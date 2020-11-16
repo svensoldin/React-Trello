@@ -10,7 +10,10 @@ type Props = {
 
 const Header = ({ user, boardName }: Props) => {
 	return (
-		<div>
+		<div className="header">
+			<h3>Thullo</h3>
+			<h2>{boardName}</h2>
+			<input type="text" />
 			<UserHeader name={user.name} />
 		</div>
 	);
