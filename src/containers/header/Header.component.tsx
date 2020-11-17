@@ -5,7 +5,7 @@ import "./Header.styles.css";
 
 type Props = {
 	user: { name: string };
-	boardName: string;
+	boardName?: string;
 };
 
 const Header = ({ user, boardName }: Props) => {
