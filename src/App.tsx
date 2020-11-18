@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./context/index";
 // Components
 import Header from "./containers/header/Header.component";
 
@@ -11,18 +12,18 @@ import BoardPage from "./pages/board/BoardPage.page";
 import "./App.css";
 
 const App = () => {
-	const [user, setUser] = React.useState({
-		token: "dfsdglksfjglkfjg",
-		id: "12RdfFDGY43YTRHds",
-		name: "Sven Soldin",
-	});
 	return (
 		<div className="App">
 			<Header user={user} />
-			<Switch>
-				<Route path={"/"} component={user ? UserPage : LoginRegisterPage} />
-				<Route path={"/board"} component={BoardPage} />
-			</Switch>
+			<AuthProvider>
+				<Switch>
+					<Route
+						path={"/"}
+						component={user ? UserPage : LoginRegisterPage}
+					/>
+					<Route path={"/board"} component={BoardPage} />
+				</Switch>
+			</AuthProvider>
 		</div>
 	);
 };
