@@ -1,10 +1,7 @@
-import React from 'react';
-
+import React from "react";
 
 const BoardPage = () => {
-	return(
-
-	);
+	return <div>{"This is a board page"}</div>;
 };
 
 export default BoardPage;

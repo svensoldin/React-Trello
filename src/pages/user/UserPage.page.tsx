@@ -1,12 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { useAuthState } from "../../context/index";
 
 // Get all the user's boards here and lift them up.
-
-type Props = {
-	userId: string;
-	token: string;
-};
 
 interface IBoard {
 	title: string;
@@ -15,13 +11,16 @@ interface IBoard {
 	users: Array<string>;
 }
 
-const UserPage = ({ userId, token }: Props) => {
+const UserPage = () => {
 	const [boards, setBoards] = React.useState<IBoard[]>([]);
+	const user = useAuthState();
+	const token = user.token;
+	const userId = user.userDetails.id;
 	React.useEffect(() => {
 		const getAllBoards = async () => {
 			try {
 				const res = await axios.get<IBoard[]>(
-					`${process.env.REACT_APP_SERVER_URL}/users/${userId}`,
+					`${process.env.REACT_APP_SERVER_URL}users/${userId}`,
 					{
 						headers: {
 							"x-auth-token": token,

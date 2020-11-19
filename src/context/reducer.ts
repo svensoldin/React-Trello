@@ -1,11 +1,11 @@
-export interface IUserDetails {
+type UserDetails = {
 	name: string;
 	id: string;
-}
+};
 type error = string | Array<string>;
 
 export type State = {
-	userDetails: IUserDetails | null;
+	userDetails: UserDetails;
 	token: string | null;
 	error: null | error;
 	loading: boolean;
@@ -13,12 +13,16 @@ export type State = {
 
 export type Dispatch = (action: Action) => void;
 
-let user = localStorage.getItem("currentUser")
-	? JSON.parse(localStorage.getItem("currentUser"))
-	: null;
+// let user = localStorage.getItem("currentUser")
+// 	? JSON.parse(localStorage.getItem("currentUser"))
+// 	: null;
+
+// let token = localStorage.getItem("token")
+// 	? localStorage.getItem("token")
+// 	: null;
 
 export const initialState: State = {
-	userDetails: user,
+	userDetails: { name: "", id: "" },
 	token: null,
 	error: null,
 	loading: false,
@@ -28,7 +32,7 @@ type Action =
 	| { type: "Login start" }
 	| {
 			type: "Login success";
-			payload: { token: string; userDetails: IUserDetails };
+			payload: { token: string; userDetails: UserDetails };
 	  }
 	| { type: "Login fail"; payload: error }
 	| { type: "Logout" };
@@ -55,7 +59,7 @@ export const AuthReducer = (state = initialState, action: Action) => {
 		case "Logout":
 			return {
 				...state,
-				userDetails: null,
+				userDetails: { name: "", id: "" },
 				token: null,
 			};
 		default:

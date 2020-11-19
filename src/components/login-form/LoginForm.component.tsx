@@ -1,23 +1,30 @@
 import * as React from "react";
-import { handleLogin } from "../../utils/login";
+import { loginUser, useAuthDispatch } from "../../context/index";
 
 const { useState } = React;
 
-const LoginForm = () => {
+const LoginForm = (props: any) => {
 	const [credentials, setCredentials] = useState({
 		email: "",
 		password: "",
 	});
-
 	const { email, password } = credentials;
+	const dispatch = useAuthDispatch();
 	// Put the form input in the state
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = e.target;
 		setCredentials({ ...credentials, [name]: value });
 	};
 	// Trigger login API call with the credentials stored in the state
-	const triggerLogin = (e: React.SyntheticEvent<any>) => {
-		handleLogin(e, email, password);
+	const triggerLogin = async (e: React.SyntheticEvent<any>) => {
+		e.preventDefault();
+		let payload = { email, password };
+		try {
+			const response = await loginUser(dispatch, payload); // loginUser handles all the state changes
+			if (!response) return;
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
