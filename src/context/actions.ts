@@ -13,7 +13,7 @@ export const loginUser = async (
 	dispatch({ type: "Login start" });
 	try {
 		const res = await axios.post(
-			`${process.env.REACT_APP_SERVER_URL}users/signin`,
+			`${process.env.REACT_APP_SERVER_URL}/users/signin`,
 			loginPayload
 		);
 		if (res.data.token) {
