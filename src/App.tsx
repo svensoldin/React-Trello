@@ -19,24 +19,35 @@ export type Board = {
 };
 
 const App = () => {
-	const [boards, setBoards] = React.useState([]);
+	const [boards, setBoards] = React.useState<Board[] | undefined>([]);
 
+	// This state is for displaying the board title in the header
+	const [currentBoard, setCurrentBoard] = React.useState<Board>();
 	return (
 		<div className="App">
 			<AuthProvider>
-				<Header />
+				<Header currentBoard={currentBoard} />
 				<Switch>
 					<Route
 						path={"/"}
 						exact
 						render={() => (
-							<UserRoute setBoards={setBoards} boards={boards} />
+							<UserRoute
+								setBoards={setBoards}
+								boards={boards}
+								setCurrentBoard={setCurrentBoard}
+							/>
 						)}
 					/>
 					<Route
 						path={"/boards/:boardId"}
 						exact
-						render={() => <BoardPage boards={boards} />}
+						render={() => (
+							<BoardPage
+								boards={boards}
+								setCurrentBoard={setCurrentBoard}
+							/>
+						)}
 					/>
 				</Switch>
 			</AuthProvider>

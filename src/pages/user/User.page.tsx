@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { useAuthState } from "../../context/index";
 import { Board } from "../../App";
 
-// Get all the user's boards here and lift them up.
+// Get all the user's boards here and lift them up to the App component.
 
-export type Props = {
-	setBoards: any;
+type Props = {
+	setBoards: React.Dispatch<React.SetStateAction<Board[] | undefined>>;
 	boards: Board[] | undefined;
 };
 

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { loginUser, useAuthDispatch } from "../../context/index";
 
-const { useState } = React;
+import "./LoginForm.styles.css";
 
 const LoginForm = (props: any) => {
-	const [credentials, setCredentials] = useState({
+	const [credentials, setCredentials] = React.useState({
 		email: "",
 		password: "",
 	});
