@@ -6,7 +6,7 @@ import { Board } from "../../App";
 import "./Header.styles.css";
 
 type Props = {
-	currentBoard?: Board | undefined;
+	currentBoard: Board | undefined;
 };
 
 const Header = ({ currentBoard }: Props) => {

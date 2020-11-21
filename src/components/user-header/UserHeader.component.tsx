@@ -11,7 +11,7 @@ const UserHeader = ({ name }: Props) => {
 	const dispatch = useAuthDispatch();
 	const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		// Trigger the logout action passing dispatch as an arg
+		// Call the logout function with dispatch as an arg
 		logout(dispatch);
 	};
 	return (

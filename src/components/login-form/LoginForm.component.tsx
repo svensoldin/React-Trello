@@ -3,18 +3,22 @@ import { loginUser, useAuthDispatch } from "../../context/index";
 
 import "./LoginForm.styles.css";
 
-const LoginForm = (props: any) => {
+// Refactor idea: separating the logic (API call) in a container and the actual form in a component
+
+const LoginForm = () => {
 	const [credentials, setCredentials] = React.useState({
 		email: "",
 		password: "",
 	});
 	const { email, password } = credentials;
-	const dispatch = useAuthDispatch();
 	// Put the form input in the state
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = e.target;
 		setCredentials({ ...credentials, [name]: value });
 	};
+
+	// Get Dispatch from context
+	const dispatch = useAuthDispatch();
 	// Trigger login API call with the credentials stored in the state
 	const triggerLogin = async (e: React.SyntheticEvent<any>) => {
 		e.preventDefault();
@@ -64,6 +68,7 @@ const LoginForm = (props: any) => {
 					Sign In
 				</button>
 			</form>
+			<p>For testing, you can use: john@gmail.com / 12345678</p>
 		</div>
 	);
 };

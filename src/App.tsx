@@ -12,7 +12,7 @@ import "./App.css";
 
 export type Board = {
 	title: string;
-	columns: Array<any>;
+	columns: Array<any>; // Todo: define separate Column type
 	admins: Array<string>;
 	users: Array<string>;
 	_id: string;
