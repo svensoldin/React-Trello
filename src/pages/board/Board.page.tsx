@@ -6,6 +6,8 @@ import { Board } from "../../App";
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
 
+import "./Board.styles.css";
+
 type Props = {
 	boards: Board[] | undefined;
 	setCurrentBoard: React.Dispatch<React.SetStateAction<Board | undefined>>;
@@ -17,10 +19,10 @@ const BoardPage = ({ boards, setCurrentBoard }: Props) => {
 	let board;
 	boards
 		? (board = boards.find((board) => params.boardId === board._id))
-		: (board = board);
+		: (board = undefined);
 	setCurrentBoard(board);
 	return boards && user.token && board ? (
-		<React.Fragment>
+		<div className="column-container">
 			{board.columns.map((column) => (
 				<BoardColumn
 					key={column._id}
@@ -28,7 +30,7 @@ const BoardPage = ({ boards, setCurrentBoard }: Props) => {
 					cards={column.cards}
 				></BoardColumn>
 			))}
-		</React.Fragment>
+		</div>
 	) : (
 		<Redirect to={"/"} />
 	);

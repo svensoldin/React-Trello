@@ -1,0 +1,8 @@
+.column-container {
+	display: flex;
+	justify-content: flex-start;
+	margin: 10px;
+	background-color: #fafafa;
+	height: 100vh;
+	border-radius: 5px;
+}
