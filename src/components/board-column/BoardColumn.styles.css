@@ -5,3 +5,15 @@
 	flex-direction: column;
 	align-items: center;
 }
+
+.add-card-btn {
+	width: 80%;
+	background: lightblue;
+	color: blue;
+	text-align: left;
+	margin-top: 20px;
+	height: 30px;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}

@@ -22,6 +22,7 @@ const BoardColumn = ({ title, cards }: Props) => {
 			{cards.map((card) => (
 				<CardThumbnail key={card._id} card={card}></CardThumbnail>
 			))}
+			<button className="add-card-btn">Add another card</button>
 		</div>
 	);
 };

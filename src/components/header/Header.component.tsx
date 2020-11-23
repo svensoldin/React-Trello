@@ -1,7 +1,10 @@
 import React from "react";
-import UserHeader from "../user-header/UserHeader.component";
 import { useAuthState } from "../../context/index";
 import { Board } from "../../App";
+
+//Components
+import UserHeader from "../user-header/UserHeader.component";
+import SearchBar from "../searchbar/SearchBar.component";
 
 import "./Header.styles.css";
 
@@ -14,15 +17,17 @@ const Header = ({ currentBoard }: Props) => {
 
 	return (
 		<div className="header">
-			<h3>Thullo</h3>
-			{user.token ? (
-				<div className="nav">
-					{currentBoard ? (
-						<h2 className="board-title">{currentBoard.title}</h2>
+			<div className="title-container">
+			<h2>Thullo</h2>
+				{currentBoard ? (
+						<h3 className="board-title">{currentBoard.title}</h3>
 					) : (
 						<div className="ghost-title"></div>
 					)}
-					<input type="text" className="nav-input" />
+			</div>
+			{user.token ? (
+				<div className="nav">
+					<SearchBar />
 					<UserHeader name={user.userDetails.name} />
 				</div> //This should be a separate component
 			) : null}

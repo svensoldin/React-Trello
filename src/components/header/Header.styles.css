@@ -1,26 +1,31 @@
 .header {
 	display: flex;
-	height: 80px;
+	height: 10%;
 	justify-content: space-between;
 	border-bottom: 1px solid grey;
 }
 
-.nav {
+.title-container {
 	display: flex;
-	width: 70%;
+	width: 40%;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.nav input {
-	height: 50%;
-	width: 30%;
-}
-
 .board-title {
 	width: 30%;
+	margin: 10px;
 }
 
 .ghost-title {
 	width: 30%;
 }
+
+.nav {
+	display: flex;
+	width: 45%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+

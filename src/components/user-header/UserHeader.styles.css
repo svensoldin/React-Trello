@@ -1,9 +1,16 @@
 .user-header {
 	margin: 10px;
 	width: 30%;
+	display: flex;
+	justify-content: space-between;
 }
 
 .logout-btn {
 	border: none;
 	background-color: none;
+	padding: 5px;
+	font-size: 12px;
+	cursor: pointer;
+	background: none;
+	color: red;
 }
