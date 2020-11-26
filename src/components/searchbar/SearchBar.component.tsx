@@ -1,12 +1,16 @@
-import * as React from 'react';
+import * as React from "react";
+
+import SearchIcon from "@material-ui/icons/Search";
 
 import "./Searchbar.styles.css";
 
 const Searchbar = () => {
-	return(
+	return (
 		<div className="searchbar">
-			<input type="text" placeholder="keyword..." className="search-input"/>
-			<button className="search-btn"><span>Search</span></button>
+			<input type="text" placeholder="search..." className="search-input" />
+			<button className="search-btn">
+				<SearchIcon />
+			</button>
 		</div>
 	);
 };

@@ -1,27 +1,32 @@
 .searchbar {
 	width: 80%;
 	display: flex;
-	justify-content: space-between;
-	box-shadow: 1px 1px 1px grey;
-	border-radius: 10px;
 	margin: 10px;
+	color: white;
 }
 
 .search-input {
-	width: 80%;
+	width: 50%;
 	border: none;
 	padding: 10px;
 	font-size: 15px;
 	outline: none;
+	background: lavender;
+	opacity: 0.8;
+}
+
+.search-input:focus {
+	width: 80%;
+	transition: 0.7s;
 }
 
 .search-btn {
 	width: 20%;
-	background: #2196F3;
+	background: #2196f3;
 	padding: 5px;
 	border: none;
-	border-radius: 10px;
 	font-size: 15px;
+	color: white;
 }
 
 .search-btn span {
