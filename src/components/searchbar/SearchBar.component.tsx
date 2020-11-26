@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import "./SearchBar.styles.css";
+import "./Searchbar.styles.css";
 
-const SearchBar = () => {
+const Searchbar = () => {
 	return(
 		<div className="searchbar">
 			<input type="text" placeholder="keyword..." className="search-input"/>
@@ -11,4 +11,4 @@ const SearchBar = () => {
 	);
 };
 
-export default SearchBar;
+export default Searchbar;

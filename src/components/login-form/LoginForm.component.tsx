@@ -67,7 +67,7 @@ const LoginForm = () => {
 				<button className="button" onClick={triggerLogin}>
 					Sign In
 				</button>
-				<p>// For testing, you can use: john@gmail.com / 12345678</p>
+				<p>For testing, you can use: john@gmail.com / 12345678</p>
 			</form>
 		</div>
 	);

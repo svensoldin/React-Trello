@@ -4,8 +4,7 @@ import { Board } from "../../App";
 
 //Components
 import UserHeader from "../user-header/UserHeader.component";
-import SearchBar from "../searchbar/SearchBar.component";
-
+import Searchbar from "../searchbar/Searchbar.component";
 import "./Header.styles.css";
 
 type Props = {
@@ -27,7 +26,7 @@ const Header = ({ currentBoard }: Props) => {
 			</div>
 			{user.token ? (
 				<div className="nav">
-					<SearchBar />
+					<Searchbar />
 					<UserHeader name={user.userDetails.name} />
 				</div> //This should be a separate component
 			) : null}
