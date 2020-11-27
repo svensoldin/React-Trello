@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import AddIcon from "@material-ui/icons/Add";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import "./BoardColumn.styles.css";
 
@@ -18,11 +20,14 @@ type Props = {
 const BoardColumn = ({ title, cards }: Props) => {
 	return (
 		<div className="column">
-			<h2>{title}</h2>
+			<h2 className="column-title">{title}</h2>
 			{cards.map((card) => (
 				<CardThumbnail key={card._id} card={card}></CardThumbnail>
 			))}
-			<button className="add-card-btn">Add another card</button>
+			<div className="add-card">
+				<AddIcon className="add-icon" />
+				<p className="add-card-text">Add another card</p>
+			</div>
 		</div>
 	);
 };

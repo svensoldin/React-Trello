@@ -4,6 +4,7 @@ import { useAuthState } from "../../context/index";
 // Components
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
+import { Link } from "react-router-dom";
 
 import "./UserDropdown.styles.css";
 
@@ -23,7 +24,11 @@ const UserDropdown = ({ handleLogout }: Props) => {
 					<p className="user-email">{email}</p>
 				</div>
 			</div>
-			<div className="dropdown-item">Dashboard</div>
+			<div className="dropdown-item">
+				<Link to="/" className="link">
+					Dashboard
+				</Link>
+			</div>
 			<div className="dropdown-item logout" onClick={handleLogout}>
 				Logout
 			</div>

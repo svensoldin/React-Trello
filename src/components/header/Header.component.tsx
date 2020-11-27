@@ -13,14 +13,20 @@ type Props = {
 	currentBoard: Board | undefined;
 };
 
+const appBarStyles = {
+	background: "#2196f3",
+	minHeight: 60,
+	maxHeight: 60,
+};
+
 const Header = ({ currentBoard }: Props) => {
 	const user = useAuthState();
 
 	return (
-		<AppBar position="static" color="primary">
+		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
 				<div className="title-container">
-					<h2>Thullo</h2>
+					<h2 className="main-title">Thullo</h2>
 					{currentBoard ? (
 						<h3 className="board-title">{currentBoard.title}</h3>
 					) : (

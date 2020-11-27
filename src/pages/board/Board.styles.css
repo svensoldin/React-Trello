@@ -1,8 +1,9 @@
 .column-container {
 	display: flex;
-	justify-content: flex-start;
+	align-items: flex-start;
 	margin: 10px;
-	background-color: #f2f8fb;
+	/*	background-color: #f2f8fb;
+*/
 	height: 85%;
 	border-radius: 5px;
 }

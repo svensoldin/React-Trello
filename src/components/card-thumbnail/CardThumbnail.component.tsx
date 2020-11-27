@@ -17,7 +17,7 @@ type Props = {
 const CardThumbnail = ({ card }: Props) => {
 	return (
 		<div className="card-thumbnail">
-			<h2>{card.title}</h2>
+			<p className="card-thumbnail-content">{card.title}</p>
 		</div>
 	);
 };

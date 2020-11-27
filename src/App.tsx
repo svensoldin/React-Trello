@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "./context/index";
 // Components
 import Header from "./components/header/Header.component";
@@ -25,32 +25,34 @@ const App = () => {
 	const [currentBoard, setCurrentBoard] = React.useState<Board>();
 	return (
 		<div className="App">
-			<AuthProvider>
-				<Header currentBoard={currentBoard} />
-				<Switch>
-					<Route
-						path={"/"}
-						exact
-						render={() => (
-							<UserRoute
-								setBoards={setBoards}
-								boards={boards}
-								setCurrentBoard={setCurrentBoard}
-							/>
-						)}
-					/>
-					<Route
-						path={"/boards/:boardId"}
-						exact
-						render={() => (
-							<BoardPage
-								boards={boards}
-								setCurrentBoard={setCurrentBoard}
-							/>
-						)}
-					/>
-				</Switch>
-			</AuthProvider>
+			<BrowserRouter>
+				<AuthProvider>
+					<Header currentBoard={currentBoard} />
+					<Switch>
+						<Route
+							path={"/"}
+							exact
+							render={() => (
+								<UserRoute
+									setBoards={setBoards}
+									boards={boards}
+									setCurrentBoard={setCurrentBoard}
+								/>
+							)}
+						/>
+						<Route
+							path={"/boards/:boardId"}
+							exact
+							render={() => (
+								<BoardPage
+									boards={boards}
+									setCurrentBoard={setCurrentBoard}
+								/>
+							)}
+						/>
+					</Switch>
+				</AuthProvider>
+			</BrowserRouter>
 		</div>
 	);
 };

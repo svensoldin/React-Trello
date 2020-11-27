@@ -23,6 +23,12 @@
 .dropdown-item {
 	padding: 8px;
 	cursor: pointer;
+	text-decoration: none;
+}
+
+.link {
+	text-decoration: none;
+	color: black;
 }
 
 .dropdown-item:hover {
