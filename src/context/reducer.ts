@@ -1,6 +1,7 @@
 type UserDetails = {
 	name: string;
 	id: string;
+	email: string;
 };
 type error = string | Array<string>;
 
@@ -22,7 +23,7 @@ export type Dispatch = (action: Action) => void;
 // 	: null;
 
 export const initialState: State = {
-	userDetails: { name: "", id: "" },
+	userDetails: { name: "", id: "", email: "" },
 	token: null,
 	error: null,
 	loading: false,
@@ -59,7 +60,7 @@ export const AuthReducer = (state = initialState, action: Action) => {
 		case "Logout":
 			return {
 				...state,
-				userDetails: { name: "", id: "" },
+				userDetails: { name: "", id: "", email: "" },
 				token: null,
 			};
 		default:

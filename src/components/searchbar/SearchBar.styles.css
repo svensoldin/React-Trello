@@ -6,13 +6,17 @@
 }
 
 .search-input {
-	width: 50%;
+	color: silver;
+	width: 40%;
 	border: none;
 	padding: 10px;
 	font-size: 15px;
 	outline: none;
-	background: lavender;
+	background: #6573c3;
 	opacity: 0.8;
+	/* Shrinking back after focus smoothly */
+	transition-property: width;
+	transition-duration: 0.5s;
 }
 
 .search-input:focus {
@@ -22,11 +26,12 @@
 
 .search-btn {
 	width: 20%;
-	background: #2196f3;
+	background: #6573c3;
 	padding: 5px;
 	border: none;
 	font-size: 15px;
 	color: white;
+	opacity: 0.8;
 }
 
 .search-btn span {

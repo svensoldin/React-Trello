@@ -21,8 +21,6 @@ export const loginUser = async (
 				type: "Login success",
 				payload: { token: res.data.token, userDetails: res.data.user },
 			});
-			// localStorage.setItem("token", res.data.token);
-			// localStorage.setItem("currentUser", JSON.stringify(res.data.user));
 			return res.data.token;
 		}
 		if (res.data.errors)
