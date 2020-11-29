@@ -16,11 +16,13 @@ type Props = {
 const BoardPage = ({ boards, setCurrentBoard }: Props) => {
 	const user = useAuthState();
 	const params = useParams<{ boardId: string }>();
-	let board;
+	let board: Board | undefined;
 	boards
 		? (board = boards.find((board) => params.boardId === board._id))
 		: (board = undefined);
-	setCurrentBoard(board);
+	React.useEffect(() => {
+		setCurrentBoard(board);
+	});
 	return boards && user.token && board ? (
 		<div className="column-container">
 			{board.columns.map((column) => (

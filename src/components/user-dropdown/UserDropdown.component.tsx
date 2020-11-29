@@ -24,11 +24,12 @@ const UserDropdown = ({ handleLogout }: Props) => {
 					<p className="user-email">{email}</p>
 				</div>
 			</div>
-			<div className="dropdown-item">
-				<Link to="/" className="link">
-					Dashboard
-				</Link>
-			</div>
+			<Link to="/" className="link">
+				<div className="dropdown-item">Dashboard</div>
+			</Link>
+			<Link to="/profile">
+				<div className="dropdown-item">Profile</div>
+			</Link>
 			<div className="dropdown-item logout" onClick={handleLogout}>
 				Logout
 			</div>

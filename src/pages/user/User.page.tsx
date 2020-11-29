@@ -12,9 +12,12 @@ type Props = {
 };
 
 const UserPage = ({ setBoards, boards }: Props) => {
+	// Pull user info from context
 	const user = useAuthState();
 	const token = user.token;
 	const userId = user.userDetails.id;
+
+	// Fetch boards from API
 	React.useEffect(() => {
 		const getAllBoards = async () => {
 			try {
@@ -34,7 +37,7 @@ const UserPage = ({ setBoards, boards }: Props) => {
 			}
 		};
 		getAllBoards();
-	}, [setBoards, token, userId]);
+	}, [token, userId]);
 	return boards ? (
 		<ul>
 			{boards.map((board, i) => (

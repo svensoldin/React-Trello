@@ -14,7 +14,7 @@ const UserRoute = ({ setCurrentBoard, ...props }: Props) => {
 	// Pull the user from context
 	const user = useAuthState();
 	// Reset the current board so that the title is not displayed in the header
-	setCurrentBoard(undefined);
+	React.useEffect(() => setCurrentBoard(undefined));
 	// If a user is authenticated, return the UserPage component, else the login page
 	return user.token ? <UserPage {...props} /> : <LoginRegisterPage />;
 };

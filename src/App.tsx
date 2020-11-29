@@ -7,6 +7,7 @@ import Header from "./components/header/Header.component";
 // Pages
 import UserRoute from "./components/UserRoute/UserRoute.component";
 import BoardPage from "./pages/board/Board.page";
+import ProfilePage from "./pages/profile/Profile.page";
 
 import "./App.css";
 
@@ -22,7 +23,7 @@ const App = () => {
 	const [boards, setBoards] = React.useState<Board[] | undefined>([]);
 
 	// This state is for displaying the board title in the header
-	const [currentBoard, setCurrentBoard] = React.useState<Board>();
+	const [currentBoard, setCurrentBoard] = React.useState<Board | undefined>();
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -50,6 +51,7 @@ const App = () => {
 								/>
 							)}
 						/>
+						<Route path={"/profile"} exact component={ProfilePage} />
 					</Switch>
 				</AuthProvider>
 			</BrowserRouter>
