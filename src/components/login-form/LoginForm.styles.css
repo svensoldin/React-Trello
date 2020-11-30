@@ -39,8 +39,8 @@
 
 .button {
 	padding: 10px;
-	border: 1px solid #6573c3;
-	background-color: #6573c3;
+	border: 1px solid #2196f3;
+	background-color: #2196f3;
 	color: white;
 	font-size: 15px;
 	font-weight: bold;
@@ -53,12 +53,12 @@
 
 .button:hover {
 	background-color: white;
-	color: #6573c3;
-	border: 1px solid #6573c3;
+	color: #2196f3;
+	border: 1px solid #2196f3;
 }
 
-span {
+.button span {
 	text-decoration: underline;
-	color: #6573c3;
+	color: #2196f3;
 	cursor: pointer;
 }

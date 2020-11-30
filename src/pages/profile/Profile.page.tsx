@@ -1,10 +1,19 @@
 import * as React from "react";
+import { useAuthState } from "../../context/index";
+import { Redirect } from "react-router-dom";
 
-// This library is the problem I think
+import ImageUpload from "../../components/image-upload/ImageUpload.component";
 
 const ProfilePage = () => {
-	// Pull user from context and conditionally render either this or Redirect
-	return <div className="profile-page"></div>;
+	const user = useAuthState();
+	const token = user.token;
+	return user.token ? (
+		<div className="profile-page">
+			<ImageUpload token={token} />
+		</div>
+	) : (
+		<Redirect to="/" />
+	);
 };
 
 export default ProfilePage;

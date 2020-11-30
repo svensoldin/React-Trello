@@ -1,26 +1,43 @@
 import * as React from "react";
 import axios from "axios";
 
-import ImageUploader from "react-images-upload";
-
 import "./ImageUpload.styles.css";
 
-const ImageUpload = () => {
-	const [picture, setPicture] = React.useState();
+type Props = {
+	token: string | null;
+};
 
-	const onDrop = (picture: any) => {
-		setPicture(picture);
+const ImageUpload = ({ token }: Props) => {
+	const [picture, setPicture] = React.useState<undefined | any>();
+
+	const onDrop = (e: React.ChangeEvent<any>) => {
+		setPicture(e.target.files[0]);
+	};
+
+	const handleUpload = async () => {
+		const data = new FormData();
+		if (!picture) alert("Please select a picture");
+		data.append("attachment", picture);
+		try {
+			await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/users/profile/add`,
+				data,
+				{
+					headers: {
+						"x-auth-token": token,
+					},
+				}
+			);
+			setPicture(undefined);
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
 		<div className="image-upload">
-			<ImageUploader
-				withPreview={true}
-				withIcon={true}
-				onChange={onDrop}
-				singleImage={true}
-			/>
-			<button>UPLOAD</button>
+			<input type="file" onChange={onDrop} />
+			<button onClick={handleUpload}>UPLOAD</button>
 		</div>
 	);
 };

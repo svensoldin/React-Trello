@@ -19,6 +19,7 @@ const LoginForm = () => {
 
 	// Get Dispatch from context
 	const dispatch = useAuthDispatch();
+
 	// Trigger login API call with the credentials stored in the state
 	const triggerLogin = async (e: React.SyntheticEvent<any>) => {
 		e.preventDefault();

@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import axios from "axios";
 import { useAuthDispatch, logout } from "../../context/index";
 
 // Components
@@ -11,9 +12,33 @@ import "./UserHeader.styles.css";
 
 type Props = {
 	name: string;
+	token: string | null;
 };
 
-const UserHeader = ({ name }: Props) => {
+const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
+
+const UserHeader = ({ name, token }: Props) => {
+	const [userPictureURL, setUserPictureURL] = React.useState<
+		string | undefined
+	>();
+	// Fetching the user's profile picture to put it in the avatar
+	React.useEffect(() => {
+		const getPicture = async () => {
+			try {
+				const res = await axios.post(url, {
+					headers: { "x-auth-token": token },
+					responseType: "blob",
+				});
+				const pictureURL = URL.createObjectURL(res);
+				setUserPictureURL(pictureURL);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		getPicture();
+	});
+
+	// Showing/hiding the popper when the user clicks on the header
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const [
 		anchorElement,
@@ -33,6 +58,7 @@ const UserHeader = ({ name }: Props) => {
 		<ClickAwayListener onClickAway={() => setIsMenuOpen(false)}>
 			<div className="user-header">
 				<Avatar
+					src={userPictureURL}
 					className="avatar"
 					alt={name}
 					aria-haspopup="true"

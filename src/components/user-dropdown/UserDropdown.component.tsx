@@ -27,7 +27,7 @@ const UserDropdown = ({ handleLogout }: Props) => {
 			<Link to="/" className="link">
 				<div className="dropdown-item">Dashboard</div>
 			</Link>
-			<Link to="/profile">
+			<Link to="/profile" className="link">
 				<div className="dropdown-item">Profile</div>
 			</Link>
 			<div className="dropdown-item logout" onClick={handleLogout}>

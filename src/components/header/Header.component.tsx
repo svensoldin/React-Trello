@@ -21,7 +21,7 @@ const appBarStyles = {
 
 const Header = ({ currentBoard }: Props) => {
 	const user = useAuthState();
-
+	const { userDetails, token } = user;
 	return (
 		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
@@ -36,7 +36,7 @@ const Header = ({ currentBoard }: Props) => {
 				{user.token ? (
 					<div className="nav">
 						<Searchbar />
-						<UserHeader name={user.userDetails.name} />
+						<UserHeader name={userDetails.name} token={token} />
 					</div> //This should be a separate component
 				) : null}
 			</div>
