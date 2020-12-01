@@ -18,25 +18,10 @@ type Props = {
 const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
 
 const UserHeader = ({ name, token }: Props) => {
+	// Local url for the user's picture fetched from server
 	const [userPictureURL, setUserPictureURL] = React.useState<
 		string | undefined
 	>();
-	// Fetching the user's profile picture to put it in the avatar
-	React.useEffect(() => {
-		const getPicture = async () => {
-			try {
-				const res = await axios.post(url, {
-					headers: { "x-auth-token": token },
-					responseType: "blob",
-				});
-				const pictureURL = URL.createObjectURL(res);
-				setUserPictureURL(pictureURL);
-			} catch (err) {
-				console.error(err);
-			}
-		};
-		getPicture();
-	});
 
 	// Showing/hiding the popper when the user clicks on the header
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -44,6 +29,28 @@ const UserHeader = ({ name, token }: Props) => {
 		anchorElement,
 		setAnchorElement,
 	] = React.useState<HTMLElement | null>();
+
+	// Fetching the user's profile picture to put it in the avatar
+	React.useEffect(() => {
+		const getPicture = async () => {
+			try {
+				const res = await axios.post(
+					url,
+					{},
+					{
+						headers: { "x-auth-token": token },
+						responseType: "blob",
+					}
+				);
+				const blob = res.data;
+				const pictureURL = URL.createObjectURL(blob);
+				setUserPictureURL(pictureURL);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		getPicture();
+	}, [token]);
 
 	const dispatch = useAuthDispatch();
 	const handleLogout = (
@@ -70,7 +77,10 @@ const UserHeader = ({ name, token }: Props) => {
 					{name.split("")[0]}
 				</Avatar>
 				<Popper open={isMenuOpen} anchorEl={anchorElement}>
-					<UserDropdown handleLogout={handleLogout} />
+					<UserDropdown
+						handleLogout={handleLogout}
+						avatarURL={userPictureURL}
+					/>
 				</Popper>
 			</div>
 		</ClickAwayListener>

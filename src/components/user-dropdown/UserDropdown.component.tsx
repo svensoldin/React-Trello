@@ -10,15 +10,16 @@ import "./UserDropdown.styles.css";
 
 type Props = {
 	handleLogout: (e: React.MouseEvent<any>) => void;
+	avatarURL: string | undefined;
 };
 
-const UserDropdown = ({ handleLogout }: Props) => {
+const UserDropdown = ({ handleLogout, avatarURL }: Props) => {
 	const user = useAuthState();
 	const { name, email } = user.userDetails;
 	return (
 		<Paper className="user-dropdown">
 			<div className="user-info">
-				<Avatar>{name.split("")[0]}</Avatar>
+				<Avatar src={avatarURL}>{name.split("")[0]}</Avatar>
 				<div className="name-email">
 					<p>{name}</p>
 					<p className="user-email">{email}</p>
