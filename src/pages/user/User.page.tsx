@@ -2,16 +2,18 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuthState } from "../../context/index";
-import { Board } from "../../App";
 
-// Get all the user's boards here and lift them up to the App component.
-
-type Props = {
-	setBoards: React.Dispatch<React.SetStateAction<Board[] | undefined>>;
-	boards: Board[] | undefined;
+type Board = {
+	title: string;
+	columns: Array<string>;
+	photo: string;
+	users: Array<string>;
+	admins: Array<string>;
+	_id: string;
 };
 
-const UserPage = ({ setBoards, boards }: Props) => {
+const UserPage = () => {
+	const [boards, setBoards] = React.useState<Board[] | undefined>();
 	// Pull user info from context
 	const user = useAuthState();
 	const token = user.token;
@@ -37,7 +39,7 @@ const UserPage = ({ setBoards, boards }: Props) => {
 			}
 		};
 		getAllBoards();
-	}, [token, userId]);
+	}, [token, userId, setBoards]);
 	return boards ? (
 		<ul>
 			{boards.map((board, i) => (

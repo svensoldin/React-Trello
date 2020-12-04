@@ -1,24 +1,36 @@
 import * as React from "react";
+import { useAuthState } from "../../context/index";
+import { getCardsFromColumn } from "../../utils/utils";
 
 import AddIcon from "@material-ui/icons/Add";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import "./BoardColumn.styles.css";
 
-type Card = {
+export type Card = {
 	title: string;
-	comments: Array<any> | []; // Define this type later
+	comments: Array<Comment> | [];
 	labels: Array<{ body: string; color: string }> | [];
 	attachments: Array<{ fileName: string }> | [];
 	_id: string;
 };
 
-type Props = {
-	title: string;
-	cards: Array<Card>;
+type Comment = {
+	body: string;
+	user: string;
 };
 
-const BoardColumn = ({ title, cards }: Props) => {
-	return (
+type Props = {
+	title: string;
+	columnId: string;
+};
+
+const BoardColumn = ({ title, columnId }: Props) => {
+	const [cards, setCards] = React.useState<Array<Card> | undefined>();
+	const { token } = useAuthState();
+	React.useEffect(() => {
+		getCardsFromColumn(setCards, columnId, token);
+	}, [token, columnId]);
+	return cards ? (
 		<div className="column">
 			<h2 className="column-title">{title}</h2>
 			{cards.map((card) => (
@@ -29,6 +41,8 @@ const BoardColumn = ({ title, cards }: Props) => {
 				<p className="add-card-text">Add another card</p>
 			</div>
 		</div>
+	) : (
+		<h2>LOADING</h2>
 	);
 };
 
