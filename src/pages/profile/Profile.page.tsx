@@ -5,11 +5,12 @@ import { Redirect } from "react-router-dom";
 import ImageUpload from "../../components/image-upload/ImageUpload.component";
 
 const ProfilePage = () => {
-	const user = useAuthState();
-	const token = user.token;
-	return user.token ? (
+	const {
+		userDetails: { id },
+	} = useAuthState();
+	return id ? (
 		<div className="profile-page">
-			<ImageUpload token={token} />
+			<ImageUpload />
 		</div>
 	) : (
 		<Redirect to="/" />

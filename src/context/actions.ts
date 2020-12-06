@@ -16,12 +16,13 @@ export const loginUser = async (
 			`${process.env.REACT_APP_SERVER_URL}/users/signin`,
 			loginPayload
 		);
-		if (res.data.token) {
+		if (res.status === 200) {
 			dispatch({
 				type: "Login success",
-				payload: { token: res.data.token, userDetails: res.data.user },
+				payload: { userDetails: res.data.user },
 			});
-			return res.data.token;
+			localStorage.setItem("user", JSON.stringify(res.data.user));
+			return res.data.user;
 		}
 		if (res.data.errors)
 			dispatch({ type: "Login fail", payload: res.data.errors });
@@ -31,6 +32,17 @@ export const loginUser = async (
 	}
 };
 
-export const logout = (dispatch: Dispatch) => {
-	dispatch({ type: "Logout" });
+export const logout = async (dispatch: Dispatch) => {
+	try {
+		const res = await axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/users/logout`,
+			{}
+		);
+		if (res.status === 200) {
+			dispatch({ type: "Logout" });
+			localStorage.removeItem("user");
+		}
+	} catch (err) {
+		console.error(err);
+	}
 };

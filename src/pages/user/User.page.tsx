@@ -12,34 +12,35 @@ type Board = {
 	_id: string;
 };
 
+async function getAllBoards(
+	id: string,
+	setBoards: React.Dispatch<React.SetStateAction<Board[] | undefined>>
+) {
+	try {
+		const res = await axios.get(
+			`${process.env.REACT_APP_SERVER_URL}/users/${id}`,
+			{
+				withCredentials: true,
+			}
+		);
+		const boards = res.data;
+		setBoards(boards);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 const UserPage = () => {
 	const [boards, setBoards] = React.useState<Board[] | undefined>();
 	// Pull user info from context
-	const user = useAuthState();
-	const token = user.token;
-	const userId = user.userDetails.id;
+	const {
+		userDetails: { id },
+	} = useAuthState();
 
 	// Fetch boards from API
 	React.useEffect(() => {
-		const getAllBoards = async () => {
-			try {
-				const res = await axios.get<Board[]>(
-					`${process.env.REACT_APP_SERVER_URL}/users/${userId}`,
-					{
-						headers: {
-							"x-auth-token": token,
-						},
-					}
-				);
-				const boards = res.data;
-				setBoards(boards);
-				return;
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		getAllBoards();
-	}, [token, userId, setBoards]);
+		getAllBoards(id, setBoards);
+	}, [id, setBoards]);
 	return boards ? (
 		<ul>
 			{boards.map((board, i) => (

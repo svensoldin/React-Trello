@@ -16,17 +16,17 @@ const appBarStyles = {
 
 const Header = () => {
 	const user = useAuthState();
-	const { userDetails, token } = user;
+	const { userDetails } = user;
 	return (
 		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
 				<div className="title-container">
 					<h2 className="main-title">Thullo</h2>
 				</div>
-				{user.token ? (
+				{userDetails.id ? (
 					<div className="nav">
 						<Searchbar />
-						<UserHeader name={userDetails.name} token={token} />
+						<UserHeader name={userDetails.name} />
 					</div> //This should be a separate component
 				) : null}
 			</div>

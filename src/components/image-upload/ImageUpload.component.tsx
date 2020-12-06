@@ -3,11 +3,7 @@ import axios from "axios";
 
 import "./ImageUpload.styles.css";
 
-type Props = {
-	token: string | null;
-};
-
-const ImageUpload = ({ token }: Props) => {
+const ImageUpload = () => {
 	const [picture, setPicture] = React.useState<undefined | any>();
 
 	const onDrop = (e: React.ChangeEvent<any>) => {
@@ -22,11 +18,7 @@ const ImageUpload = ({ token }: Props) => {
 			await axios.post(
 				`${process.env.REACT_APP_SERVER_URL}/users/profile/add`,
 				data,
-				{
-					headers: {
-						"x-auth-token": token,
-					},
-				}
+				{ withCredentials: true }
 			);
 			setPicture(undefined);
 		} catch (err) {

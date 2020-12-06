@@ -26,13 +26,15 @@ type Board = {
 
 const BoardPage = () => {
 	const [board, setBoard] = React.useState<Board | undefined>();
-	const { token } = useAuthState();
+	const {
+		userDetails: { id },
+	} = useAuthState();
 	const { boardId } = useParams<{ boardId: string }>();
 
 	React.useEffect(() => {
-		if (token) getBoardById(setBoard, token, boardId);
-	}, [token, boardId]);
-	return token ? (
+		if (id) getBoardById(setBoard, boardId);
+	}, [boardId, id]);
+	return id ? (
 		board ? (
 			<div className="column-container">
 				{board.columns.map((column, i) => (

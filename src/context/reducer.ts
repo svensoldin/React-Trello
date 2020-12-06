@@ -7,24 +7,18 @@ type error = string | Array<string>;
 
 export type State = {
 	userDetails: UserDetails;
-	token: string | null;
 	error: null | error;
 	loading: boolean;
 };
 
 export type Dispatch = (action: Action) => void;
 
-// let user = localStorage.getItem("currentUser")
-// 	? JSON.parse(localStorage.getItem("currentUser"))
-// 	: null;
-
-// let token = localStorage.getItem("token")
-// 	? localStorage.getItem("token")
-// 	: null;
+let user: UserDetails | null = localStorage.getItem("user")
+	? JSON.parse(localStorage.getItem("user") || "{}")
+	: null;
 
 export const initialState: State = {
-	userDetails: { name: "", id: "", email: "" },
-	token: null,
+	userDetails: user ? user : { name: "", id: "", email: "" },
 	error: null,
 	loading: false,
 };
@@ -33,7 +27,7 @@ type Action =
 	| { type: "Login start" }
 	| {
 			type: "Login success";
-			payload: { token: string; userDetails: UserDetails };
+			payload: { userDetails: UserDetails };
 	  }
 	| { type: "Login fail"; payload: error }
 	| { type: "Logout" };
@@ -49,7 +43,6 @@ export const AuthReducer = (state = initialState, action: Action) => {
 			return {
 				...state,
 				userDetails: action.payload.userDetails,
-				token: action.payload.token,
 				loading: false,
 			};
 		case "Login fail":
@@ -61,7 +54,6 @@ export const AuthReducer = (state = initialState, action: Action) => {
 			return {
 				...state,
 				userDetails: { name: "", id: "", email: "" },
-				token: null,
 			};
 		default:
 			return state;

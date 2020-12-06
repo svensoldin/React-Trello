@@ -12,12 +12,13 @@ import "./UserHeader.styles.css";
 
 type Props = {
 	name: string;
-	token: string | null;
 };
+
+axios.defaults.withCredentials = true;
 
 const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
 
-const UserHeader = ({ name, token }: Props) => {
+const UserHeader = ({ name }: Props) => {
 	// Local url for the user's picture fetched from server
 	const [userPictureURL, setUserPictureURL] = React.useState<
 		string | undefined
@@ -38,8 +39,8 @@ const UserHeader = ({ name, token }: Props) => {
 					url,
 					{},
 					{
-						headers: { "x-auth-token": token },
 						responseType: "blob",
+						withCredentials: true,
 					}
 				);
 				const blob = res.data;
@@ -50,7 +51,7 @@ const UserHeader = ({ name, token }: Props) => {
 			}
 		};
 		getPicture();
-	}, [token]);
+	}, []);
 
 	const dispatch = useAuthDispatch();
 	const handleLogout = (

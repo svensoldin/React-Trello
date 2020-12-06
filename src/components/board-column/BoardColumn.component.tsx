@@ -26,10 +26,10 @@ type Props = {
 
 const BoardColumn = ({ title, columnId }: Props) => {
 	const [cards, setCards] = React.useState<Array<Card> | undefined>();
-	const { token } = useAuthState();
+
 	React.useEffect(() => {
-		getCardsFromColumn(setCards, columnId, token);
-	}, [token, columnId]);
+		getCardsFromColumn(setCards, columnId);
+	}, [columnId]);
 	return cards ? (
 		<div className="column">
 			<h2 className="column-title">{title}</h2>

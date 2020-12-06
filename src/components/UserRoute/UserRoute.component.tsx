@@ -5,9 +5,9 @@ import { useAuthState } from "../../context/index";
 
 const UserRoute = () => {
 	// Pull the user from context
-	const user = useAuthState();
+	const { userDetails } = useAuthState();
 	// If a user is authenticated, return the UserPage component, else the login page
-	return user.token ? <UserPage /> : <LoginRegisterPage />;
+	return userDetails.id ? <UserPage /> : <LoginRegisterPage />;
 };
 
 export default UserRoute;

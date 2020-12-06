@@ -19,14 +19,11 @@ type Board = {
 
 export async function getBoardById(
 	setBoard: React.Dispatch<React.SetStateAction<Board | undefined>>,
-	token: string,
 	boardId: string
 ) {
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
 	try {
-		const res = await axios.get(url, {
-			headers: { "x-auth-token": token },
-		});
+		const res = await axios.get(url, { withCredentials: true });
 		const board = res.data;
 		setBoard(board);
 	} catch (err) {
@@ -36,13 +33,12 @@ export async function getBoardById(
 
 export async function getCardsFromColumn(
 	setCards: React.Dispatch<React.SetStateAction<Array<Card> | undefined>>,
-	columnId: string,
-	token: string | null
+	columnId: string
 ) {
 	try {
 		const res = await axios.get(
 			`${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`,
-			{ headers: { "x-auth-token": token } }
+			{ withCredentials: true }
 		);
 		const cards = res.data;
 		setCards(cards);
