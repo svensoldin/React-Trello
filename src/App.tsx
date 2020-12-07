@@ -1,6 +1,6 @@
 import * as React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { AuthProvider } from "./context/index";
+import { Switch, Route } from "react-router-dom";
+import { checkUserSession, useAuthDispatch } from "./context/index";
 // Components
 import Header from "./components/header/Header.component";
 
@@ -12,22 +12,22 @@ import ProfilePage from "./pages/profile/Profile.page";
 import "./App.css";
 
 const App = () => {
+	const dispatch = useAuthDispatch();
+	React.useEffect(() => {
+		checkUserSession(dispatch);
+	});
 	return (
 		<div className="App">
-			<BrowserRouter>
-				<AuthProvider>
-					<Header />
-					<Switch>
-						<Route path={"/"} exact render={() => <UserRoute />} />
-						<Route
-							path={"/boards/:boardId"}
-							exact
-							render={() => <BoardPage />}
-						/>
-						<Route path={"/profile"} exact component={ProfilePage} />
-					</Switch>
-				</AuthProvider>
-			</BrowserRouter>
+			<Header />
+			<Switch>
+				<Route path={"/"} exact render={() => <UserRoute />} />
+				<Route
+					path={"/boards/:boardId"}
+					exact
+					render={() => <BoardPage />}
+				/>
+				<Route path={"/profile"} exact component={ProfilePage} />
+			</Switch>
 		</div>
 	);
 };

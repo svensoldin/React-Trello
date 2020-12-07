@@ -14,14 +14,14 @@ export const loginUser = async (
 	try {
 		const res = await axios.post(
 			`${process.env.REACT_APP_SERVER_URL}/users/signin`,
-			loginPayload
+			loginPayload,
+			{ withCredentials: true }
 		);
 		if (res.status === 200) {
 			dispatch({
 				type: "Login success",
-				payload: { userDetails: res.data.user },
+				payload: res.data.user,
 			});
-			localStorage.setItem("user", JSON.stringify(res.data.user));
 			return res.data.user;
 		}
 		if (res.data.errors)
@@ -36,12 +36,25 @@ export const logout = async (dispatch: Dispatch) => {
 	try {
 		const res = await axios.post(
 			`${process.env.REACT_APP_SERVER_URL}/users/logout`,
-			{}
+			{},
+			{ withCredentials: true }
 		);
 		if (res.status === 200) {
 			dispatch({ type: "Logout" });
-			localStorage.removeItem("user");
 		}
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+export const checkUserSession = async (dispatch: Dispatch) => {
+	try {
+		const res = await axios.get(
+			`${process.env.REACT_APP_SERVER_URL}/users/session`,
+			{ withCredentials: true }
+		);
+		console.log(res);
+		if (res.data) dispatch({ type: "Session exists", payload: res.data });
 	} catch (err) {
 		console.error(err);
 	}

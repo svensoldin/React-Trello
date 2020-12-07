@@ -1,3 +1,5 @@
+import { Reducer } from "react";
+
 type UserDetails = {
 	name: string;
 	id: string;
@@ -13,27 +15,32 @@ export type State = {
 
 export type Dispatch = (action: Action) => void;
 
-let user: UserDetails | null = localStorage.getItem("user")
-	? JSON.parse(localStorage.getItem("user") || "{}")
-	: null;
-
 export const initialState: State = {
-	userDetails: user ? user : { name: "", id: "", email: "" },
+	userDetails: { name: "", id: "", email: "" },
 	error: null,
 	loading: false,
 };
 
 type Action =
+	| { type: "Session exists"; payload: UserDetails }
 	| { type: "Login start" }
 	| {
 			type: "Login success";
-			payload: { userDetails: UserDetails };
+			payload: UserDetails;
 	  }
 	| { type: "Login fail"; payload: error }
 	| { type: "Logout" };
 
-export const AuthReducer = (state = initialState, action: Action) => {
+export const AuthReducer: Reducer<State, Action> = (
+	state = initialState,
+	action
+) => {
 	switch (action.type) {
+		case "Session exists":
+			return {
+				...state,
+				userDetails: action.payload,
+			};
 		case "Login start":
 			return {
 				...state,
@@ -42,7 +49,7 @@ export const AuthReducer = (state = initialState, action: Action) => {
 		case "Login success":
 			return {
 				...state,
-				userDetails: action.payload.userDetails,
+				userDetails: action.payload,
 				loading: false,
 			};
 		case "Login fail":
