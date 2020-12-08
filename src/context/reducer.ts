@@ -1,6 +1,6 @@
 import { Reducer } from "react";
 
-type UserDetails = {
+export type UserDetails = {
 	name: string;
 	id: string;
 	email: string;

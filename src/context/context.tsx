@@ -1,5 +1,11 @@
 import * as React from "react";
-import { State, Dispatch, AuthReducer, initialState } from "./reducer";
+import {
+	State,
+	Dispatch,
+	AuthReducer,
+	initialState,
+	UserDetails,
+} from "./reducer";
 
 type AuthProviderProps = { children: React.ReactNode };
 

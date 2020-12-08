@@ -4,10 +4,11 @@ import LoginRegisterPage from "../../pages/login-register/LoginRegister.page";
 import { useAuthState } from "../../context/index";
 
 const UserRoute = () => {
-	// Pull the user from context
-	const { userDetails } = useAuthState();
+	const {
+		userDetails: { id },
+	} = useAuthState();
 	// If a user is authenticated, return the UserPage component, else the login page
-	return userDetails.id ? <UserPage /> : <LoginRegisterPage />;
+	return id ? <UserPage /> : <LoginRegisterPage />;
 };
 
 export default UserRoute;

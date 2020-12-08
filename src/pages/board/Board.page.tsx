@@ -26,30 +26,23 @@ type Board = {
 
 const BoardPage = () => {
 	const [board, setBoard] = React.useState<Board | undefined>();
-	const {
-		userDetails: { id },
-	} = useAuthState();
 	const { boardId } = useParams<{ boardId: string }>();
 
 	React.useEffect(() => {
-		if (id) getBoardById(setBoard, boardId);
-	}, [boardId, id]);
-	return id ? (
-		board ? (
-			<div className="column-container">
-				{board.columns.map((column, i) => (
-					<BoardColumn
-						key={i}
-						title={column.title}
-						columnId={column._id}
-					></BoardColumn>
-				))}
-			</div>
-		) : (
-			<h2>Loading</h2>
-		)
+		getBoardById(setBoard, boardId);
+	}, [boardId]);
+	return board ? (
+		<div className="column-container">
+			{board.columns.map((column, i) => (
+				<BoardColumn
+					key={i}
+					title={column.title}
+					columnId={column._id}
+				></BoardColumn>
+			))}
+		</div>
 	) : (
-		<Redirect to="/" />
+		<h2>Loading</h2>
 	);
 };
 
