@@ -1,6 +1,5 @@
 import React from "react";
-import { Redirect, useParams } from "react-router-dom";
-import { useAuthState } from "../../context/index";
+import { useParams } from "react-router-dom";
 
 import { getBoardById } from "../../utils/utils";
 
@@ -42,7 +41,7 @@ const BoardPage = () => {
 			))}
 		</div>
 	) : (
-		<h2>Loading</h2>
+		<p></p>
 	);
 };
 

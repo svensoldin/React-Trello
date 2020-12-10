@@ -57,9 +57,10 @@ export const checkUserSession = async (
 			{ withCredentials: true }
 		);
 		if (res.data) {
-			dispatch({ type: "Session exists", payload: res.data });
+			dispatch({ type: "Login success", payload: res.data });
 			return setIsLoading(false);
 		}
+		return setIsLoading(false);
 	} catch (err) {
 		console.error(err);
 		setIsLoading(false);

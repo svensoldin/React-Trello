@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useAuthState } from "../../context/index";
 import { getCardsFromColumn } from "../../utils/utils";
 
 import AddIcon from "@material-ui/icons/Add";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
+import Skeleton from "@material-ui/lab/Skeleton";
+
 import "./BoardColumn.styles.css";
 
 export type Card = {
@@ -41,9 +42,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
 				<p className="add-card-text">Add another card</p>
 			</div>
 		</div>
-	) : (
-		<h2>LOADING</h2>
-	);
+	) : null;
 };
 
 export default BoardColumn;

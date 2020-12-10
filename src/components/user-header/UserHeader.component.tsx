@@ -1,12 +1,14 @@
 import * as React from "react";
 import axios from "axios";
 import { useAuthDispatch, logout } from "../../context/index";
+import { useQuery } from "react-query";
 
 // Components
 import UserDropdown from "../user-dropdown/UserDropdown.component";
 import Avatar from "@material-ui/core/Avatar";
 import Popper from "@material-ui/core/Popper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import "./UserHeader.styles.css";
 
@@ -18,12 +20,28 @@ axios.defaults.withCredentials = true;
 
 const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
 
-const UserHeader = ({ name }: Props) => {
-	// Local url for the user's picture fetched from server
-	const [userPictureURL, setUserPictureURL] = React.useState<
-		string | undefined
-	>();
+async function getPicture(
+	setUserPictureURL: React.Dispatch<React.SetStateAction<string | undefined>>
+) {
+	try {
+		const res = await axios.post(
+			url,
+			{},
+			{
+				responseType: "blob",
+				withCredentials: true,
+			}
+		);
+		const blob = res.data;
+		const pictureURL = URL.createObjectURL(blob);
+		return pictureURL;
+	} catch (err) {
+		console.error(err);
+		return err;
+	}
+}
 
+const UserHeader = ({ name }: Props) => {
 	// Showing/hiding the popper when the user clicks on the header
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const [
@@ -32,26 +50,7 @@ const UserHeader = ({ name }: Props) => {
 	] = React.useState<HTMLElement | null>();
 
 	// Fetching the user's profile picture to put it in the avatar
-	React.useEffect(() => {
-		const getPicture = async () => {
-			try {
-				const res = await axios.post(
-					url,
-					{},
-					{
-						responseType: "blob",
-						withCredentials: true,
-					}
-				);
-				const blob = res.data;
-				const pictureURL = URL.createObjectURL(blob);
-				setUserPictureURL(pictureURL);
-			} catch (err) {
-				console.error(err);
-			}
-		};
-		getPicture();
-	}, []);
+	const { isLoading, data } = useQuery("getPicture", getPicture);
 
 	const dispatch = useAuthDispatch();
 	const handleLogout = (
@@ -60,28 +59,30 @@ const UserHeader = ({ name }: Props) => {
 		e.preventDefault();
 		// Call the logout function with dispatch as an arg
 		logout(dispatch);
+		// Close the popper
 		setIsMenuOpen(false);
 	};
 	return (
 		<ClickAwayListener onClickAway={() => setIsMenuOpen(false)}>
 			<div className="user-header">
-				<Avatar
-					src={userPictureURL}
-					className="avatar"
-					alt={name}
-					aria-haspopup="true"
-					onClick={(e: any) => {
-						setAnchorElement(e.target);
-						setIsMenuOpen(!isMenuOpen);
-					}}
-				>
-					{name.split("")[0]}
-				</Avatar>
+				{!isLoading ? (
+					<Avatar
+						src={data}
+						className="avatar"
+						alt={name}
+						aria-haspopup="true"
+						onClick={(e: any) => {
+							setAnchorElement(e.target);
+							setIsMenuOpen(!isMenuOpen);
+						}}
+					>
+						{name.split("")[0].toUpperCase()}
+					</Avatar>
+				) : (
+					<Skeleton variant="circle" height="40" width="40" />
+				)}
 				<Popper open={isMenuOpen} anchorEl={anchorElement}>
-					<UserDropdown
-						handleLogout={handleLogout}
-						avatarURL={userPictureURL}
-					/>
+					<UserDropdown handleLogout={handleLogout} avatarURL={data} />
 				</Popper>
 			</div>
 		</ClickAwayListener>

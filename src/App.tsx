@@ -1,11 +1,7 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import {
-	checkUserSession,
-	useAuthDispatch,
-	useAuthState,
-} from "./context/index";
+import { checkUserSession, useAuthDispatch } from "./context/index";
 // Components
 import Header from "./components/header/Header.component";
 import ProtectedRoute from "./components/protected-route/ProtectedRoute.component";

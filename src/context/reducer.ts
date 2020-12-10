@@ -22,7 +22,6 @@ export const initialState: State = {
 };
 
 type Action =
-	| { type: "Session exists"; payload: UserDetails }
 	| { type: "Login start" }
 	| {
 			type: "Login success";
@@ -36,11 +35,6 @@ export const AuthReducer: Reducer<State, Action> = (
 	action
 ) => {
 	switch (action.type) {
-		case "Session exists":
-			return {
-				...state,
-				userDetails: action.payload,
-			};
 		case "Login start":
 			return {
 				...state,
