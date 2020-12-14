@@ -3,7 +3,6 @@ import { getCardsFromColumn } from "../../utils/utils";
 
 import AddIcon from "@material-ui/icons/Add";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 import "./BoardColumn.styles.css";
 
@@ -42,7 +41,14 @@ const BoardColumn = ({ title, columnId }: Props) => {
 				<p className="add-card-text">Add another card</p>
 			</div>
 		</div>
-	) : null;
+	) : (
+		<div className="column-skeleton">
+			<h2 className="title-skeleton"></h2>
+			<h2 className="card-skeleton"></h2>
+			<div className="card-skeleton"></div>
+			<div className="card-skeleton"></div>
+		</div>
+	);
 };
 
 export default BoardColumn;

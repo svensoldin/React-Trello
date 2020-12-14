@@ -1,0 +1,16 @@
+.board-thumbnail {
+	height: 200px;
+	width: 250px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.board-thumbnail img {
+	border-radius: 5px;
+}
+
+.board-thumbnail p {
+	color: black;
+}

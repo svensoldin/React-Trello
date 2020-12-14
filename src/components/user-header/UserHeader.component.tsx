@@ -8,7 +8,6 @@ import UserDropdown from "../user-dropdown/UserDropdown.component";
 import Avatar from "@material-ui/core/Avatar";
 import Popper from "@material-ui/core/Popper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 import "./UserHeader.styles.css";
 
@@ -51,7 +50,6 @@ const UserHeader = ({ name }: Props) => {
 
 	// Fetching the user's profile picture to put it in the avatar
 	const { isLoading, data } = useQuery("getPicture", getPicture);
-
 	const dispatch = useAuthDispatch();
 	const handleLogout = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -79,7 +77,7 @@ const UserHeader = ({ name }: Props) => {
 						{name.split("")[0].toUpperCase()}
 					</Avatar>
 				) : (
-					<Skeleton variant="circle" height="40" width="40" />
+					<div className="avatar-skeleton"></div>
 				)}
 				<Popper open={isMenuOpen} anchorEl={anchorElement}>
 					<UserDropdown handleLogout={handleLogout} avatarURL={data} />

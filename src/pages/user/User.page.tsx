@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { useAuthState } from "../../context/index";
+
+import BoardThumbnail from "../../components/board-thumbnail/BoardThumbnail.component";
+
+import "./User.styles.css";
 
 type Board = {
 	title: string;
@@ -42,13 +47,12 @@ const UserPage = () => {
 		getAllBoards(id, setBoards);
 	}, [id, setBoards]);
 	return boards ? (
-		<ul>
+		<>
+			<h2>My boards</h2>
 			{boards.map((board, i) => (
-				<Link key={i} to={`/boards/${board._id}`}>
-					{board.title}
-				</Link>
+				<BoardThumbnail key={i} title={board.title} id={board._id} />
 			))}
-		</ul>
+		</>
 	) : (
 		<h2>Loading...</h2>
 	);
