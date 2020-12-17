@@ -24,6 +24,7 @@
 	opacity: 0.5;
 	font-size: 15px;
 	margin-top: 10px;
+	cursor: pointer;
 }
 
 .add-card:hover {
@@ -33,23 +34,4 @@
 
 .add-card-text {
 	margin: 5px;
-}
-
-.column-skeleton {
-	width: 272px;
-	height: 200px;
-	background: #f6f6f6;
-}
-
-.title-skeleton {
-	width: 80%;
-	background: #e2e2e2;
-	height: 30px;
-	border-radius: 5px;
-	margin: 5px;
-}
-
-.card-skeleton {
-	width: 100%;
-	background: black;
 }

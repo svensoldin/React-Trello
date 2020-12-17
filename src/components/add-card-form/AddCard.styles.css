@@ -1,0 +1,24 @@
+.add-card-form {
+	/*	width: 400px;*/
+	padding: 10px;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+}
+
+.form-label {
+	margin: 8px;
+}
+
+.form-input {
+	padding: 10px;
+	margin: 8px;
+	text-align: top;
+}
+
+.description {
+	height: 100px;
+	min-width: 100px;
+	max-width: 400px;
+	width: 400px;
+}

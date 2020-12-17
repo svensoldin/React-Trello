@@ -2,7 +2,9 @@ import * as React from "react";
 import { getCardsFromColumn } from "../../utils/utils";
 
 import AddIcon from "@material-ui/icons/Add";
+import Modal from "@material-ui/core/Modal";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
+import AddCard from "../../components/add-card-form/AddCard.component";
 
 import "./BoardColumn.styles.css";
 
@@ -24,9 +26,16 @@ type Props = {
 	columnId: string;
 };
 
+// Styles for Modal component
+const centerStyles = {
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+};
+
 const BoardColumn = ({ title, columnId }: Props) => {
 	const [cards, setCards] = React.useState<Array<Card> | undefined>();
-
+	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	React.useEffect(() => {
 		getCardsFromColumn(setCards, columnId);
 	}, [columnId]);
@@ -36,18 +45,20 @@ const BoardColumn = ({ title, columnId }: Props) => {
 			{cards.map((card) => (
 				<CardThumbnail key={card._id} card={card}></CardThumbnail>
 			))}
-			<div className="add-card">
+			<div className="add-card" onClick={() => setIsModalOpen(true)}>
 				<AddIcon className="add-icon" />
 				<p className="add-card-text">Add another card</p>
 			</div>
+			<Modal
+				style={centerStyles}
+				open={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+			>
+				<AddCard />
+			</Modal>
 		</div>
 	) : (
-		<div className="column-skeleton">
-			<h2 className="title-skeleton"></h2>
-			<h2 className="card-skeleton"></h2>
-			<div className="card-skeleton"></div>
-			<div className="card-skeleton"></div>
-		</div>
+		<h2>Loading</h2>
 	);
 };
 
