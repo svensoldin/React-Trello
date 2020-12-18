@@ -38,7 +38,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	React.useEffect(() => {
 		getCardsFromColumn(setCards, columnId);
-	}, [columnId]);
+	}, [columnId, isModalOpen]);
 	return cards ? (
 		<div className="column">
 			<h2 className="column-title">{title}</h2>
@@ -54,7 +54,9 @@ const BoardColumn = ({ title, columnId }: Props) => {
 				open={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 			>
-				<AddCard />
+				<div>
+					<AddCard columnId={columnId} setIsModalOpen={setIsModalOpen} />
+				</div>
 			</Modal>
 		</div>
 	) : (
