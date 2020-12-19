@@ -15,6 +15,7 @@ const BoardThumbnail = ({ title, id }: Props) => {
 		<Link to={`/boards/${id}`} className="board-link">
 			<div className="board-thumbnail">
 				<img
+					alt="board"
 					width="250"
 					height="150"
 					src="https://static.passeportsante.net/680x357/i93408-.jpeg"

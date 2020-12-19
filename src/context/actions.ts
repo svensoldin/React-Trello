@@ -47,10 +47,7 @@ export const logout = async (dispatch: Dispatch) => {
 	}
 };
 
-export const checkUserSession = async (
-	dispatch: Dispatch,
-	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const checkUserSession = async (dispatch: Dispatch) => {
 	try {
 		const res = await axios.get(
 			`${process.env.REACT_APP_SERVER_URL}/users/session`,
@@ -58,11 +55,9 @@ export const checkUserSession = async (
 		);
 		if (res.data) {
 			dispatch({ type: "Login success", payload: res.data });
-			return setIsLoading(false);
+			return res.data;
 		}
-		return setIsLoading(false);
 	} catch (err) {
-		console.error(err);
-		setIsLoading(false);
+		return err;
 	}
 };

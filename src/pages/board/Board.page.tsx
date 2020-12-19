@@ -1,9 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 import { getBoardById } from "../../utils/utils";
 
 //Components
+import AddIcon from "@material-ui/icons/Add";
 import BoardColumn from "../../components/board-column/BoardColumn.component";
 
 import "./Board.styles.css";
@@ -24,24 +26,34 @@ type Board = {
 };
 
 const BoardPage = () => {
-	const [board, setBoard] = React.useState<Board | undefined>();
 	const { boardId } = useParams<{ boardId: string }>();
-
-	React.useEffect(() => {
-		getBoardById(setBoard, boardId);
-	}, [boardId]);
-	return board ? (
-		<div className="column-container">
-			{board.columns.map((column, i) => (
-				<BoardColumn
-					key={i}
-					title={column.title}
-					columnId={column._id}
-				></BoardColumn>
-			))}
+	const { data, isLoading, isError } = useQuery(
+		["getBoardById", boardId],
+		() => getBoardById(boardId)
+	);
+	const board = data;
+	if (isLoading) {
+		return <span>Loading...</span>;
+	}
+	if (isError) {
+		return <span>Oops something went wrong</span>;
+	}
+	return (
+		<div className="columns-container">
+			<div className="board-column">
+				{board.columns.map(({ title, _id }: Column) => (
+					<BoardColumn
+						key={_id}
+						title={title}
+						columnId={_id}
+					></BoardColumn>
+				))}
+			</div>
+			<div className="add-column-btn">
+				<AddIcon />
+				<p className="add-column-text">Add column</p>
+			</div>
 		</div>
-	) : (
-		<p></p>
 	);
 };
 

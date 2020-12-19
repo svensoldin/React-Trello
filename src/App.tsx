@@ -17,9 +17,10 @@ const App = () => {
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const dispatch = useAuthDispatch();
 	React.useEffect(() => {
-		checkUserSession(dispatch, setIsLoading);
+		checkUserSession(dispatch);
+		setIsLoading(false);
 	}, [dispatch]);
-	return isLoading ? null : (
+	return !isLoading ? (
 		<div className="App">
 			<Header />
 			<Switch>
@@ -32,7 +33,7 @@ const App = () => {
 				<ProtectedRoute path={"/profile"} exact component={ProfilePage} />
 			</Switch>
 		</div>
-	);
+	) : null;
 };
 
 export default App;

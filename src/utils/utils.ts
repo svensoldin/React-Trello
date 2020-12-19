@@ -17,17 +17,13 @@ type Board = {
 	_id: string;
 };
 
-export async function getBoardById(
-	setBoard: React.Dispatch<React.SetStateAction<Board | undefined>>,
-	boardId: string
-) {
+export async function getBoardById(boardId: string) {
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
 	try {
 		const res = await axios.get(url, { withCredentials: true });
-		const board = res.data;
-		setBoard(board);
+		return res.data;
 	} catch (err) {
-		console.error(err);
+		return err;
 	}
 }
 
