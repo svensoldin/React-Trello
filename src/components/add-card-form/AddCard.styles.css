@@ -4,6 +4,7 @@
 	background: #fff;
 	display: flex;
 	flex-direction: column;
+	border: none;
 }
 
 .form-label {

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { getCardsFromColumn } from "../../utils/utils";
+import { useQuery } from "react-query";
 
 import AddIcon from "@material-ui/icons/Add";
 import Modal from "@material-ui/core/Modal";
@@ -26,6 +27,11 @@ type Props = {
 	columnId: string;
 };
 
+type QueryResults = {
+	data: Card[] | undefined;
+	isLoading: boolean;
+};
+
 // Styles for Modal component
 const centerStyles = {
 	display: "flex",
@@ -34,31 +40,39 @@ const centerStyles = {
 };
 
 const BoardColumn = ({ title, columnId }: Props) => {
-	const [cards, setCards] = React.useState<Array<Card> | undefined>();
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
-	React.useEffect(() => {
-		getCardsFromColumn(setCards, columnId);
-	}, [columnId, isModalOpen]);
-	return cards ? (
-		<div className="column">
-			<h2 className="column-title">{title}</h2>
-			{cards.map((card) => (
-				<CardThumbnail key={card._id} card={card}></CardThumbnail>
-			))}
-			<div className="add-card" onClick={() => setIsModalOpen(true)}>
-				<AddIcon className="add-icon" />
-				<p className="add-card-text">Add another card</p>
-			</div>
-			<Modal
-				style={centerStyles}
-				open={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
-			>
-				<div>
-					<AddCard columnId={columnId} setIsModalOpen={setIsModalOpen} />
+	const { data, isLoading }: QueryResults = useQuery(
+		["getCardsFromColumn", columnId],
+		() => getCardsFromColumn(columnId)
+	);
+
+	return !isLoading ? (
+		data ? (
+			<div className="column">
+				<h2 className="column-title">{title}</h2>
+				{data.map((card) => (
+					<CardThumbnail key={card._id} card={card}></CardThumbnail>
+				))}
+				<div className="add-card" onClick={() => setIsModalOpen(true)}>
+					<AddIcon className="add-icon" />
+					<p className="add-card-text">Add another card</p>
 				</div>
-			</Modal>
-		</div>
+				<Modal
+					style={centerStyles}
+					open={isModalOpen}
+					onClose={() => setIsModalOpen(false)}
+				>
+					<div>
+						<AddCard
+							columnId={columnId}
+							setIsModalOpen={setIsModalOpen}
+						/>
+					</div>
+				</Modal>
+			</div>
+		) : (
+			<span>Oops something went wrong</span>
+		)
 	) : (
 		<h2>Loading</h2>
 	);

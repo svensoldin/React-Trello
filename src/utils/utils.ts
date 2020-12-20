@@ -17,6 +17,20 @@ type Board = {
 	_id: string;
 };
 
+export async function getAllBoards(id: string) {
+	try {
+		const res = await axios.get(
+			`${process.env.REACT_APP_SERVER_URL}/users/${id}`,
+			{
+				withCredentials: true,
+			}
+		);
+		return res.data;
+	} catch (err) {
+		return err;
+	}
+}
+
 export async function getBoardById(boardId: string) {
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
 	try {
@@ -27,18 +41,26 @@ export async function getBoardById(boardId: string) {
 	}
 }
 
-export async function getCardsFromColumn(
-	setCards: React.Dispatch<React.SetStateAction<Array<Card> | undefined>>,
-	columnId: string
-) {
+export async function getCardsFromColumn(columnId: string) {
 	try {
 		const res = await axios.get(
 			`${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`,
 			{ withCredentials: true }
 		);
 		const cards = res.data;
-		setCards(cards);
+		return cards;
 	} catch (err) {
 		console.error(err);
+		return err;
 	}
 }
+
+export const createColumn = async (boardId: string, title: string) => {
+	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}/column/add`;
+	try {
+		await axios.patch(url, { title }, { withCredentials: true });
+		return;
+	} catch (err) {
+		return err.message;
+	}
+};

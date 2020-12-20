@@ -8,7 +8,7 @@ const UserRoute = () => {
 		userDetails: { id },
 	} = useAuthState();
 	// If a user is authenticated, return the UserPage component, else the login page
-	return id ? <UserPage /> : <LoginRegisterPage />;
+	return id ? <UserPage id={id} /> : <LoginRegisterPage />;
 };
 
 export default UserRoute;

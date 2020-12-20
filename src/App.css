@@ -4,4 +4,5 @@
 
 a {
 	text-decoration: none;
+	display: inline-block; /* Fixes Link component taking whole width of User page*/
 }

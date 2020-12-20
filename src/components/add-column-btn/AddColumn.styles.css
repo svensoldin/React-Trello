@@ -1,0 +1,32 @@
+.add-column-btn {
+	margin: 20px;
+	width: 272px;
+	display: flex;
+	align-items: center;
+	height: 30px;
+	font-size: 15px;
+	opacity: 0.5;
+	background: #f6f6f6;
+}
+
+.add-column-btn:hover {
+	opacity: 1;
+	cursor: pointer;
+	background: gainsboro;
+}
+
+.add-column-text {
+	margin: 5px;
+}
+
+.add-column-form {
+	border: none;
+	margin: 20px;
+	width: 272px;
+	height: 30px;
+	font-size: 15px;
+	opacity: 0.5;
+	background: #f6f6f6;
+	color: black;
+	font-weight: bold;
+}

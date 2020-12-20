@@ -12,7 +12,7 @@ type Props = {
 
 const BoardThumbnail = ({ title, id }: Props) => {
 	return (
-		<Link to={`/boards/${id}`} className="board-link">
+		<Link to={`/boards/${id}`}>
 			<div className="board-thumbnail">
 				<img
 					alt="board"

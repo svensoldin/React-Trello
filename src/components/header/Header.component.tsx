@@ -5,6 +5,7 @@ import { useAuthState } from "../../context/index";
 import UserHeader from "../user-header/UserHeader.component";
 import Searchbar from "../searchbar/Searchbar.component";
 import AppBar from "@material-ui/core/AppBar";
+import { ReactComponent as TrelloLogo } from "../../assets/trello.svg";
 
 import "./Header.styles.css";
 
@@ -21,6 +22,7 @@ const Header = () => {
 		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
 				<div className="title-container">
+					<TrelloLogo style={{ width: 40 }} />
 					<h2 className="main-title">Thullo</h2>
 				</div>
 				{userDetails.id ? (

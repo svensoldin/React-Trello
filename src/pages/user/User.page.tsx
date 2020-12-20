@@ -1,7 +1,6 @@
 import React from "react";
-import axios from "axios";
-
-import { useAuthState } from "../../context/index";
+import { useQuery } from "react-query";
+import { getAllBoards } from "../../utils/utils";
 
 import BoardThumbnail from "../../components/board-thumbnail/BoardThumbnail.component";
 
@@ -16,44 +15,26 @@ type Board = {
 	_id: string;
 };
 
-async function getAllBoards(
-	id: string,
-	setBoards: React.Dispatch<React.SetStateAction<Board[] | undefined>>
-) {
-	try {
-		const res = await axios.get(
-			`${process.env.REACT_APP_SERVER_URL}/users/${id}`,
-			{
-				withCredentials: true,
-			}
-		);
-		const boards = res.data;
-		setBoards(boards);
-	} catch (err) {
-		console.log(err);
-	}
-}
+type Props = {
+	id: string;
+};
 
-const UserPage = () => {
-	const [boards, setBoards] = React.useState<Board[] | undefined>();
-	// Pull user info from context
-	const {
-		userDetails: { id },
-	} = useAuthState();
-
-	// Fetch boards from API
-	React.useEffect(() => {
-		getAllBoards(id, setBoards);
-	}, [id, setBoards]);
-	return boards ? (
+const UserPage = ({ id }: Props) => {
+	const { data, isLoading } = useQuery(["getAllBoards", id], () =>
+		getAllBoards(id)
+	);
+	const boards: Board[] | undefined = data;
+	return isLoading ? (
+		<h2>Loading...</h2>
+	) : boards ? (
 		<>
 			<h2>My boards</h2>
-			{boards.map((board, i) => (
-				<BoardThumbnail key={i} title={board.title} id={board._id} />
+			{boards.map(({ title, _id }: Board) => (
+				<BoardThumbnail key={_id} title={title} id={_id} />
 			))}
 		</>
 	) : (
-		<h2>Loading...</h2>
+		<span>Oops something went wrong</span>
 	);
 };
 
