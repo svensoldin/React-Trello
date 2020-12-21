@@ -31,11 +31,20 @@ type QueryResults = {
 };
 
 const BoardColumn = ({ title, columnId }: Props) => {
-	const { data, isLoading }: QueryResults = useQuery(
-		["getCardsFromColumn", columnId],
-		() => getCardsFromColumn(columnId),
-		{ staleTime: 500 }
-	);
+	// const { data, isLoading }: QueryResults = useQuery(
+	// 	["getCardsFromColumn", columnId],
+	// 	() => getCardsFromColumn(columnId),
+	// 	{ staleTime: 500 }
+	// );
+	const [data, setData] = React.useState<Card[] | undefined>(undefined);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [isInputOpen, setIsInputOpen] = React.useState(false);
+
+	React.useEffect(() => {
+		setIsLoading(true);
+		getCardsFromColumn(columnId).then((cards) => setData(cards));
+		setIsLoading(false);
+	}, [columnId, isInputOpen]);
 
 	return !isLoading ? (
 		data ? (
@@ -44,7 +53,12 @@ const BoardColumn = ({ title, columnId }: Props) => {
 				{data.map((card) => (
 					<CardThumbnail key={card._id} card={card}></CardThumbnail>
 				))}
-				<AddButton id={columnId} elementToAdd="card" />
+				<AddButton
+					id={columnId}
+					elementToAdd="card"
+					isInputOpen={isInputOpen}
+					setIsInputOpen={setIsInputOpen}
+				/>
 			</div>
 		) : (
 			<span>Oops something went wrong</span>

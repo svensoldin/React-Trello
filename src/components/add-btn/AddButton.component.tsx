@@ -10,24 +10,34 @@ import "./AddButton.styles.css";
 type Props = {
 	id: string;
 	elementToAdd: "column" | "card";
+	isInputOpen: boolean;
+	setIsInputOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AddButton = ({ id, elementToAdd }: Props) => {
-	const [isInputOpen, setIsInputOpen] = React.useState(false);
+const AddButton = ({
+	id,
+	elementToAdd,
+	isInputOpen,
+	setIsInputOpen,
+}: Props) => {
 	const [title, setTitle] = React.useState("");
-	const handleEvent = (
+	const handleEvent = async (
 		e:
 			| React.FormEvent<HTMLFormElement>
 			| React.MouseEvent<Document, MouseEvent>
 	) => {
 		e.preventDefault();
 		if (!title.length) return setIsInputOpen(false);
-		if (elementToAdd === "column") createColumn(id, title);
-		if (elementToAdd === "card") createCard(id, title);
-		// Hide the input
-		setIsInputOpen(false);
-		setTitle("");
-		// Re-render parent component
+		if (elementToAdd === "column") {
+			await createColumn(id, title);
+			setIsInputOpen(false);
+			setTitle("");
+		}
+		if (elementToAdd === "card") {
+			await createCard(id, title);
+			setIsInputOpen(false);
+			setTitle("");
+		}
 	};
 	return !isInputOpen ? (
 		<div

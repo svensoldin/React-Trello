@@ -1,12 +1,13 @@
 .column {
-	margin: 10px;
+	margin: 20px;
 	width: 272px;
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 	align-items: center;
 	background: #f6f6f6;
-	max-height: 100%;
 	padding: 5px;
+	height: auto;
 }
 
 .column-title {

@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import { getBoardById } from "../../utils/utils";
+import { getBoardById, useSubscription } from "../../utils/utils";
 
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
@@ -26,31 +26,36 @@ type Board = {
 };
 
 type QueryResults = {
-	data: Board | undefined;
+	data: any;
 	isLoading: boolean;
+	update: any;
+	setUpdate: any;
 };
 
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
-	const { data, isLoading }: QueryResults = useQuery(
-		["getBoardById", boardId],
-		() => getBoardById(boardId)
+	// const { data, isLoading }: QueryResults = useQuery(
+	// 	["getBoardById", boardId],
+	// 	() => getBoardById(boardId)
+	// );
+	const { isLoading, data, update, setUpdate }: QueryResults = useSubscription(
+		getBoardById,
+		boardId
 	);
 
 	return isLoading ? (
 		<span>Loading</span>
 	) : data ? (
-		<div className="columns-container">
-			<div className="board-column">
-				{data.columns.map(({ title, _id }: Column) => (
-					<BoardColumn
-						key={_id}
-						title={title}
-						columnId={_id}
-					></BoardColumn>
-				))}
-			</div>
-			<AddButton id={boardId} elementToAdd="column" />
+		<div className="board-page">
+			{data.columns.map(({ title, _id }: Column) => (
+				<BoardColumn key={_id} title={title} columnId={_id}></BoardColumn>
+			))}
+			<AddButton
+				id={boardId}
+				elementToAdd="column"
+				isInputOpen={update}
+				setIsInputOpen={setUpdate}
+			/>
 		</div>
 	) : (
 		<span>Oops something went wrong</span>

@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios";
 
 import { Card } from "../components/board-column/BoardColumn.component";
@@ -79,4 +80,20 @@ export const createColumn = async (boardId: string, title: string) => {
 	} catch (err) {
 		return err.message;
 	}
+};
+
+export const useSubscription = (queryFunction: any, queryParam: any) => {
+	const [data, setData] = React.useState<Card[] | Board | undefined>(
+		undefined
+	);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [update, setUpdate] = React.useState(false);
+
+	React.useEffect(() => {
+		setIsLoading(true);
+		queryFunction(queryParam).then((res: Card[] | Board) => setData(res));
+		setIsLoading(false);
+	}, [queryFunction, queryParam, update]);
+
+	return { update, setUpdate, isLoading, data };
 };
