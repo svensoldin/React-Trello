@@ -6,7 +6,7 @@ import { getBoardById } from "../../utils/utils";
 
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
-import AddColumn from "../../components/add-column-btn/AddColumn.component";
+import AddButton from "../../components/add-btn/AddButton.component";
 
 import "./Board.styles.css";
 
@@ -50,7 +50,7 @@ const BoardPage = () => {
 					></BoardColumn>
 				))}
 			</div>
-			<AddColumn boardId={boardId} />
+			<AddButton id={boardId} elementToAdd="column" />
 		</div>
 	) : (
 		<span>Oops something went wrong</span>

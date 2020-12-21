@@ -2,10 +2,8 @@ import * as React from "react";
 import { getCardsFromColumn } from "../../utils/utils";
 import { useQuery } from "react-query";
 
-import AddIcon from "@material-ui/icons/Add";
-import Modal from "@material-ui/core/Modal";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
-import AddCard from "../../components/add-card-form/AddCard.component";
+import AddButton from "../../components/add-btn/AddButton.component";
 
 import "./BoardColumn.styles.css";
 
@@ -32,18 +30,11 @@ type QueryResults = {
 	isLoading: boolean;
 };
 
-// Styles for Modal component
-const centerStyles = {
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-};
-
 const BoardColumn = ({ title, columnId }: Props) => {
-	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const { data, isLoading }: QueryResults = useQuery(
 		["getCardsFromColumn", columnId],
-		() => getCardsFromColumn(columnId)
+		() => getCardsFromColumn(columnId),
+		{ staleTime: 500 }
 	);
 
 	return !isLoading ? (
@@ -53,22 +44,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
 				{data.map((card) => (
 					<CardThumbnail key={card._id} card={card}></CardThumbnail>
 				))}
-				<div className="add-card" onClick={() => setIsModalOpen(true)}>
-					<AddIcon className="add-icon" />
-					<p className="add-card-text">Add another card</p>
-				</div>
-				<Modal
-					style={centerStyles}
-					open={isModalOpen}
-					onClose={() => setIsModalOpen(false)}
-				>
-					<div>
-						<AddCard
-							columnId={columnId}
-							setIsModalOpen={setIsModalOpen}
-						/>
-					</div>
-				</Modal>
+				<AddButton id={columnId} elementToAdd="card" />
 			</div>
 		) : (
 			<span>Oops something went wrong</span>

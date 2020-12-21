@@ -17,6 +17,8 @@ type Board = {
 	_id: string;
 };
 
+// Queries
+
 export async function getAllBoards(id: string) {
 	try {
 		const res = await axios.get(
@@ -54,6 +56,20 @@ export async function getCardsFromColumn(columnId: string) {
 		return err;
 	}
 }
+
+// Mutations
+
+export const createCard = async (columnId: string, title: string) => {
+	try {
+		await axios.patch(
+			`${process.env.REACT_APP_SERVER_URL}/columns/${columnId}/card/add`,
+			{ title },
+			{ withCredentials: true }
+		);
+	} catch (err) {
+		return err;
+	}
+};
 
 export const createColumn = async (boardId: string, title: string) => {
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}/column/add`;

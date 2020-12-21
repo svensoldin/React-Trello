@@ -1,6 +1,7 @@
 .columns-container {
 	display: flex;
 	flex-direction: row;
+	overflow: scroll;
 }
 
 .board-column {

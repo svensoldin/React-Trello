@@ -1,17 +1,18 @@
 import * as React from "react";
 
-import { createColumn } from "../../utils/utils";
+import { createColumn, createCard } from "../../utils/utils";
 
 import AddIcon from "@material-ui/icons/Add";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
-import "./AddColumn.styles.css";
+import "./AddButton.styles.css";
 
 type Props = {
-	boardId: string;
+	id: string;
+	elementToAdd: "column" | "card";
 };
 
-const AddColumn = ({ boardId }: Props) => {
+const AddButton = ({ id, elementToAdd }: Props) => {
 	const [isInputOpen, setIsInputOpen] = React.useState(false);
 	const [title, setTitle] = React.useState("");
 	const handleEvent = (
@@ -21,22 +22,34 @@ const AddColumn = ({ boardId }: Props) => {
 	) => {
 		e.preventDefault();
 		if (!title.length) return setIsInputOpen(false);
-		createColumn(boardId, title);
+		if (elementToAdd === "column") createColumn(id, title);
+		if (elementToAdd === "card") createCard(id, title);
+		// Hide the input
 		setIsInputOpen(false);
+		setTitle("");
+		// Re-render parent component
 	};
 	return !isInputOpen ? (
-		<div className="add-column-btn" onClick={() => setIsInputOpen(true)}>
+		<div
+			className={`add-btn ${
+				elementToAdd === "column" ? "add-column" : "add-card"
+			}`}
+			onClick={() => setIsInputOpen(true)}
+		>
 			<AddIcon />
-			<p className="add-column-text">New column</p>
+			<p className="add-text">New {elementToAdd}</p>
 		</div>
 	) : (
 		<ClickAwayListener onClickAway={handleEvent}>
 			<form onSubmit={handleEvent}>
 				<input
 					type="text"
-					className="add-column-form"
+					className={
+						elementToAdd === "column"
+							? "add-column-form"
+							: "add-card-form"
+					}
 					autoFocus={true}
-					placeholder="Enter a column title"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
@@ -45,4 +58,4 @@ const AddColumn = ({ boardId }: Props) => {
 	);
 };
 
-export default AddColumn;
+export default AddButton;
