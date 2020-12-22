@@ -22,8 +22,8 @@ const Header = () => {
 		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
 				<div className="title-container">
-					<TrelloLogo style={{ width: 40 }} />
-					<h2 className="main-title">Thullo</h2>
+					<TrelloLogo style={{ width: 30 }} />
+					<h3 className="main-title">Thullo</h3>
 				</div>
 				{userDetails.id ? (
 					<div className="nav">

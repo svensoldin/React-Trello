@@ -10,31 +10,35 @@ import "./AddButton.styles.css";
 type Props = {
 	id: string;
 	elementToAdd: "column" | "card";
-	isInputOpen: boolean;
-	setIsInputOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	refetch: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const AddButton = ({
-	id,
-	elementToAdd,
-	isInputOpen,
-	setIsInputOpen,
-}: Props) => {
+const AddButton = ({ id, elementToAdd, refetch }: Props) => {
+	const [isInputOpen, setIsInputOpen] = React.useState(false);
+
+	// The input is controlled via this state
 	const [title, setTitle] = React.useState("");
+
+	// Triggered if input is submitted or if user clicks away
 	const handleEvent = async (
 		e:
 			| React.FormEvent<HTMLFormElement>
 			| React.MouseEvent<Document, MouseEvent>
 	) => {
 		e.preventDefault();
+		// Do nothing if card is empty
 		if (!title.length) return setIsInputOpen(false);
+
+		// Otherwise, trigger mutations and reset state
 		if (elementToAdd === "column") {
 			await createColumn(id, title);
+			refetch({});
 			setIsInputOpen(false);
 			setTitle("");
 		}
 		if (elementToAdd === "card") {
 			await createCard(id, title);
+			refetch({});
 			setIsInputOpen(false);
 			setTitle("");
 		}

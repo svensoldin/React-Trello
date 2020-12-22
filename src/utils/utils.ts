@@ -1,7 +1,13 @@
 import React from "react";
 import axios from "axios";
 
-import { Card } from "../components/board-column/BoardColumn.component";
+type Card = {
+	title: string;
+	comments: Array<Comment> | [];
+	labels: Array<{ body: string; color: string }> | [];
+	attachments: Array<{ fileName: string }> | [];
+	_id: string;
+};
 
 type Column = {
 	board: string;
@@ -82,18 +88,64 @@ export const createColumn = async (boardId: string, title: string) => {
 	}
 };
 
-export const useSubscription = (queryFunction: any, queryParam: any) => {
-	const [data, setData] = React.useState<Card[] | Board | undefined>(
-		undefined
+// Refactoring ideas : type definitions, caching
+export const useFetchAndRefetch = (url: string) => {
+	type Data = undefined | Board | Card[];
+	type State = {
+		data: Data;
+		isLoading: boolean;
+		error: any;
+	};
+	const initialState: State = {
+		data: undefined,
+		isLoading: false,
+		error: null,
+	};
+	type Action =
+		| { type: "FETCH_START" }
+		| { type: "FETCH_SUCCESS"; payload: Data }
+		| { type: "FETCH_FAIL"; payload: any };
+	const [state, dispatch] = React.useReducer(
+		(state = initialState, action: Action) => {
+			switch (action.type) {
+				case "FETCH_START":
+					return {
+						...state,
+						isLoading: true,
+					};
+				case "FETCH_SUCCESS":
+					return {
+						...state,
+						isLoading: false,
+						data: action.payload,
+					};
+				case "FETCH_FAIL":
+					return {
+						...state,
+						isLoading: false,
+						error: action.payload,
+					};
+				default:
+					return state;
+			}
+		},
+		initialState
 	);
-	const [isLoading, setIsLoading] = React.useState(false);
-	const [update, setUpdate] = React.useState(false);
+	const [shouldRefetch, refetch] = React.useState({});
+
+	const fetchFunction = React.useCallback(async () => {
+		dispatch({ type: "FETCH_START" });
+		try {
+			const res = await axios.get(url, { withCredentials: true });
+			dispatch({ type: "FETCH_SUCCESS", payload: res.data });
+		} catch (err) {
+			dispatch({ type: "FETCH_FAIL", payload: err });
+		}
+	}, [url]);
 
 	React.useEffect(() => {
-		setIsLoading(true);
-		queryFunction(queryParam).then((res: Card[] | Board) => setData(res));
-		setIsLoading(false);
-	}, [queryFunction, queryParam, update]);
-
-	return { update, setUpdate, isLoading, data };
+		fetchFunction();
+	}, [fetchFunction, shouldRefetch]);
+	const { isLoading, data, error } = state;
+	return { data, isLoading, error, refetch };
 };

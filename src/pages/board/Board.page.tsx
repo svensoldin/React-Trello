@@ -1,8 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-
-import { getBoardById, useSubscription } from "../../utils/utils";
+import { useFetchAndRefetch } from "../../utils/utils";
 
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
@@ -25,23 +23,17 @@ type Board = {
 	_id: string;
 };
 
-type QueryResults = {
-	data: any;
+type HookReturns = {
+	data: Board | undefined;
 	isLoading: boolean;
-	update: any;
-	setUpdate: any;
+	error: any;
+	refetch: React.Dispatch<React.SetStateAction<any>>;
 };
 
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
-	// const { data, isLoading }: QueryResults = useQuery(
-	// 	["getBoardById", boardId],
-	// 	() => getBoardById(boardId)
-	// );
-	const { isLoading, data, update, setUpdate }: QueryResults = useSubscription(
-		getBoardById,
-		boardId
-	);
+	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
+	const { data, isLoading, refetch }: HookReturns = useFetchAndRefetch(url);
 
 	return isLoading ? (
 		<span>Loading</span>
@@ -50,12 +42,7 @@ const BoardPage = () => {
 			{data.columns.map(({ title, _id }: Column) => (
 				<BoardColumn key={_id} title={title} columnId={_id}></BoardColumn>
 			))}
-			<AddButton
-				id={boardId}
-				elementToAdd="column"
-				isInputOpen={update}
-				setIsInputOpen={setUpdate}
-			/>
+			<AddButton id={boardId} elementToAdd="column" refetch={refetch} />
 		</div>
 	) : (
 		<span>Oops something went wrong</span>

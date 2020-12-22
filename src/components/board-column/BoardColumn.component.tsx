@@ -1,13 +1,12 @@
 import * as React from "react";
-import { getCardsFromColumn } from "../../utils/utils";
-import { useQuery } from "react-query";
+import { useFetchAndRefetch } from "../../utils/utils";
 
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 
 import "./BoardColumn.styles.css";
 
-export type Card = {
+type Card = {
 	title: string;
 	comments: Array<Comment> | [];
 	labels: Array<{ body: string; color: string }> | [];
@@ -25,40 +24,18 @@ type Props = {
 	columnId: string;
 };
 
-type QueryResults = {
-	data: Card[] | undefined;
-	isLoading: boolean;
-};
-
 const BoardColumn = ({ title, columnId }: Props) => {
-	// const { data, isLoading }: QueryResults = useQuery(
-	// 	["getCardsFromColumn", columnId],
-	// 	() => getCardsFromColumn(columnId),
-	// 	{ staleTime: 500 }
-	// );
-	const [data, setData] = React.useState<Card[] | undefined>(undefined);
-	const [isLoading, setIsLoading] = React.useState(false);
-	const [isInputOpen, setIsInputOpen] = React.useState(false);
-
-	React.useEffect(() => {
-		setIsLoading(true);
-		getCardsFromColumn(columnId).then((cards) => setData(cards));
-		setIsLoading(false);
-	}, [columnId, isInputOpen]);
+	const url = `${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`;
+	const { data, isLoading, refetch } = useFetchAndRefetch(url);
 
 	return !isLoading ? (
 		data ? (
 			<div className="column">
 				<h2 className="column-title">{title}</h2>
-				{data.map((card) => (
+				{data.map((card: Card) => (
 					<CardThumbnail key={card._id} card={card}></CardThumbnail>
 				))}
-				<AddButton
-					id={columnId}
-					elementToAdd="card"
-					isInputOpen={isInputOpen}
-					setIsInputOpen={setIsInputOpen}
-				/>
+				<AddButton id={columnId} elementToAdd="card" refetch={refetch} />
 			</div>
 		) : (
 			<span>Oops something went wrong</span>
