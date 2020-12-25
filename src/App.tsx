@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { checkUserSession, useAuthDispatch } from "./context/index";
+import { useSession, useAuthDispatch } from "./context/index";
 // Components
 import Header from "./components/header/Header.component";
 import ProtectedRoute from "./components/protected-route/ProtectedRoute.component";
@@ -14,12 +14,8 @@ import ProfilePage from "./pages/profile/Profile.page";
 import "./App.css";
 
 const App = () => {
-	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const dispatch = useAuthDispatch();
-	React.useEffect(() => {
-		checkUserSession(dispatch);
-		setIsLoading(false);
-	}, [dispatch]);
+	const { isLoading } = useSession(dispatch);
 	return !isLoading ? (
 		<div className="App">
 			<Header />

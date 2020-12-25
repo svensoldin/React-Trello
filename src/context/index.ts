@@ -1,4 +1,4 @@
-import { loginUser, logout, checkUserSession } from "./actions";
+import { loginUser, logout, useSession } from "./actions";
 import { AuthProvider, useAuthState, useAuthDispatch } from "./context";
 
 export {
@@ -7,5 +7,5 @@ export {
 	useAuthDispatch,
 	loginUser,
 	logout,
-	checkUserSession,
+	useSession,
 };
