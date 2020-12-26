@@ -88,7 +88,7 @@ export const createColumn = async (boardId: string, title: string) => {
 	}
 };
 
-// Refactoring ideas : type definitions, caching
+// Refactoring ideas: caching
 export const useFetchAndRefetch = (url: string) => {
 	type Data = undefined | Board | Card[];
 	type State = {

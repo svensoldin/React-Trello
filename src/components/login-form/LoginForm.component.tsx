@@ -41,8 +41,12 @@ const LoginForm = () => {
 			>
 				<h3>Sign in</h3>
 				<div className="form-field">
-					<label className="label">Email</label>
+					<label htmlFor="email" className="label">
+						Email
+					</label>
 					<input
+						aria-label="email-input"
+						id="email"
 						type="email"
 						name="email"
 						required
@@ -54,8 +58,12 @@ const LoginForm = () => {
 					/>
 				</div>
 				<div className="form-field">
-					<label className="label">Password</label>
+					<label htmlFor="password" className="label">
+						Password
+					</label>
 					<input
+						aria-label="password-input"
+						id="password"
 						type="password"
 						name="password"
 						required

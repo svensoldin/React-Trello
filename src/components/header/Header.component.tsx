@@ -17,7 +17,9 @@ const appBarStyles = {
 
 const Header = () => {
 	const user = useAuthState();
-	const { userDetails } = user;
+	const {
+		userDetails: { id, name },
+	} = user;
 	return (
 		<AppBar position="static" style={appBarStyles}>
 			<div className="header">
@@ -25,10 +27,10 @@ const Header = () => {
 					<TrelloLogo style={{ width: 30 }} />
 					<h3 className="main-title">Thullo</h3>
 				</div>
-				{userDetails.id ? (
+				{id ? (
 					<div className="nav">
 						<Searchbar />
-						<UserHeader name={userDetails.name} />
+						<UserHeader name={name} />
 					</div> //This should be a separate component
 				) : null}
 			</div>

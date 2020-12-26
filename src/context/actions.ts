@@ -1,6 +1,6 @@
 import React from "react";
-import { Dispatch } from "./reducer";
 import axios from "axios";
+import { Dispatch } from "./reducer";
 
 type Credentials = {
 	email: string;
