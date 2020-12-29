@@ -17,26 +17,21 @@ const LoginForm = () => {
 		setCredentials({ ...credentials, [name]: value });
 	};
 
-	// Get Dispatch from context
+	// Get dispatch from context
 	const dispatch = useAuthDispatch();
 
-	// Trigger login API call with the credentials stored in the state
-	const triggerLogin = async (e: React.SyntheticEvent<any>) => {
+	// // Trigger login API call with the credentials stored in the state
+	const handleSubmit = async (e: React.SyntheticEvent<any>) => {
 		e.preventDefault();
-		let payload = { email, password };
-		try {
-			const response = await loginUser(dispatch, payload); // loginUser handles all the state changes
-			if (!response) return;
-		} catch (err) {
-			console.error(err);
-		}
+		loginUser(dispatch, credentials);
 	};
 
 	return (
 		<div className="form-container">
 			<form
+				data-testid="form"
 				className="signin-form"
-				onSubmit={triggerLogin}
+				onSubmit={handleSubmit}
 				autoComplete="off"
 			>
 				<h3>Sign in</h3>
@@ -73,7 +68,7 @@ const LoginForm = () => {
 						placeholder="Enter password"
 					/>
 				</div>
-				<button className="button" onClick={triggerLogin}>
+				<button className="button" onClick={handleSubmit}>
 					Sign In
 				</button>
 				<p>For testing, you can use: john@gmail.com / 12345678</p>

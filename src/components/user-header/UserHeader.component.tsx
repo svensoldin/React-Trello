@@ -1,7 +1,7 @@
 import * as React from "react";
-import axios from "axios";
 import { useAuthDispatch, logout } from "../../context/index";
 import { useQuery } from "react-query";
+import { getPicture } from "../../utils/utils";
 
 // Components
 import UserDropdown from "../user-dropdown/UserDropdown.component";
@@ -14,31 +14,6 @@ import "./UserHeader.styles.css";
 type Props = {
 	name: string;
 };
-
-axios.defaults.withCredentials = true;
-
-const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
-
-async function getPicture(
-	setUserPictureURL: React.Dispatch<React.SetStateAction<string | undefined>>
-) {
-	try {
-		const res = await axios.post(
-			url,
-			{},
-			{
-				responseType: "blob",
-				withCredentials: true,
-			}
-		);
-		const blob = res.data;
-		const pictureURL = URL.createObjectURL(blob);
-		return pictureURL;
-	} catch (err) {
-		console.error(err);
-		return err;
-	}
-}
 
 const UserHeader = ({ name }: Props) => {
 	// Showing/hiding the popper when the user clicks on the header
@@ -77,7 +52,7 @@ const UserHeader = ({ name }: Props) => {
 						{name.split("")[0].toUpperCase()}
 					</Avatar>
 				) : (
-					<div className="avatar-skeleton"></div>
+					<div data-testid="skeleton" className="avatar-skeleton"></div>
 				)}
 				<Popper open={isMenuOpen} anchorEl={anchorElement}>
 					<UserDropdown handleLogout={handleLogout} avatarURL={data} />

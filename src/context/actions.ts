@@ -9,13 +9,13 @@ type Credentials = {
 
 export const loginUser = async (
 	dispatch: Dispatch,
-	loginPayload: Credentials
+	credentials: Credentials
 ) => {
 	dispatch({ type: "Login start" });
 	try {
 		const res = await axios.post(
 			`${process.env.REACT_APP_SERVER_URL}/users/signin`,
-			loginPayload,
+			credentials,
 			{ withCredentials: true }
 		);
 		if (res.status === 200) {
@@ -51,6 +51,7 @@ export const logout = async (dispatch: Dispatch) => {
 export const useSession = (dispatch: Dispatch) => {
 	const [isLoading, setIsLoading] = React.useState(true);
 
+	// Prevent infinite rerendering cycle with useCallback (checkUserSession is a dependency of useEffect)
 	const checkUserSession = React.useCallback(async () => {
 		try {
 			const res = await axios.get(

@@ -24,6 +24,8 @@ type Board = {
 	_id: string;
 };
 
+axios.defaults.withCredentials = true;
+
 // Queries
 
 export async function getAllBoards(id: string) {
@@ -58,6 +60,26 @@ export async function getCardsFromColumn(columnId: string) {
 		);
 		const cards = res.data;
 		return cards;
+	} catch (err) {
+		console.error(err);
+		return err;
+	}
+}
+
+export async function getPicture() {
+	const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
+	try {
+		const res = await axios.post(
+			url,
+			{},
+			{
+				responseType: "blob",
+				withCredentials: true,
+			}
+		);
+		const blob = res.data;
+		const pictureURL = URL.createObjectURL(blob);
+		return pictureURL;
 	} catch (err) {
 		console.error(err);
 		return err;

@@ -14,8 +14,9 @@ type Props = {
 };
 
 const UserDropdown = ({ handleLogout, avatarURL }: Props) => {
-	const user = useAuthState();
-	const { name, email } = user.userDetails;
+	const {
+		userDetails: { name, email },
+	} = useAuthState();
 	return (
 		<Paper className="user-dropdown">
 			<div className="user-info">
