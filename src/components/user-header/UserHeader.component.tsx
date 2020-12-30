@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAuthDispatch, logout } from "../../context/index";
 import { useQuery } from "react-query";
-import { getPicture } from "../../utils/utils";
+import { getPicture } from "../../utils/queries";
 
 // Components
 import UserDropdown from "../user-dropdown/UserDropdown.component";
@@ -54,7 +54,11 @@ const UserHeader = ({ name }: Props) => {
 				) : (
 					<div data-testid="skeleton" className="avatar-skeleton"></div>
 				)}
-				<Popper open={isMenuOpen} anchorEl={anchorElement}>
+				<Popper
+					open={isMenuOpen}
+					anchorEl={anchorElement}
+					data-testid="dropdown"
+				>
 					<UserDropdown handleLogout={handleLogout} avatarURL={data} />
 				</Popper>
 			</div>

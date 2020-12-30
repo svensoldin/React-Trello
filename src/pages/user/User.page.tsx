@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { getAllBoards } from "../../utils/utils";
+import { getAllBoards } from "../../utils/queries";
 
 import BoardThumbnail from "../../components/board-thumbnail/BoardThumbnail.component";
 

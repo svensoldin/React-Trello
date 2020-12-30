@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { createColumn, createCard } from "../../utils/utils";
+import { createColumn, createCard } from "../../utils/mutations";
 
 import AddIcon from "@material-ui/icons/Add";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
