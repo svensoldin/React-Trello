@@ -86,7 +86,9 @@ export const useFetchAndRefetch = (url: string) => {
 	React.useEffect(() => {
 		let mounted = true;
 		if (mounted) fetchFunction();
-		return () => (mounted = false);
+		return () => {
+			mounted = false;
+		};
 	}, [fetchFunction, shouldRefetch]);
 	const { isLoading, data, error } = state;
 	return { data, isLoading, error, refetch };

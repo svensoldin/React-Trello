@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDrag } from "react-dnd";
 
 import "./CardThumbnail.styles.css";
 
@@ -15,8 +16,14 @@ type Props = {
 };
 
 const CardThumbnail = ({ card }: Props) => {
+	const [{ isDragging }, drag] = useDrag({
+		item: { type: "card" },
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+	});
 	return (
-		<div className="card-thumbnail">
+		<div className="card-thumbnail" ref={drag}>
 			<p className="card-thumbnail-content">{card.title}</p>
 		</div>
 	);

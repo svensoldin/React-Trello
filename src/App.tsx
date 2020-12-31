@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { useSession, useAuthDispatch } from "./context/index";
 // Components
+import ErrorBoundary from "./components/error-boundary/ErrorBoundary.component";
 import Header from "./components/header/Header.component";
 import ProtectedRoute from "./components/protected-route/ProtectedRoute.component";
 
@@ -19,15 +20,21 @@ const App = () => {
 	return !isLoading ? (
 		<div className="App">
 			<Header />
-			<Switch>
-				<Route path={"/"} exact component={UserRoute} />
-				<ProtectedRoute
-					component={BoardPage}
-					path={"/boards/:boardId"}
-					exact
-				/>
-				<ProtectedRoute path={"/profile"} exact component={ProfilePage} />
-			</Switch>
+			<ErrorBoundary>
+				<Switch>
+					<Route path={"/"} exact component={UserRoute} />
+					<ProtectedRoute
+						component={BoardPage}
+						path={"/boards/:boardId"}
+						exact
+					/>
+					<ProtectedRoute
+						path={"/profile"}
+						exact
+						component={ProfilePage}
+					/>
+				</Switch>
+			</ErrorBoundary>
 		</div>
 	) : null;
 };

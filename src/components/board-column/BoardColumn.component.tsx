@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useFetchAndRefetch } from "../../utils/utils";
+import { useDrop } from "react-dnd";
 
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
@@ -27,10 +28,13 @@ type Props = {
 const BoardColumn = ({ title, columnId }: Props) => {
 	const url = `${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`;
 	const { data, isLoading, refetch } = useFetchAndRefetch(url);
+	const [, drop] = useDrop({
+		accept: "card",
+	});
 
 	return !isLoading ? (
 		data ? (
-			<div className="column">
+			<div className="column" ref={drop}>
 				<h2 className="column-title">{title}</h2>
 				{data.map((card: Card) => (
 					<CardThumbnail key={card._id} card={card}></CardThumbnail>

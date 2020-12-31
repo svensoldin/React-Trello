@@ -19,17 +19,21 @@ type Props = {
 	id: string;
 };
 
+type QueryReturn = {
+	data: Board[] | undefined;
+	isLoading: boolean;
+};
+
 const UserPage = ({ id }: Props) => {
-	const { data, isLoading } = useQuery(["getAllBoards", id], () =>
+	const { data, isLoading }: QueryReturn = useQuery(["getAllBoards", id], () =>
 		getAllBoards(id)
 	);
-	const boards: Board[] | undefined = data;
 	return isLoading ? (
 		<h2>Loading...</h2>
-	) : boards ? (
+	) : data ? (
 		<>
 			<h2>My boards</h2>
-			{boards.map(({ title, _id }: Board) => (
+			{data.map(({ title, _id }: Board) => (
 				<BoardThumbnail key={_id} title={title} id={_id} />
 			))}
 		</>

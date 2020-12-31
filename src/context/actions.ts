@@ -44,7 +44,7 @@ export const logout = async (dispatch: Dispatch) => {
 			dispatch({ type: "Logout" });
 		}
 	} catch (err) {
-		console.error(err);
+		return err;
 	}
 };
 

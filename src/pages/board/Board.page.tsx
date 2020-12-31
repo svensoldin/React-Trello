@@ -1,4 +1,10 @@
-import React from "react";
+import * as React from "react";
+
+// Drag'n drop
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+//Hooks
 import { useParams } from "react-router-dom";
 import { useFetchAndRefetch } from "../../utils/utils";
 
@@ -39,9 +45,15 @@ const BoardPage = () => {
 		<span>Loading</span>
 	) : data ? (
 		<div className="board-page">
-			{data.columns.map(({ title, _id }: Column) => (
-				<BoardColumn key={_id} title={title} columnId={_id}></BoardColumn>
-			))}
+			<DndProvider backend={HTML5Backend}>
+				{data.columns.map(({ title, _id }: Column) => (
+					<BoardColumn
+						key={_id}
+						title={title}
+						columnId={_id}
+					></BoardColumn>
+				))}
+			</DndProvider>
 			<AddButton id={boardId} elementToAdd="column" refetch={refetch} />
 		</div>
 	) : (
