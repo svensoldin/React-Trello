@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useDrag } from "react-dnd";
 
 import "./CardThumbnail.styles.css";
 
@@ -16,14 +15,13 @@ type Props = {
 };
 
 const CardThumbnail = ({ card }: Props) => {
-	const [{ isDragging }, drag] = useDrag({
-		item: { type: "card" },
-		collect: (monitor) => ({
-			isDragging: !!monitor.isDragging(),
-		}),
-	});
+	const handleDrag = (e: React.DragEvent<any>) => {
+		const cardJSON = JSON.stringify(card);
+		e.dataTransfer.setData("card", cardJSON);
+		e.dataTransfer.effectAllowed = "move";
+	};
 	return (
-		<div className="card-thumbnail" ref={drag}>
+		<div className="card-thumbnail" draggable onDragStart={handleDrag}>
 			<p className="card-thumbnail-content">{card.title}</p>
 		</div>
 	);
