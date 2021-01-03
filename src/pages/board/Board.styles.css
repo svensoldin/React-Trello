@@ -1,4 +1,4 @@
-.board-page {
+.columns {
 	display: flex;
 	align-items: flex-start; /*Each column adjusts in size according to content */
 	overflow-x: scroll;

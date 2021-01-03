@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { Draggable } from "react-beautiful-dnd";
 import "./CardThumbnail.styles.css";
 
 type Card = {
@@ -12,16 +13,18 @@ type Card = {
 
 type Props = {
 	card: Card;
+	provided: any;
+	innerRef: any;
 };
 
-const CardThumbnail = ({ card }: Props) => {
-	const handleDrag = (e: React.DragEvent<any>) => {
-		const cardJSON = JSON.stringify(card);
-		e.dataTransfer.setData("card", cardJSON);
-		e.dataTransfer.effectAllowed = "move";
-	};
+const CardThumbnail = ({ card, provided, innerRef }: Props) => {
 	return (
-		<div className="card-thumbnail" draggable onDragStart={handleDrag}>
+		<div
+			className="card-thumbnail"
+			ref={innerRef}
+			{...provided.draggableProps}
+			{...provided.dragHandleProps}
+		>
 			<p className="card-thumbnail-content">{card.title}</p>
 		</div>
 	);

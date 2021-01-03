@@ -1,8 +1,7 @@
 import * as React from "react";
 
 // Drag'n drop
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 //Hooks
 import { useParams } from "react-router-dom";
@@ -41,20 +40,40 @@ const BoardPage = () => {
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
 	const { data, isLoading, refetch }: HookReturns = useFetchAndRefetch(url);
 
+	const handleDragEnd = (result: DropResult) => {};
+
 	return isLoading ? (
 		<span>Loading</span>
 	) : data ? (
 		<div className="board-page">
-			<DndProvider backend={HTML5Backend}>
-				{data.columns.map(({ title, _id }: Column) => (
-					<BoardColumn
-						key={_id}
-						title={title}
-						columnId={_id}
-					></BoardColumn>
-				))}
-			</DndProvider>
-			<AddButton id={boardId} elementToAdd="column" refetch={refetch} />
+			<DragDropContext onDragEnd={handleDragEnd}>
+				<div className="columns">
+					{data.columns.map(({ title, _id }: Column) => {
+						// Return each column wrapped with the Droppable component
+						return (
+							<Droppable droppableId={_id} key={_id}>
+								{(provided) => {
+									// provided.innerRef gets the ref from the HTMLElement inside BoardColumn
+									// provided is passed as a prop because provided.placeholder is needed at the bottom of the droppable
+									return (
+										<BoardColumn
+											provided={provided}
+											innerRef={provided.innerRef}
+											title={title}
+											columnId={_id}
+										></BoardColumn>
+									);
+								}}
+							</Droppable>
+						);
+					})}
+					<AddButton
+						id={boardId}
+						elementToAdd="column"
+						refetch={refetch}
+					/>
+				</div>
+			</DragDropContext>
 		</div>
 	) : (
 		<span>Oops something went wrong</span>
