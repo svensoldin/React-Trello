@@ -13,20 +13,25 @@ type Card = {
 
 type Props = {
 	card: Card;
-	provided: any;
-	innerRef: any;
+	index: number;
 };
 
-const CardThumbnail = ({ card, provided, innerRef }: Props) => {
+const CardThumbnail = ({ card, index }: Props) => {
 	return (
-		<div
-			className="card-thumbnail"
-			ref={innerRef}
-			{...provided.draggableProps}
-			{...provided.dragHandleProps}
-		>
-			<p className="card-thumbnail-content">{card.title}</p>
-		</div>
+		<Draggable draggableId={card._id} index={index}>
+			{(provided) => {
+				return (
+					<div
+						className="card-thumbnail"
+						ref={provided.innerRef}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+					>
+						<p className="card-thumbnail-content">{card.title}</p>
+					</div>
+				);
+			}}
+		</Draggable>
 	);
 };
 

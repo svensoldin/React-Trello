@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 
-import { Draggable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 
@@ -23,11 +23,9 @@ type Comment = {
 type Props = {
 	title: string;
 	columnId: string;
-	provided: any;
-	innerRef: any;
 };
 
-const BoardColumn = ({ title, columnId, provided, innerRef }: Props) => {
+const BoardColumn = ({ title, columnId }: Props) => {
 	const [cards, setCards] = React.useState<Card[]>([]);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const url = `${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`;
@@ -48,26 +46,34 @@ const BoardColumn = ({ title, columnId, provided, innerRef }: Props) => {
 
 	return !isLoading ? (
 		cards ? (
-			<div className="column" {...provided.droppableProps} ref={innerRef}>
-				<h2 className="column-title">{title}</h2>
-				{cards.map((card: Card, i) => {
+			<Droppable droppableId={columnId} type="cards">
+				{(provided) => {
 					return (
-						<Draggable key={card._id} index={i} draggableId={card._id}>
-							{(provided) => {
+						<div
+							className="column"
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							<h2 className="column-title">{title}</h2>
+							{cards.map((card: Card, i) => {
 								return (
 									<CardThumbnail
 										card={card}
-										provided={provided}
-										innerRef={provided.innerRef}
+										index={i}
+										key={card._id}
 									/>
 								);
-							}}
-						</Draggable>
+							})}
+							{provided.placeholder}
+							<AddButton
+								id={columnId}
+								elementToAdd="card"
+								refetch={() => {}}
+							/>
+						</div>
 					);
-				})}
-				{provided.placeholder}
-				<AddButton id={columnId} elementToAdd="card" refetch={() => {}} />
-			</div>
+				}}
+			</Droppable>
 		) : (
 			<span>Oops something went wrong</span>
 		)

@@ -49,22 +49,8 @@ const BoardPage = () => {
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
 					{data.columns.map(({ title, _id }: Column) => {
-						// Return each column wrapped with the Droppable component
 						return (
-							<Droppable droppableId={_id} key={_id}>
-								{(provided) => {
-									// provided.innerRef gets the ref from the HTMLElement inside BoardColumn
-									// provided is passed as a prop because provided.placeholder is needed at the bottom of the droppable
-									return (
-										<BoardColumn
-											provided={provided}
-											innerRef={provided.innerRef}
-											title={title}
-											columnId={_id}
-										></BoardColumn>
-									);
-								}}
-							</Droppable>
+							<BoardColumn title={title} columnId={_id}></BoardColumn>
 						);
 					})}
 					<AddButton
