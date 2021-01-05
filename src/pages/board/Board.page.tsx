@@ -1,7 +1,8 @@
 import * as React from "react";
+import axios from "axios";
 
 // Drag'n drop
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 //Hooks
 import { useParams } from "react-router-dom";
@@ -37,10 +38,29 @@ type HookReturns = {
 
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
-	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
-	const { data, isLoading, refetch }: HookReturns = useFetchAndRefetch(url);
+	const fetchUrl = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
+	const { data, isLoading, refetch }: HookReturns = useFetchAndRefetch(
+		fetchUrl
+	);
 
-	const handleDragEnd = (result: DropResult) => {};
+	const handleDragEnd = async (result: DropResult) => {
+		const {
+			destination,
+			source: { droppableId: sourceId }, // renaming while destructuring
+			draggableId: cardId,
+		} = result;
+		if (!destination) return;
+		try {
+			const res = await axios.patch(
+				`${process.env.REACT_APP_SERVER_URL}/columns/drag/${sourceId}/${cardId}`,
+				destination,
+				{ withCredentials: true }
+			);
+			if (res.status === 200) console.log("success");
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return isLoading ? (
 		<span>Loading</span>
@@ -50,7 +70,11 @@ const BoardPage = () => {
 				<div className="columns">
 					{data.columns.map(({ title, _id }: Column) => {
 						return (
-							<BoardColumn title={title} columnId={_id}></BoardColumn>
+							<BoardColumn
+								title={title}
+								columnId={_id}
+								key={_id}
+							></BoardColumn>
 						);
 					})}
 					<AddButton

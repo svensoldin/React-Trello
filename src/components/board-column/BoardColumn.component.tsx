@@ -5,6 +5,8 @@ import { Droppable } from "react-beautiful-dnd";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 
+import { useFetchAndRefetch } from "../../utils/utils";
+
 import "./BoardColumn.styles.css";
 
 type Card = {
@@ -26,23 +28,27 @@ type Props = {
 };
 
 const BoardColumn = ({ title, columnId }: Props) => {
-	const [cards, setCards] = React.useState<Card[]>([]);
-	const [isLoading, setIsLoading] = React.useState(false);
+	// const [cards, setCards] = React.useState<Card[]>([]);
+	// const [isLoading, setIsLoading] = React.useState(false);
 	const url = `${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`;
-	React.useEffect(() => {
-		const fetchCards = async () => {
-			setIsLoading(true);
-			try {
-				const res = await axios.get(url, { withCredentials: true });
-				setCards(res.data);
-			} catch (err) {
-				console.error(err);
-			}
-			setIsLoading(false);
-		};
-		fetchCards();
-	}, [url]);
-	// const { data, isLoading, refetch } = useFetchAndRefetch(url);
+	// React.useEffect(() => {
+	// 	const fetchCards = async () => {
+	// 		setIsLoading(true);
+	// 		try {
+	// 			const res = await axios.get(url, { withCredentials: true });
+	// 			setCards(res.data);
+	// 		} catch (err) {
+	// 			console.error(err);
+	// 		}
+	// 		setIsLoading(false);
+	// 	};
+	// 	fetchCards();
+	// }, [url]);
+	const {
+		data: { cards },
+		isLoading,
+		refetch,
+	} = useFetchAndRefetch(url);
 
 	return !isLoading ? (
 		cards ? (
@@ -55,7 +61,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
 							ref={provided.innerRef}
 						>
 							<h2 className="column-title">{title}</h2>
-							{cards.map((card: Card, i) => {
+							{cards.map((card: Card, i: number) => {
 								return (
 									<CardThumbnail
 										card={card}
@@ -68,7 +74,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
 							<AddButton
 								id={columnId}
 								elementToAdd="card"
-								refetch={() => {}}
+								refetch={refetch}
 							/>
 						</div>
 					);
