@@ -1,6 +1,6 @@
 import * as React from "react";
-import axios from "axios";
 
+import { io } from "socket.io-client";
 import { Droppable } from "react-beautiful-dnd";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
@@ -28,27 +28,19 @@ type Props = {
 };
 
 const BoardColumn = ({ title, columnId }: Props) => {
-	// const [cards, setCards] = React.useState<Card[]>([]);
-	// const [isLoading, setIsLoading] = React.useState(false);
+	// The API endpoint for getting all cards from a column
 	const url = `${process.env.REACT_APP_SERVER_URL}/cards/${columnId}`;
-	// React.useEffect(() => {
-	// 	const fetchCards = async () => {
-	// 		setIsLoading(true);
-	// 		try {
-	// 			const res = await axios.get(url, { withCredentials: true });
-	// 			setCards(res.data);
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 		}
-	// 		setIsLoading(false);
-	// 	};
-	// 	fetchCards();
-	// }, [url]);
-	const {
-		data: { cards },
-		isLoading,
-		refetch,
-	} = useFetchAndRefetch(url);
+	const { data: cards, isLoading, refetch } = useFetchAndRefetch(url);
+	React.useEffect(() => {
+		let mounted = true;
+		if (mounted) {
+			const socket = io(process.env.REACT_APP_SERVER_URL!);
+			// socket.on()
+		}
+		return () => {
+			mounted = false;
+		};
+	}, []);
 
 	return !isLoading ? (
 		cards ? (
