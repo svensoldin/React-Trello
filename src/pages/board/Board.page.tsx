@@ -6,7 +6,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 //Hooks
 import { useParams } from "react-router-dom";
-import { useFetchAndRefetch } from "../../utils/utils";
+// import { useFetchAndRefetch } from "../../utils/utils";
 
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
@@ -17,7 +17,7 @@ import "./Board.styles.css";
 type Column = {
 	board: string;
 	title: string;
-	cards: Array<string>;
+	cards: Array<any>; //Card
 	_id: string;
 };
 
@@ -29,75 +29,100 @@ type Board = {
 	_id: string;
 };
 
-type HookReturns = {
-	data: Board | undefined;
-	isLoading: boolean;
-	error: any;
-	refetch: React.Dispatch<React.SetStateAction<any>>;
-};
+// type HookReturns = {
+// 	data: Board | undefined;
+// 	isLoading: boolean;
+// 	error: any;
+// 	refetch: React.Dispatch<React.SetStateAction<any>>;
+// };
 
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
-	const fetchUrl = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
-	const { data, isLoading, refetch }: HookReturns = useFetchAndRefetch(
-		fetchUrl
-	);
+	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
+	const [columns, setColumns] = React.useState<Column[]>([]);
+	React.useEffect(() => {
+		const fetchBoard = async (url: string) => {
+			try {
+				const res = await axios.get(url, { withCredentials: true });
+				setColumns(res.data.columns);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		fetchBoard(url);
+	}, [url]);
 
-	const handleDragEnd = async (result: DropResult) => {
-		if (!data) return;
-		const {
-			destination,
-			source: { droppableId: sourceId }, // renaming while destructuring
-			draggableId: cardId,
-		} = result;
-
-		// If the card was dropped outside a column
+	const handleDragEnd = async ({
+		source,
+		destination,
+		draggableId,
+	}: DropResult) => {
 		if (!destination) return;
+		const newColumns = Array.from(columns);
+		if (destination.droppableId === source.droppableId) {
+			const { cards } = newColumns.find(
+				(column) => column._id === destination.droppableId
+			) as Column;
+			const [reorderedCard] = cards.splice(source.index, 1);
+			cards.splice(destination.index, 0, reorderedCard);
+			setColumns(newColumns);
 
-		// If the card was dropped in the same column
-		if (destination.droppableId === sourceId) {
-			// Need to make endpoint for this
+			// Update DB
 		}
+		if (destination.droppableId !== source.droppableId) {
+			// 1) Change UI
 
-		// If the card was dropped from one column to another
-		// Update the DB
-		try {
-			const res = await axios.patch(
-				`${process.env.REACT_APP_SERVER_URL}/columns/drag/${sourceId}/${cardId}`,
-				destination,
-				{ withCredentials: true }
-			);
-			if (res.status === 200) console.log("success");
-		} catch (err) {
-			console.error(err);
+			// Find the source and destination columns
+			const sourceColumn = newColumns.find(
+				(column) => column._id === source.droppableId
+			) as Column;
+			const destinationColumn = newColumns.find(
+				(column) => column._id === destination.droppableId
+			) as Column;
+			// Pull the card from source column
+			const [reorderedCard] = sourceColumn.cards.splice(source.index, 1);
+			// Add to the destination column
+			destinationColumn.cards.splice(destination.index, 0, reorderedCard);
+			// Update state
+			setColumns(newColumns);
+
+			//Update DB
+			try {
+				const res = await axios.patch(
+					`${process.env.REACT_APP_SERVER_URL}/columns/drag/${source.droppableId}/${draggableId}`,
+					destination,
+					{ withCredentials: true }
+				);
+				if (res.status === 200) console.log("success");
+			} catch (err) {
+				console.error(err);
+			}
 		}
 	};
-
-	return isLoading ? (
-		<span>Loading</span>
-	) : data ? (
+	return (
 		<div className="board-page">
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
-					{data.columns.map(({ title, _id }: Column) => {
-						return (
-							<BoardColumn
-								title={title}
-								columnId={_id}
-								key={_id}
-							></BoardColumn>
-						);
-					})}
+					{columns
+						? columns.map(({ title, _id, cards }: Column) => {
+								return (
+									<BoardColumn
+										title={title}
+										columnId={_id}
+										key={_id}
+										cards={cards}
+									></BoardColumn>
+								);
+						  })
+						: null}
 					<AddButton
 						id={boardId}
 						elementToAdd="column"
-						refetch={refetch}
+						refetch={() => {}}
 					/>
 				</div>
 			</DragDropContext>
 		</div>
-	) : (
-		<span>Oops something went wrong</span>
 	);
 };
 

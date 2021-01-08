@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { DropResult } from "react-beautiful-dnd";
 
 type Card = {
 	title: string;
@@ -93,3 +94,33 @@ export const useFetchAndRefetch = (url: string) => {
 	const { isLoading, data, error } = state;
 	return { data, isLoading, error, refetch };
 };
+
+// const handleDragEnd = async (result: DropResult) => {
+// 	if (!data) return;
+// 	const {
+// 		destination,
+// 		source: { droppableId: sourceId }, // renaming while destructuring
+// 		draggableId: cardId,
+// 	} = result;
+
+// 	// If the card was dropped outside a column
+// 	if (!destination) return;
+
+// 	// If the card was dropped within the same column
+// 	if (destination.droppableId === sourceId) {
+// 		// Need to make endpoint for this
+// 	}
+
+// 	// If the card was dropped from one column to another
+// 	// Update the DB
+// 	try {
+// 		const res = await axios.patch(
+// 			`${process.env.REACT_APP_SERVER_URL}/columns/drag/${sourceId}/${cardId}`,
+// 			destination,
+// 			{ withCredentials: true }
+// 		);
+// 		if (res.status === 200) console.log("success");
+// 	} catch (err) {
+// 		console.error(err);
+// 	}
+// };
