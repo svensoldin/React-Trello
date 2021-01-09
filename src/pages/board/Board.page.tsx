@@ -58,45 +58,35 @@ const BoardPage = () => {
 		draggableId,
 	}: DropResult) => {
 		if (!destination) return;
+		// Create new array not to mutate the state
 		const newColumns = Array.from(columns);
-		if (destination.droppableId === source.droppableId) {
-			const { cards } = newColumns.find(
-				(column) => column._id === destination.droppableId
-			) as Column;
-			const [reorderedCard] = cards.splice(source.index, 1);
-			cards.splice(destination.index, 0, reorderedCard);
-			setColumns(newColumns);
 
-			// Update DB
-		}
-		if (destination.droppableId !== source.droppableId) {
-			// 1) Change UI
+		// 1) Change UI
 
-			// Find the source and destination columns
-			const sourceColumn = newColumns.find(
-				(column) => column._id === source.droppableId
-			) as Column;
-			const destinationColumn = newColumns.find(
-				(column) => column._id === destination.droppableId
-			) as Column;
-			// Pull the card from source column
-			const [reorderedCard] = sourceColumn.cards.splice(source.index, 1);
-			// Add to the destination column
-			destinationColumn.cards.splice(destination.index, 0, reorderedCard);
-			// Update state
-			setColumns(newColumns);
+		// Find the source and destination columns
+		const sourceColumn = newColumns.find(
+			(column) => column._id === source.droppableId
+		) as Column;
+		const destinationColumn = newColumns.find(
+			(column) => column._id === destination.droppableId
+		) as Column;
+		// Remove the card from source
+		const [reorderedCard] = sourceColumn.cards.splice(source.index, 1);
+		// Add to the destination
+		destinationColumn.cards.splice(destination.index, 0, reorderedCard);
+		// Update state
+		setColumns(newColumns);
 
-			//Update DB
-			try {
-				const res = await axios.patch(
-					`${process.env.REACT_APP_SERVER_URL}/columns/drag/${source.droppableId}/${draggableId}`,
-					destination,
-					{ withCredentials: true }
-				);
-				if (res.status === 200) console.log("success");
-			} catch (err) {
-				console.error(err);
-			}
+		// 2) Update DB
+		try {
+			const res = await axios.patch(
+				`${process.env.REACT_APP_SERVER_URL}/columns/drag/${source.droppableId}/${draggableId}`,
+				destination,
+				{ withCredentials: true }
+			);
+			if (res.status === 200) console.log("success");
+		} catch (err) {
+			console.error(err);
 		}
 	};
 	return (
