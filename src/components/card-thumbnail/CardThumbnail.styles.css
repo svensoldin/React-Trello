@@ -5,6 +5,8 @@
 	background: #fff;
 	margin: 5px;
 	padding: 2px;
+	cursor: pointer;
+	border-bottom: silver 1px solid;
 }
 
 .card-thumbnail-content {

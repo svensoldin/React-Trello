@@ -1,0 +1,13 @@
+.column-title {
+	text-align: left;
+	font-weight: bold;
+	font-size: 15px;
+	width: 100%;
+	border: none;
+	margin: 10px;
+	padding: 5px;
+}
+
+.column-title:hover {
+	cursor: pointer;
+}

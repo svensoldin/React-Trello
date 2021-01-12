@@ -29,13 +29,6 @@ type Board = {
 	_id: string;
 };
 
-// type HookReturns = {
-// 	data: Board | undefined;
-// 	isLoading: boolean;
-// 	error: any;
-// 	refetch: React.Dispatch<React.SetStateAction<any>>;
-// };
-
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
 	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
@@ -43,7 +36,7 @@ const BoardPage = () => {
 	React.useEffect(() => {
 		const fetchBoard = async (url: string) => {
 			try {
-				const res = await axios.get(url, { withCredentials: true });
+				const res = await axios.get<Board>(url, { withCredentials: true });
 				setColumns(res.data.columns);
 			} catch (err) {
 				console.error(err);
@@ -93,23 +86,17 @@ const BoardPage = () => {
 		<div className="board-page">
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
-					{columns
-						? columns.map(({ title, _id, cards }: Column) => {
-								return (
-									<BoardColumn
-										title={title}
-										columnId={_id}
-										key={_id}
-										cards={cards}
-									></BoardColumn>
-								);
-						  })
-						: null}
-					<AddButton
-						id={boardId}
-						elementToAdd="column"
-						refetch={() => {}}
-					/>
+					{columns?.map(({ title, _id, cards }: Column) => {
+						return (
+							<BoardColumn
+								title={title}
+								columnId={_id}
+								key={_id}
+								cards={cards}
+							></BoardColumn>
+						);
+					})}
+					<AddButton id={boardId} type="column" refetch={() => {}} />
 				</div>
 			</DragDropContext>
 		</div>

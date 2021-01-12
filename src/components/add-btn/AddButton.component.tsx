@@ -9,11 +9,11 @@ import "./AddButton.styles.css";
 
 type Props = {
 	id: string;
-	elementToAdd: "column" | "card";
+	type: "column" | "card";
 	refetch: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const AddButton = ({ id, elementToAdd, refetch }: Props) => {
+const AddButton = ({ id, type, refetch }: Props) => {
 	const [isInputOpen, setIsInputOpen] = React.useState(false);
 
 	// The input is controlled via this state
@@ -30,13 +30,13 @@ const AddButton = ({ id, elementToAdd, refetch }: Props) => {
 		if (!title.length) return setIsInputOpen(false);
 
 		// Otherwise, trigger mutations and reset state
-		if (elementToAdd === "column") {
+		if (type === "column") {
 			await createColumn(id, title);
 			refetch({});
 			setIsInputOpen(false);
 			setTitle("");
 		}
-		if (elementToAdd === "card") {
+		if (type === "card") {
 			await createCard(id, title);
 			refetch({});
 			setIsInputOpen(false);
@@ -45,13 +45,11 @@ const AddButton = ({ id, elementToAdd, refetch }: Props) => {
 	};
 	return !isInputOpen ? (
 		<div
-			className={`add-btn ${
-				elementToAdd === "column" ? "add-column" : "add-card"
-			}`}
+			className={`add-btn ${type === "column" ? "add-column" : "add-card"}`}
 			onClick={() => setIsInputOpen(true)}
 		>
 			<AddIcon />
-			<p className="add-text">New {elementToAdd}</p>
+			<p className="add-text">New {type}</p>
 		</div>
 	) : (
 		<ClickAwayListener onClickAway={handleEvent}>
@@ -59,9 +57,7 @@ const AddButton = ({ id, elementToAdd, refetch }: Props) => {
 				<input
 					type="text"
 					className={
-						elementToAdd === "column"
-							? "add-column-form"
-							: "add-card-form"
+						type === "column" ? "add-column-form" : "add-card-form"
 					}
 					autoFocus={true}
 					value={title}
