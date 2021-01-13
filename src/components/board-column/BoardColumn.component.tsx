@@ -39,7 +39,7 @@ const BoardColumn = ({ title, columnId, cards }: Props) => {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						<EditableTitle title={title} />
+						<EditableTitle title={title} columnId={columnId} />
 						{cards?.map((card: Card, i: number) => {
 							return (
 								<CardThumbnail card={card} index={i} key={card._id} />
