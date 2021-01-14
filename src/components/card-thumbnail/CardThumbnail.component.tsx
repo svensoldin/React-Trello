@@ -21,14 +21,14 @@ const CardThumbnail = ({ card, index }: Props) => {
 		<Draggable draggableId={card._id} index={index}>
 			{(provided) => {
 				return (
-					<div
+					<article
 						className="card-thumbnail"
 						ref={provided.innerRef}
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 					>
 						<p className="card-thumbnail-content">{card.title}</p>
-					</div>
+					</article>
 				);
 			}}
 		</Draggable>

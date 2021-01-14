@@ -5,6 +5,7 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 import EditableTitle from "../../components/editable-title/EditableTitle.component";
+import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
 
 import { useFetchAndRefetch } from "../../utils/utils";
 
@@ -34,12 +35,15 @@ const BoardColumn = ({ title, columnId, cards }: Props) => {
 		<Droppable droppableId={columnId} type="cards">
 			{(provided) => {
 				return (
-					<div
+					<section
 						className="column"
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						<EditableTitle title={title} columnId={columnId} />
+						<header className="column-title-container">
+							<EditableTitle title={title} columnId={columnId} />
+							<MenuIcon className="menu-icon" />
+						</header>
 						{cards?.map((card: Card, i: number) => {
 							return (
 								<CardThumbnail card={card} index={i} key={card._id} />
@@ -51,7 +55,7 @@ const BoardColumn = ({ title, columnId, cards }: Props) => {
 							type="card"
 							refetch={() => {}} /* Add the card via state, this is an antipattern*/
 						/>
-					</div>
+					</section>
 				);
 			}}
 		</Droppable>

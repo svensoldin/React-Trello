@@ -83,7 +83,7 @@ const BoardPage = () => {
 		}
 	};
 	return (
-		<div className="board-page">
+		<main className="board-page">
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
 					{columns?.map(({ title, _id, cards }: Column) => {
@@ -99,7 +99,7 @@ const BoardPage = () => {
 					<AddButton id={boardId} type="column" refetch={() => {}} />
 				</div>
 			</DragDropContext>
-		</div>
+		</main>
 	);
 };
 

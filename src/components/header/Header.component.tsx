@@ -22,18 +22,18 @@ const Header = () => {
 	} = user;
 	return (
 		<AppBar position="static" style={appBarStyles}>
-			<div className="header">
+			<header className="header">
 				<div className="title-container">
 					<TrelloLogo style={{ width: 30 }} />
 					<h3 className="main-title">Thullo</h3>
 				</div>
 				{id ? (
-					<div className="nav">
+					<nav className="nav">
 						<Searchbar />
 						<UserHeader name={name} />
-					</div> //This should be a separate component
+					</nav> //This should be a separate component
 				) : null}
-			</div>
+			</header>
 		</AppBar>
 	);
 };

@@ -10,22 +10,19 @@
 	height: auto;
 }
 
-.add-card {
+.column-title-container {
 	width: 100%;
-	height: 30px;
 	display: flex;
 	align-items: center;
-	opacity: 0.5;
-	font-size: 15px;
-	margin-top: 10px;
-	cursor: pointer;
+	justify-content: space-between;
 }
 
-.add-card:hover {
+.menu-icon {
+	padding: 5px;
+}
+
+.menu-icon:hover {
 	background: gainsboro;
-	opacity: 1;
-}
-
-.add-card-text {
-	margin: 5px;
+	cursor: pointer;
+	fill: black;
 }
