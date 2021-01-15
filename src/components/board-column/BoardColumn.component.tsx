@@ -1,13 +1,10 @@
 import * as React from "react";
-import axios from "axios";
 
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import CardThumbnail from "../../components/card-thumbnail/CardThumbnail.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 import EditableTitle from "../../components/editable-title/EditableTitle.component";
 import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
-
-import { useFetchAndRefetch } from "../../utils/utils";
 
 import "./BoardColumn.styles.css";
 

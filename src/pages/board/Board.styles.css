@@ -1,3 +1,17 @@
+.board-users {
+	display: flex;
+	width: 30%;
+	align-items: center;
+	padding: 5px;
+	margin: 5px 20px;
+}
+
+.board-title {
+	border-right: 2px solid gainsboro;
+	padding-right: 10px;
+	width: 150px;
+}
+
 .columns {
 	display: flex;
 	align-items: flex-start; /*Each column adjusts in size according to content */

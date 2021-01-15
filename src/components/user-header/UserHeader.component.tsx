@@ -1,7 +1,8 @@
 import * as React from "react";
-import { useAuthDispatch, logout } from "../../context/index";
-import { useQuery } from "react-query";
-import { getPicture } from "../../utils/queries";
+
+// Custom hooks
+import { useAuthState, useAuthDispatch, logout } from "../../context/index";
+import { useProfilePicture } from "../../utils/utils";
 
 // Components
 import UserDropdown from "../user-dropdown/UserDropdown.component";
@@ -24,7 +25,12 @@ const UserHeader = ({ name }: Props) => {
 	] = React.useState<HTMLElement | null>();
 
 	// Fetching the user's profile picture to put it in the avatar
-	const { isLoading, data } = useQuery("getPicture", getPicture);
+	const {
+		userDetails: { id },
+	} = useAuthState();
+	const { pictureUrl } = useProfilePicture(id);
+
+	// Logout logic
 	const dispatch = useAuthDispatch();
 	const handleLogout = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -38,28 +44,28 @@ const UserHeader = ({ name }: Props) => {
 	return (
 		<ClickAwayListener onClickAway={() => setIsMenuOpen(false)}>
 			<div className="user-header">
-				{!isLoading ? (
-					<Avatar
-						src={data}
-						className="avatar"
-						alt={name}
-						aria-haspopup="true"
-						onClick={(e: any) => {
-							setAnchorElement(e.target);
-							setIsMenuOpen(!isMenuOpen);
-						}}
-					>
-						{name.split("")[0].toUpperCase()}
-					</Avatar>
-				) : (
-					<div data-testid="skeleton" className="avatar-skeleton"></div>
-				)}
+				<Avatar
+					src={pictureUrl}
+					className="avatar"
+					alt={name}
+					aria-haspopup="true"
+					onClick={(e: any) => {
+						setAnchorElement(e.target);
+						setIsMenuOpen(!isMenuOpen);
+					}}
+				>
+					{name.split("")[0].toUpperCase()}
+				</Avatar>
+
 				<Popper
 					open={isMenuOpen}
 					anchorEl={anchorElement}
 					data-testid="dropdown"
 				>
-					<UserDropdown handleLogout={handleLogout} avatarURL={data} />
+					<UserDropdown
+						handleLogout={handleLogout}
+						avatarURL={pictureUrl}
+					/>
 				</Popper>
 			</div>
 		</ClickAwayListener>

@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
 import AddButton from "../../components/add-btn/AddButton.component";
+import UserAvatar from "../../components/user-avatar/UserAvatar.component";
 
 import "./Board.styles.css";
 
@@ -31,19 +32,22 @@ type Board = {
 
 const BoardPage = () => {
 	const { boardId } = useParams<{ boardId: string }>();
-	const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
-	const [columns, setColumns] = React.useState<Column[]>([]);
+	const [board, setBoard] = React.useState<Board>();
 	React.useEffect(() => {
-		const fetchBoard = async (url: string) => {
+		const fetchBoard = async () => {
+			const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
+
 			try {
 				const res = await axios.get<Board>(url, { withCredentials: true });
-				setColumns(res.data.columns);
+				setBoard(res.data);
+				// setColumns(res.data.columns);
+				// setUsers(res.data.users);
 			} catch (err) {
 				console.error(err);
 			}
 		};
-		fetchBoard(url);
-	}, [url]);
+		fetchBoard();
+	}, [boardId]);
 
 	const handleDragEnd = async ({
 		source,
@@ -51,24 +55,29 @@ const BoardPage = () => {
 		draggableId,
 	}: DropResult) => {
 		if (!destination) return;
+		const newBoard = { ...board } as Board;
 		// Create new array not to mutate the state
-		const newColumns = Array.from(columns);
+		// const newColumns = Array.from(columns);
 
 		// 1) Change UI
 
 		// Find the source and destination columns
-		const sourceColumn = newColumns.find(
+		const sourceColumn = newBoard.columns.find(
 			(column) => column._id === source.droppableId
 		) as Column;
-		const destinationColumn = newColumns.find(
+		const destinationColumn = newBoard.columns.find(
 			(column) => column._id === destination.droppableId
 		) as Column;
+		// const destinationColumn = newColumns.find(
+		// 	(column) => column._id === destination.droppableId
+		// ) as Column;
 		// Remove the card from source
 		const [reorderedCard] = sourceColumn.cards.splice(source.index, 1);
 		// Add to the destination
 		destinationColumn.cards.splice(destination.index, 0, reorderedCard);
 		// Update state
-		setColumns(newColumns);
+		setBoard(newBoard);
+		// setColumns(newColumns);
 
 		// 2) Update DB
 		try {
@@ -84,9 +93,15 @@ const BoardPage = () => {
 	};
 	return (
 		<main className="board-page">
+			<div className="board-users">
+				<h3 className="board-title">{board?.title}</h3>
+				{board?.users.map((user) => {
+					return <UserAvatar userId={user} key={user} />;
+				})}
+			</div>
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
-					{columns?.map(({ title, _id, cards }: Column) => {
+					{board?.columns.map(({ title, _id, cards }: Column) => {
 						return (
 							<BoardColumn
 								title={title}

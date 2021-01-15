@@ -40,8 +40,7 @@ export async function getCardsFromColumn(columnId: string) {
 	}
 }
 
-export async function getPicture() {
-	const url = `${process.env.REACT_APP_SERVER_URL}/users/profile`;
+export async function getPicture(url: string) {
 	try {
 		const res = await axios.post(
 			url,
