@@ -6,12 +6,12 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 //Hooks
 import { useParams } from "react-router-dom";
-// import { useFetchAndRefetch } from "../../utils/utils";
 
 //Components
 import BoardColumn from "../../components/board-column/BoardColumn.component";
 import AddButton from "../../components/add-btn/AddButton.component";
 import UserAvatar from "../../components/user-avatar/UserAvatar.component";
+import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
 
 import "./Board.styles.css";
 
@@ -36,12 +36,9 @@ const BoardPage = () => {
 	React.useEffect(() => {
 		const fetchBoard = async () => {
 			const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
-
 			try {
 				const res = await axios.get<Board>(url, { withCredentials: true });
 				setBoard(res.data);
-				// setColumns(res.data.columns);
-				// setUsers(res.data.users);
 			} catch (err) {
 				console.error(err);
 			}
@@ -56,8 +53,7 @@ const BoardPage = () => {
 	}: DropResult) => {
 		if (!destination) return;
 		const newBoard = { ...board } as Board;
-		// Create new array not to mutate the state
-		// const newColumns = Array.from(columns);
+		// Create new object not to mutate the state
 
 		// 1) Change UI
 
@@ -68,16 +64,13 @@ const BoardPage = () => {
 		const destinationColumn = newBoard.columns.find(
 			(column) => column._id === destination.droppableId
 		) as Column;
-		// const destinationColumn = newColumns.find(
-		// 	(column) => column._id === destination.droppableId
-		// ) as Column;
+
 		// Remove the card from source
 		const [reorderedCard] = sourceColumn.cards.splice(source.index, 1);
 		// Add to the destination
 		destinationColumn.cards.splice(destination.index, 0, reorderedCard);
 		// Update state
 		setBoard(newBoard);
-		// setColumns(newColumns);
 
 		// 2) Update DB
 		try {
@@ -91,17 +84,20 @@ const BoardPage = () => {
 			console.error(err);
 		}
 	};
-	return (
+	return board ? (
 		<main className="board-page">
 			<div className="board-users">
 				<h3 className="board-title">{board?.title}</h3>
-				{board?.users.map((user) => {
+				{board.users.map((user) => {
 					return <UserAvatar userId={user} key={user} />;
 				})}
+				<button className="add-user-btn">
+					<PlusIcon className="plus-icon" />
+				</button>
 			</div>
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<div className="columns">
-					{board?.columns.map(({ title, _id, cards }: Column) => {
+					{board.columns.map(({ title, _id, cards }: Column) => {
 						return (
 							<BoardColumn
 								title={title}
@@ -115,6 +111,8 @@ const BoardPage = () => {
 				</div>
 			</DragDropContext>
 		</main>
+	) : (
+		<></>
 	);
 };
 

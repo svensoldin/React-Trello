@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useAuthState } from "../../context/index";
 
 //Components
@@ -10,7 +11,7 @@ import { ReactComponent as TrelloLogo } from "../../assets/trello.svg";
 import "./Header.styles.css";
 
 const appBarStyles = {
-	background: "#2196f3",
+	background: "#fff",
 	minHeight: 60,
 	maxHeight: 60,
 };
@@ -23,10 +24,10 @@ const Header = () => {
 	return (
 		<AppBar position="static" style={appBarStyles}>
 			<header className="header">
-				<div className="title-container">
+				<Link to="/" className="title-container">
 					<TrelloLogo style={{ width: 30 }} />
 					<h3 className="main-title">Thullo</h3>
-				</div>
+				</Link>
 				{id ? (
 					<nav className="nav">
 						<Searchbar />

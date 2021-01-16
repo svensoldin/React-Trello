@@ -2,14 +2,15 @@
 	display: flex;
 	width: 30%;
 	align-items: center;
-	padding: 5px;
-	margin: 5px 20px;
 }
 
 .board-title {
-	border-right: 2px solid gainsboro;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
 	padding-right: 10px;
 	width: 150px;
+	color: #000;
 }
 
 .columns {
@@ -17,4 +18,22 @@
 	align-items: flex-start; /*Each column adjusts in size according to content */
 	overflow-x: scroll;
 	height: 100%;
+}
+
+.add-user-btn {
+	border: none;
+	border-radius: 10px;
+	background: #2f80ed;
+	color: #fff;
+	height: 35px;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.plus-icon {
+	fill: white;
+	width: 20px;
 }

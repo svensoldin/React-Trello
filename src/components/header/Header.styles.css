@@ -7,9 +7,10 @@
 
 .title-container {
 	display: flex;
-	width: 40%;
 	align-items: center;
 	margin: 10px;
+	color: #000;
+	font-weight: 400;
 }
 
 .main-title {
