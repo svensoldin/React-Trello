@@ -37,11 +37,10 @@ export const createCardOrColumn = async (
 					{ title },
 					{ withCredentials: true }
 				);
-				return;
+				break;
 			} catch (err) {
 				return err;
 			}
-			break;
 		case "card":
 			try {
 				await axios.patch(
@@ -49,10 +48,10 @@ export const createCardOrColumn = async (
 					{ title },
 					{ withCredentials: true }
 				);
+				break;
 			} catch (err) {
 				return err;
 			}
-			break;
 		default:
 			return;
 	}

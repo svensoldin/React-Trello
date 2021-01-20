@@ -9,7 +9,17 @@
 	border-bottom: silver 1px solid;
 }
 
+.card-thumbnail:hover {
+	background: #f8f8f8;
+	cursor: pointer;
+}
+
 .card-thumbnail-content {
 	margin: 5px;
 	font-size: 15px;
+}
+
+.card-modal {
+	display: flex;
+	justify-content: center;
 }

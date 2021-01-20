@@ -1,0 +1,11 @@
+.card {
+	background: #f4f5f7;
+	width: 768px;
+	margin-top: 48px;
+	overflow: scroll;
+}
+
+.card .lower-container {
+	display: flex;
+	justify-content: space-between;
+}

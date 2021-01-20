@@ -11,7 +11,7 @@ import { ReactComponent as TrelloLogo } from "../../assets/trello.svg";
 import "./Header.styles.css";
 
 const appBarStyles = {
-	background: "#fff",
+	background: "#F8F8F8",
 	minHeight: 60,
 	maxHeight: 60,
 };
