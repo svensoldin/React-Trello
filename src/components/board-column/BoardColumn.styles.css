@@ -1,16 +1,3 @@
-.column {
-	margin: 5px 20px;
-	width: 272px;
-	display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
-	align-items: center;
-	background: #ebecf0;
-	padding: 5px;
-	height: auto;
-	border-radius: 5px;
-}
-
 .column-title-container {
 	width: 100%;
 	display: flex;

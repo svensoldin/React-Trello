@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { createColumn, createCard } from "../../utils/mutations";
+import { createCardOrColumn } from "../../utils/mutations";
 
 import AddIcon from "@material-ui/icons/Add";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -10,10 +10,11 @@ import "./AddButton.styles.css";
 type Props = {
 	id: string;
 	type: "column" | "card";
-	refetch: React.Dispatch<React.SetStateAction<any>>;
+	addFunction: (type: string, title: string, id?: string) => void;
 };
 
-const AddButton = ({ id, type, refetch }: Props) => {
+const AddButton = ({ id, type, addFunction }: Props) => {
+	// Refactor: merge the two states in one object ?
 	const [isInputOpen, setIsInputOpen] = React.useState(false);
 
 	// The input is controlled via this state
@@ -30,18 +31,10 @@ const AddButton = ({ id, type, refetch }: Props) => {
 		if (!title.length) return setIsInputOpen(false);
 
 		// Otherwise, trigger mutations and reset state
-		if (type === "column") {
-			await createColumn(id, title);
-			refetch({});
-			setIsInputOpen(false);
-			setTitle("");
-		}
-		if (type === "card") {
-			await createCard(id, title);
-			refetch({});
-			setIsInputOpen(false);
-			setTitle("");
-		}
+		await createCardOrColumn(type, id, title); // Add to DB
+		addFunction(type, title, id); // Add to UI
+		setIsInputOpen(false);
+		setTitle("");
 	};
 	return !isInputOpen ? (
 		<div

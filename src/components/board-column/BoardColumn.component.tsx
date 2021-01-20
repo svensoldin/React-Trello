@@ -47,11 +47,6 @@ const BoardColumn = ({ title, columnId, cards }: Props) => {
 							);
 						})}
 						{provided.placeholder}
-						<AddButton
-							id={columnId}
-							type="card"
-							refetch={() => {}} /* Add the card via state, this is an antipattern*/
-						/>
 					</section>
 				);
 			}}

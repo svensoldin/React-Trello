@@ -46,15 +46,28 @@ const BoardPage = () => {
 		fetchBoard();
 	}, [boardId]);
 
+	const handleAddElement = (type: string, title: string, id?: string) => {
+		const newBoard = { ...board } as Board;
+		if (type === "card") {
+			const targetColumn = newBoard.columns.find(
+				(column) => column._id === id
+			);
+			targetColumn?.cards.push({ title });
+		}
+		if (type === "column") {
+			newBoard.columns.push({ title, cards: [], board: "", _id: "" });
+		}
+		return setBoard(newBoard);
+	};
+
 	const handleDragEnd = async ({
 		source,
 		destination,
 		draggableId,
 	}: DropResult) => {
 		if (!destination) return;
-		const newBoard = { ...board } as Board;
 		// Create new object not to mutate the state
-
+		const newBoard = { ...board } as Board;
 		// 1) Change UI
 
 		// Find the source and destination columns
@@ -99,15 +112,26 @@ const BoardPage = () => {
 				<div className="columns">
 					{board.columns.map(({ title, _id, cards }: Column) => {
 						return (
-							<BoardColumn
-								title={title}
-								columnId={_id}
-								key={_id}
-								cards={cards}
-							></BoardColumn>
+							<div className="column">
+								<BoardColumn
+									title={title}
+									columnId={_id}
+									key={_id}
+									cards={cards}
+								/>
+								<AddButton
+									id={_id}
+									type="card"
+									addFunction={handleAddElement}
+								/>
+							</div>
 						);
 					})}
-					<AddButton id={boardId} type="column" refetch={() => {}} />
+					<AddButton
+						id={boardId}
+						type="column"
+						addFunction={handleAddElement}
+					/>
 				</div>
 			</DragDropContext>
 		</main>
