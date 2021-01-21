@@ -37,25 +37,23 @@ const EditableTitle = ({ title, columnId }: Props) => {
 		}
 	};
 
-	return (
+	return isInputOpen ? (
 		<ClickAwayListener onClickAway={handleClickAway}>
-			{isInputOpen ? (
-				<input
-					type="text"
-					value={stateTitle}
-					onChange={handleChange}
-					className="column-title"
-					autoFocus={true}
-					onKeyUp={({ key }) => {
-						if (key === "Enter") handleClickAway();
-					}}
-				/>
-			) : (
-				<h2 onClick={() => setIsInputOpen(true)} className="column-title">
-					{stateTitle}
-				</h2>
-			)}
+			<input
+				type="text"
+				value={stateTitle}
+				onChange={handleChange}
+				className="column-title"
+				autoFocus={true}
+				onKeyUp={({ key }) => {
+					if (key === "Enter") handleClickAway();
+				}}
+			/>
 		</ClickAwayListener>
+	) : (
+		<h2 onClick={() => setIsInputOpen(true)} className="column-title">
+			{stateTitle}
+		</h2>
 	);
 };
 

@@ -35,9 +35,17 @@ export const createCardOrColumn = async (
 	}
 };
 
-export const updateCardDescription = async (text: string) => {
+export const updateCardField = async (
+	text: string,
+	cardId: string,
+	field: string
+) => {
 	try {
-		await axios.patch("", { text }, { withCredentials: true });
+		await axios.patch(
+			`${process.env.REACT_APP_SERVER_URL}/cards/${cardId}/${field}/update`,
+			{ text },
+			{ withCredentials: true }
+		);
 		return;
 	} catch (err) {
 		return console.error(err.message);

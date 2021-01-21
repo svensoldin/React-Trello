@@ -12,25 +12,101 @@
 	height: 1000px;
 }
 
+.card .upper-container {
+	margin-left: 35px; /* Little cheat in order to have some padding and still be aligned */
+}
+
+.upper-container h2 {
+	cursor: pointer;
+	padding: 5px 5px;
+}
+
 .card .lower-container {
 	display: flex;
 	justify-content: space-between;
 }
 
 .card-details {
-	border: 1px solid red;
-	flex-grow: 1;
-}
-
-.card-description-container {
-	border: 1px solid red;
+	flex-grow: 4;
+	margin-left: 40px;
 }
 
 .card-description {
-	width: 80%;
-	font-size: 17px;
-	margin: 0;
-	padding: 5px;
+	font-family: inherit;
+	font-size: 15px;
+
+	resize: none;
+	width: 90%;
+	height: 50px;
+
+	padding: 10px;
 	border: none;
-	text-align: top;
+	border-radius: 3px;
+	margin: 0;
+	background: rgba(9, 30, 66, 0.04);
+}
+
+.card-description:hover {
+	cursor: pointer;
+	background: rgba(9, 30, 66, 0.08);
+}
+
+.comment-input {
+	resize: none;
+	background: #fff;
+	color: grey;
+
+	padding: 10px;
+	border: none;
+	border-radius: 3px;
+
+	height: 30px;
+	width: 90%;
+
+	font-family: inherit;
+	font-size: 15px;
+}
+
+.comment-input:focus {
+	outline: 1px solid #2f80ed;
+}
+
+.comment-input:hover {
+	cursor: pointer;
+}
+
+.card-functions {
+	flex-grow: 1;
+	margin-right: 10px;
+}
+
+.card-functions h3 {
+	font-size: 15px;
+	text-align: left;
+	margin: 5px;
+}
+
+.card-functions div {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+
+.card-function-btn {
+	background: rgba(9, 30, 66, 0.04);
+	font-size: 14px;
+	font-weight: 400;
+
+	padding: 6px 12px;
+	border: none;
+	border-radius: 3px;
+	margin: 5px;
+
+	text-align: left;
+	height: 32px;
+	cursor: pointer;
+}
+
+.card-function-btn:hover {
+	background: rgba(9, 30, 66, 0.08);
 }

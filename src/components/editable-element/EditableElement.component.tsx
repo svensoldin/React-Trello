@@ -4,10 +4,19 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 type Props = {
 	children: React.ReactElement<any>;
-	updaterFunction: (text: string) => Promise<void>;
+	updaterFunction: (text: string, id: string, field: string) => Promise<void>;
+	inputStyles?: React.CSSProperties;
+	id: string;
+	field: string;
 };
 
-const EditableElement = ({ children, updaterFunction }: Props) => {
+const EditableElement = ({
+	children,
+	updaterFunction,
+	inputStyles,
+	id,
+	field,
+}: Props) => {
 	if (!children)
 		throw new Error("EditableElement component must have children");
 	const [isInputOpen, setIsInputOpen] = React.useState(false);
@@ -18,18 +27,21 @@ const EditableElement = ({ children, updaterFunction }: Props) => {
 		// If the text was changed
 		if (text !== children.props.children) {
 			// API call
-			updaterFunction(text);
+			updaterFunction(text, id, field);
 		}
 	};
 
 	return isInputOpen ? (
 		<ClickAwayListener onClickAway={handleClickAway}>
-			<input
-				type="text"
+			<textarea
 				value={text}
 				onChange={(e) => setText(e.target.value)}
 				className={children.props.className}
+				style={inputStyles}
 				autoFocus={true}
+				onKeyUp={({ key }) => {
+					if (key === "Enter") handleClickAway();
+				}}
 			/>
 		</ClickAwayListener>
 	) : (
@@ -38,8 +50,8 @@ const EditableElement = ({ children, updaterFunction }: Props) => {
 				...children.props,
 				onClick: () => {
 					setIsInputOpen(true);
-					console.log(isInputOpen);
 				},
+				children: text,
 			})}
 		</>
 	);

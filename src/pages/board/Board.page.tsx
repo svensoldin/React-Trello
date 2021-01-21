@@ -112,11 +112,10 @@ const BoardPage = () => {
 				<div className="columns">
 					{board.columns.map(({ title, _id, cards }: Column) => {
 						return (
-							<div className="column">
+							<div className="column" key={_id}>
 								<BoardColumn
 									title={title}
 									columnId={_id}
-									key={_id}
 									cards={cards}
 								/>
 								<AddButton
