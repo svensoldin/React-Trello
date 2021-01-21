@@ -32,7 +32,7 @@ const Header = () => {
 					<nav className="nav">
 						<Searchbar />
 						<UserHeader name={name} />
-					</nav> //This should be a separate component
+					</nav>
 				) : null}
 			</header>
 		</AppBar>

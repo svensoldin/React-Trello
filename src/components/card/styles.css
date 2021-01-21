@@ -1,11 +1,36 @@
+.card-modal {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin-top: 48px;
+}
+
 .card {
 	background: #f4f5f7;
 	width: 768px;
-	margin-top: 48px;
 	overflow: scroll;
+	height: 1000px;
 }
 
 .card .lower-container {
 	display: flex;
 	justify-content: space-between;
+}
+
+.card-details {
+	border: 1px solid red;
+	flex-grow: 1;
+}
+
+.card-description-container {
+	border: 1px solid red;
+}
+
+.card-description {
+	width: 80%;
+	font-size: 17px;
+	margin: 0;
+	padding: 5px;
+	border: none;
+	text-align: top;
 }

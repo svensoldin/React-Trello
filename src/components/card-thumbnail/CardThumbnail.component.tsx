@@ -3,7 +3,6 @@ import * as React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import CardComponent from "../card/Card.component";
-import Modal from "@material-ui/core/Modal";
 import "./CardThumbnail.styles.css";
 
 type Card = {
@@ -11,6 +10,7 @@ type Card = {
 	comments: Array<any> | []; // Define this type later
 	labels: Array<{ body: string; color: string }> | [];
 	attachments: Array<{ fileName: string }> | [];
+	description?: string;
 	_id: string;
 };
 
@@ -35,13 +35,11 @@ const CardThumbnail = ({ card, index }: Props) => {
 						>
 							<p className="card-thumbnail-content">{card.title}</p>
 						</article>
-						<Modal
-							open={isOpen}
-							className="card-modal"
-							onClose={() => setIsOpen(false)}
-						>
-							<CardComponent card={card} />
-						</Modal>
+						<CardComponent
+							card={card}
+							isModalOpen={isOpen}
+							closeModal={() => setIsOpen(false)}
+						/>
 					</>
 				);
 			}}
