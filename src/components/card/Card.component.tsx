@@ -2,21 +2,26 @@ import * as React from 'react';
 
 import Dialog from '@material-ui/core/Dialog';
 import EditableElement from '../editable-element/EditableElement.component';
-import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
-import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
+import UserAvatar from '../user-avatar/UserAvatar.component';
+
+// Icons
+import PersonIcon from '@material-ui/icons/PersonOutlineOutlined';
+import LabelIcon from '@material-ui/icons/LabelOutlined';
+import AttachmentIcon from '@material-ui/icons/AttachmentOutlined';
 import SubjectIcon from '@material-ui/icons/Subject';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import Title from '@material-ui/icons/Title';
+import ListIcon from '@material-ui/icons/FormatListBulleted';
+import TitleIcon from '@material-ui/icons/Title';
 
 import { updateCardField } from '../../utils/mutations';
 
 import './styles.css';
+import { useAuthState } from '../../context/index';
 
 type Card = {
+  column: string;
   title: string;
   users?: Array<string>;
-  comments: Array<any> | []; // Define this type later
+  comments: Array<any> | [];
   labels: Array<{ body: string; color: string }> | [];
   attachments: Array<{ fileName: string }> | [];
   description?: string;
@@ -30,7 +35,11 @@ type Props = {
 };
 
 const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
-  const { title, comments, labels, attachments, description, _id } = card;
+  // Component should fetch card info from server on mount
+  const {
+    userDetails: { id: userId },
+  } = useAuthState();
+  const { title, description, _id, column } = card;
   const descriptionStyles: React.CSSProperties = {
     background: '#fff',
     height: 108,
@@ -62,12 +71,13 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
       <main className='card'>
         <section className='upper-container'>
           <div className='card-header'>
-            <Title />
+            <TitleIcon />
             <EditableElement
               updaterFunction={updateCardField}
               id={_id}
               field='title'
               inputStyles={cardTitleStyles}
+              parentId={column}
             >
               <h2>{title}</h2>
             </EditableElement>
@@ -93,28 +103,34 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
             </div>
             <div className='card-activity'>
               <div className='card-header'>
-                <FormatListBulletedIcon />
+                <ListIcon />
                 <h3>Activity</h3>
               </div>
-              <textarea
-                placeholder='Write a comment...'
-                className='comment-input'
-              />
+              <div className='card-header'>
+                <UserAvatar
+                  userId={userId}
+                  style={{ width: '35px', height: '35px', marginLeft: '-5px' }}
+                />
+                <textarea
+                  placeholder='Write a comment...'
+                  className='comment-input'
+                />
+              </div>
             </div>
           </div>
           <aside className='card-functions'>
             <h3>Add to card</h3>
-            <div>
+            <div className='card-btn-container'>
               <button className='card-function-btn'>
-                <PersonOutlineOutlinedIcon fontSize='small' />
+                <PersonIcon fontSize='small' />
                 <p>Members</p>
               </button>
               <button className='card-function-btn'>
-                <LabelOutlinedIcon fontSize='small' />
+                <LabelIcon fontSize='small' />
                 <p>Labels</p>
               </button>
               <button className='card-function-btn'>
-                <AttachmentOutlinedIcon fontSize='small' />
+                <AttachmentIcon fontSize='small' />
                 <p>Attachment</p>
               </button>
             </div>

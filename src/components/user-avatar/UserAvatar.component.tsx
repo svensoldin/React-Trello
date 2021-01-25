@@ -1,18 +1,20 @@
-import * as React from "react";
-import axios from "axios";
+import * as React from 'react';
 
-import Avatar from "@material-ui/core/Avatar";
+import Avatar from '@material-ui/core/Avatar';
 
-import { useProfilePicture } from "../../utils/utils";
-import "./UserAvatar.styles.css";
+import { useProfilePicture } from '../../utils/utils';
+import './UserAvatar.styles.css';
 
 type Props = {
-	userId: string;
+  userId: string;
+  style?: React.CSSProperties;
 };
 
-const UserAvatar = ({ userId }: Props) => {
-	const { pictureUrl } = useProfilePicture(userId);
-	return <Avatar src={pictureUrl} alt="user" className="user-avatar"></Avatar>;
+// We get the user id from props because this component does not only display the logged in user
+
+const UserAvatar = ({ userId, style }: Props) => {
+  const { pictureUrl } = useProfilePicture(userId);
+  return <Avatar src={pictureUrl} alt='user' style={style}></Avatar>;
 };
 
 export default UserAvatar;

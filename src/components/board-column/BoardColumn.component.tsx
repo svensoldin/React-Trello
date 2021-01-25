@@ -6,6 +6,8 @@ import EditableTitle from '../../components/editable-title/EditableTitle.compone
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 import './BoardColumn.styles.css';
+import { cardRecordAtom } from '../../jotai/atoms';
+import { useAtom } from 'jotai';
 
 type Card = {
   title: string;
@@ -13,6 +15,7 @@ type Card = {
   labels: Array<{ body: string; color: string }> | [];
   attachments: Array<{ fileName: string }> | [];
   _id: string;
+  column: string;
 };
 
 type Comment = {
@@ -23,30 +26,28 @@ type Comment = {
 type Props = {
   title: string;
   columnId: string;
-  cards: Card[];
 };
 
-const BoardColumn = ({ title, columnId, cards }: Props) => {
+const BoardColumn = ({ title, columnId }: Props) => {
+  const [cardRecord]: any = useAtom(cardRecordAtom);
   return (
     <Droppable droppableId={columnId} type='cards'>
-      {(provided) => {
-        return (
-          <section
-            className='column'
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            <header className='column-title-container'>
-              <EditableTitle title={title} columnId={columnId} />
-              <MenuIcon className='menu-icon' />
-            </header>
-            {cards?.map((card: Card, i: number) => {
-              return <CardThumbnail card={card} index={i} key={card._id} />;
-            })}
-            {provided.placeholder}
-          </section>
-        );
-      }}
+      {(provided) => (
+        <section
+          className='column'
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          <header className='column-title-container'>
+            <EditableTitle title={title} columnId={columnId} />
+            <MenuIcon className='menu-icon' />
+          </header>
+          {cardRecord[columnId].map((card: Card, i: number) => (
+            <CardThumbnail card={card} index={i} key={card._id} />
+          ))}
+          {provided.placeholder}
+        </section>
+      )}
     </Droppable>
   );
 };
