@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import { useAuthState } from '../../context/index';
+import { Card } from '../../types/dataTypes';
+
 import Dialog from '@material-ui/core/Dialog';
 import EditableElement from '../editable-element/EditableElement.component';
 import UserAvatar from '../user-avatar/UserAvatar.component';
@@ -15,18 +18,6 @@ import TitleIcon from '@material-ui/icons/Title';
 import { updateCardField } from '../../utils/mutations';
 
 import './styles.css';
-import { useAuthState } from '../../context/index';
-
-type Card = {
-  column: string;
-  title: string;
-  users?: Array<string>;
-  comments: Array<any> | [];
-  labels: Array<{ body: string; color: string }> | [];
-  attachments: Array<{ fileName: string }> | [];
-  description?: string;
-  _id: string;
-};
 
 type Props = {
   card: Card;
@@ -49,7 +40,7 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
   };
   const cardTitleStyles: React.CSSProperties = {
     resize: 'none',
-    margin: '21px 0',
+    margin: '21px 20px',
     border: 'none',
     width: '60%',
     height: '28px',

@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { useAtom } from 'jotai';
-import { columnsAtom } from '../../jotai/atoms';
+import { boardAtom } from '../../jotai/atoms';
+import { Board, Card } from '../../types/dataTypes';
 
 type Props = {
   children: React.ReactElement<any>;
@@ -23,7 +24,7 @@ const EditableElement = ({
 }: Props) => {
   if (!children)
     throw new Error('EditableElement component must have children');
-  const [columns, setColumns] = useAtom(columnsAtom);
+  const [board, setBoard] = useAtom(boardAtom);
   const [isInputOpen, setIsInputOpen] = React.useState(false);
   const [text, setText] = React.useState(children.props.children); // The inner text of the element
 
@@ -31,7 +32,13 @@ const EditableElement = ({
     setIsInputOpen(false);
     // If the text was changed
     if (text !== children.props.children) {
-      if (field === 'title') {
+      if (field === 'title' && parentId) {
+        const newBoard = { ...board } as Board;
+        const card = newBoard.columns
+          .find((column) => column._id === parentId)
+          ?.cards.find((card) => card._id === id) as Card;
+        card.title = text;
+        setBoard(newBoard);
       }
       // API call
       updaterFunction(text, id, field);
@@ -42,7 +49,10 @@ const EditableElement = ({
     <ClickAwayListener onClickAway={handleClickAway}>
       <textarea
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          e.preventDefault();
+          setText(e.target.value);
+        }}
         className={children.props.className}
         style={inputStyles}
         autoFocus={true}

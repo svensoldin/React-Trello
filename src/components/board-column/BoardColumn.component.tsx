@@ -1,35 +1,23 @@
 import * as React from 'react';
 
+// Types
+import { Card } from '../../types/dataTypes';
+
+// Components
 import { Droppable } from 'react-beautiful-dnd';
 import CardThumbnail from '../../components/card-thumbnail/CardThumbnail.component';
 import EditableTitle from '../../components/editable-title/EditableTitle.component';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 import './BoardColumn.styles.css';
-import { cardRecordAtom } from '../../jotai/atoms';
-import { useAtom } from 'jotai';
-
-type Card = {
-  title: string;
-  comments: Array<Comment> | [];
-  labels: Array<{ body: string; color: string }> | [];
-  attachments: Array<{ fileName: string }> | [];
-  _id: string;
-  column: string;
-};
-
-type Comment = {
-  body: string;
-  user: string;
-};
 
 type Props = {
   title: string;
   columnId: string;
+  cards: Card[];
 };
 
-const BoardColumn = ({ title, columnId }: Props) => {
-  const [cardRecord]: any = useAtom(cardRecordAtom);
+const BoardColumn = ({ title, columnId, cards }: Props) => {
   return (
     <Droppable droppableId={columnId} type='cards'>
       {(provided) => (
@@ -42,7 +30,7 @@ const BoardColumn = ({ title, columnId }: Props) => {
             <EditableTitle title={title} columnId={columnId} />
             <MenuIcon className='menu-icon' />
           </header>
-          {cardRecord[columnId].map((card: Card, i: number) => (
+          {cards.map((card: Card, i: number) => (
             <CardThumbnail card={card} index={i} key={card._id} />
           ))}
           {provided.placeholder}

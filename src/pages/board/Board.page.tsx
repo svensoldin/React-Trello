@@ -22,7 +22,6 @@ import './Board.styles.css';
 
 const BoardPage = () => {
   const { boardId } = useParams<{ boardId: string }>();
-  // const [board, setBoard] = React.useState<Board>();
   const [board, setBoard] = useAtom(boardAtom);
   React.useEffect(() => {
     const fetchBoard = async () => {
@@ -66,7 +65,6 @@ const BoardPage = () => {
     if (!destination) return;
     // Create new object not to mutate the state
     const newBoard = { ...board } as Board;
-    // 1) Change UI
 
     // Find the source and destination columns
     const sourceColumn = newBoard.columns.find(
@@ -83,7 +81,7 @@ const BoardPage = () => {
     // Update state
     setBoard(newBoard);
 
-    // 2) Update DB
+    // Update DB
     try {
       const res = await axios.patch(
         `${process.env.REACT_APP_SERVER_URL}/columns/drag/${source.droppableId}/${draggableId}`,
@@ -108,9 +106,9 @@ const BoardPage = () => {
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className='columns'>
-          {board.columns.map(({ title, _id }: Column) => (
+          {board.columns.map(({ title, _id, cards }: Column) => (
             <div className='column' key={_id}>
-              <BoardColumn title={title} columnId={_id} />
+              <BoardColumn title={title} columnId={_id} cards={cards} />
               <AddButton id={_id} type='card' addFunction={handleAddElement} />
             </div>
           ))}

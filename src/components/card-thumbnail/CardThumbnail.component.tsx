@@ -1,19 +1,12 @@
 import * as React from 'react';
 
+// Types
+import { Card } from '../../types/dataTypes';
+
 import { Draggable } from 'react-beautiful-dnd';
-
 import CardComponent from '../card/Card.component';
-import './CardThumbnail.styles.css';
 
-type Card = {
-  title: string;
-  comments: Array<any> | []; // Define this type later
-  labels: Array<{ body: string; color: string }> | [];
-  attachments: Array<{ fileName: string }> | [];
-  description?: string;
-  _id: string;
-  column: string;
-};
+import './CardThumbnail.styles.css';
 
 type Props = {
   card: Card;
