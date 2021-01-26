@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 
-import { useProfilePicture } from '../../utils/utils';
+import { useProfilePicture } from '../../utils';
 import './UserAvatar.styles.css';
 
 type Props = {

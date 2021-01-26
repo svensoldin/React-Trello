@@ -1,18 +1,20 @@
 .column-title-container {
-	width: 100%;
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	margin-top: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 0;
 }
 
 .menu-icon {
-	padding: 8px;
-	margin-top: 0;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 0 0 10px 0;
+  color: grey;
 }
 
 .menu-icon:hover {
-	background: gainsboro;
-	cursor: pointer;
-	fill: black;
+  background: gainsboro;
+  cursor: pointer;
+  color: black;
 }

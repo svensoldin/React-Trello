@@ -1,52 +1,58 @@
 .board-users {
-	display: flex;
-	width: 30%;
-	align-items: center;
+  display: flex;
+  width: 30%;
+  align-items: center;
 }
 
 .board-title {
-	border-radius: 5px;
-	padding: 5px;
-	text-align: center;
-	padding-right: 10px;
-	width: 150px;
-	color: #000;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  padding-right: 10px;
+  width: 150px;
+  color: #000;
+  font-weight: normal;
 }
 
 .columns {
-	display: flex;
-	align-items: flex-start; /*Each column adjusts in size according to content */
-	overflow-x: scroll;
-	height: 100%;
+  display: flex;
+  align-items: flex-start; /*Each column adjusts in size according to content */
+  overflow-x: scroll;
+  height: 100%;
 }
 
 .column {
-	margin: 5px 20px;
-	width: 272px;
-	display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
-	align-items: center;
-	background: #ebecf0;
-	padding: 5px;
-	height: auto;
-	border-radius: 5px;
+  margin: 5px 20px;
+  width: 272px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  background: #ebecf0;
+  padding: 5px;
+  height: auto;
+  border-radius: 5px;
 }
 
 .add-user-btn {
-	border: none;
-	border-radius: 100%;
-	background: #2f80ed;
-	color: #fff;
-	height: 38px;
-	width: 38px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
+  margin: 0px 15px;
+  border: none;
+  border-radius: 100%;
+
+  background: #2f80ed;
+  color: #fff;
+
+  height: 38px;
+  width: 38px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
 }
 
 .plus-icon {
-	fill: white;
-	width: 20px;
+  fill: white;
+  width: 20px;
 }

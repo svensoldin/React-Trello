@@ -15,7 +15,7 @@ import SubjectIcon from '@material-ui/icons/Subject';
 import ListIcon from '@material-ui/icons/FormatListBulleted';
 import TitleIcon from '@material-ui/icons/Title';
 
-import { updateCardField } from '../../utils/mutations';
+import { updateCardField } from '../../api/mutations';
 
 import './styles.css';
 

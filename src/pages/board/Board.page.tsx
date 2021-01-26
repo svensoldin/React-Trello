@@ -1,22 +1,17 @@
 import * as React from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { boardAtom } from '../../jotai/atoms';
 
-// Drag'n drop
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-
-// Hooks
-import { useParams } from 'react-router-dom';
-
-// Types
 import { Board, Column } from '../../types/dataTypes';
 
 //Components
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import AddUser from '../../components/add-user-btn/AddUser.component';
 import BoardColumn from '../../components/board-column/BoardColumn.component';
 import AddButton from '../../components/add-btn/AddButton.component';
 import UserAvatar from '../../components/user-avatar/UserAvatar.component';
-import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
 
 import './Board.styles.css';
 
@@ -100,9 +95,7 @@ const BoardPage = () => {
         {board.users.map((user) => (
           <UserAvatar userId={user} key={user} />
         ))}
-        <button className='add-user-btn'>
-          <PlusIcon className='plus-icon' />
-        </button>
+        <AddUser />
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className='columns'>

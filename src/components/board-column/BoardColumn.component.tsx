@@ -7,7 +7,7 @@ import { Card } from '../../types/dataTypes';
 import { Droppable } from 'react-beautiful-dnd';
 import CardThumbnail from '../../components/card-thumbnail/CardThumbnail.component';
 import EditableTitle from '../../components/editable-title/EditableTitle.component';
-import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
+import MoreIcon from '@material-ui/icons/MoreHoriz';
 
 import './BoardColumn.styles.css';
 
@@ -28,7 +28,7 @@ const BoardColumn = ({ title, columnId, cards }: Props) => {
         >
           <header className='column-title-container'>
             <EditableTitle title={title} columnId={columnId} />
-            <MenuIcon className='menu-icon' />
+            <MoreIcon className='menu-icon' />
           </header>
           {cards.map((card: Card, i: number) => (
             <CardThumbnail card={card} index={i} key={card._id} />
