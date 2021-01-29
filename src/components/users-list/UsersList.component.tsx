@@ -11,9 +11,11 @@ type Props = {
 const UsersList = ({ users }: Props) => {
   return (
     <div className='users-list'>
-      {users.map((user: User) => (
-        <UserItem key={user._id} user={user} />
-      ))}
+      {users ? (
+        users.map((user: User) => <UserItem key={user._id} user={user} />)
+      ) : (
+        <p>No users found</p>
+      )}
     </div>
   );
 };

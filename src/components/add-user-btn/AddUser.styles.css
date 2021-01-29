@@ -1,0 +1,22 @@
+.add-user-btn {
+  margin: 0px 15px;
+  border: none;
+  border-radius: 100%;
+
+  background: #2f80ed;
+  color: #fff;
+
+  height: 38px;
+  width: 38px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.plus-icon {
+  fill: white;
+  width: 20px;
+}

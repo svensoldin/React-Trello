@@ -2,16 +2,15 @@ import * as React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { boardAtom } from '../../jotai/atoms';
+import { boardAtom } from 'jotai/atoms';
 
-import { Board, Column } from '../../types/dataTypes';
+import { Board, Column } from 'types/dataTypes';
 
 //Components
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import AddUser from '../../components/add-user-btn/AddUser.component';
-import BoardColumn from '../../components/board-column/BoardColumn.component';
-import AddButton from '../../components/add-btn/AddButton.component';
-import UserAvatar from '../../components/user-avatar/UserAvatar.component';
+import BoardUsers from 'components/board-users/BoardUsers.component';
+import ColumnsList from 'components/columns-list/ColumnsList.component';
+import AddButton from 'components/add-btn/AddButton.component';
 
 import './Board.styles.css';
 
@@ -90,21 +89,10 @@ const BoardPage = () => {
   };
   return board ? (
     <main className='board-page'>
-      <div className='board-users'>
-        <h3 className='board-title'>{board?.title}</h3>
-        {board.users.map((user) => (
-          <UserAvatar userId={user} key={user} />
-        ))}
-        <AddUser />
-      </div>
+      <BoardUsers title={board.title} users={board.users} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className='columns'>
-          {board.columns.map(({ title, _id, cards }: Column) => (
-            <div className='column' key={_id}>
-              <BoardColumn title={title} columnId={_id} cards={cards} />
-              <AddButton id={_id} type='card' addFunction={handleAddElement} />
-            </div>
-          ))}
+          <ColumnsList addCard={handleAddElement} columns={board.columns} />
           <AddButton
             id={boardId}
             type='column'

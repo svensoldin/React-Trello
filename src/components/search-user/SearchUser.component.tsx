@@ -8,7 +8,7 @@ import './SearchUser.styles.css';
 
 async function getUsersByName(
   name: string,
-  stateFunc: React.Dispatch<React.SetStateAction<User[]>>
+  setter: React.Dispatch<React.SetStateAction<User[]>>
 ) {
   try {
     const res = await axios.get<User[]>(
@@ -16,8 +16,7 @@ async function getUsersByName(
       { withCredentials: true }
     );
     const users = res.data;
-    console.log(users);
-    return stateFunc(users);
+    return setter(users);
   } catch (err) {
     console.error(err);
     return err;
@@ -45,8 +44,9 @@ const SearchUser = () => {
         autoFocus={true}
         onChange={handleChange}
         className='search-user-input'
+        placeholder='search users..'
       />
-      {search && users ? <UsersList users={users} /> : null}
+      {search ? <UsersList users={users} /> : null}
     </Paper>
   );
 };
