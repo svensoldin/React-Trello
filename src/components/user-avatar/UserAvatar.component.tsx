@@ -10,7 +10,7 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-// We get the user id from props because this component does not only display the logged in user
+// We get the user id from props (not from context) because this component does not only display the logged in user
 
 const UserAvatar = ({ userId, style }: Props) => {
   const { pictureUrl } = useProfilePicture(userId);

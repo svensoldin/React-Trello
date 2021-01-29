@@ -1,0 +1,15 @@
+.user-list-item {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.user-list-item:hover {
+  cursor: pointer;
+  background: whitesmoke;
+}
+
+.user-list-item p {
+  margin-left: 20px;
+  text-align: left;
+}

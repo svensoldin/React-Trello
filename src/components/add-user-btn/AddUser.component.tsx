@@ -10,15 +10,14 @@ const AddUser = () => {
   const [anchor, setAnchor] = React.useState<HTMLElement | null>();
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-      <div>
+      <div
+        onClick={(e: any) => {
+          setAnchor(e.target);
+          setIsOpen(true);
+        }}
+      >
         <button className='add-user-btn'>
-          <AddIcon
-            className='plus-icon'
-            onClick={(e: any) => {
-              setAnchor(e.target);
-              setIsOpen(true);
-            }}
-          />
+          <AddIcon className='plus-icon' />
         </button>
         <Popper open={isOpen} anchorEl={anchor}>
           <SearchUser />

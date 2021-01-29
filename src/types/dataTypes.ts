@@ -23,3 +23,10 @@ export type Board = {
   users: string[];
   _id: string;
 };
+
+export type User = {
+  name: string;
+  email: string;
+  picture: string;
+  _id: string;
+};

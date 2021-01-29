@@ -5,8 +5,8 @@ import { Card } from '../../types/dataTypes';
 
 // Components
 import { Droppable } from 'react-beautiful-dnd';
-import CardThumbnail from '../../components/card-thumbnail/CardThumbnail.component';
-import EditableTitle from '../../components/editable-title/EditableTitle.component';
+import CardThumbnail from 'components/card-thumbnail/CardThumbnail.component';
+import EditableTitle from 'components/editable-title/EditableTitle.component';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 
 import './BoardColumn.styles.css';
