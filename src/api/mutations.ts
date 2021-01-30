@@ -51,3 +51,15 @@ export const updateCardField = async (
     return console.error(err.message);
   }
 };
+
+export const addUserToBoard = async (boardId: string, userId: string) => {
+  try {
+    await axios.patch(
+      `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}/user/${userId}/add`,
+      { withCredentials: true }
+    );
+    return;
+  } catch (err) {
+    return console.error(err.message);
+  }
+};

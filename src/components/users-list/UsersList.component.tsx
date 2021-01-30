@@ -10,15 +10,15 @@ type Props = {
   isLoading: boolean;
 };
 
-const styles = makeStyles({
+const useStyles = makeStyles({
   root: {
     color: '#2f80ed',
   },
 });
 
 const UsersList = ({ users, isLoading }: Props) => {
+  const classes = useStyles();
   if (isLoading) {
-    const classes = styles();
     return (
       <div className='user-spinner'>
         <CircularProgress size={30} className={classes.root} />

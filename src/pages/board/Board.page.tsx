@@ -11,6 +11,7 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import BoardUsers from 'components/board-users/BoardUsers.component';
 import ColumnsList from 'components/columns-list/ColumnsList.component';
 import AddButton from 'components/add-btn/AddButton.component';
+import Toast from 'components/custom-toast/Toast.component';
 
 import './Board.styles.css';
 
@@ -100,6 +101,7 @@ const BoardPage = () => {
           />
         </div>
       </DragDropContext>
+      <Toast />
     </main>
   ) : (
     <></>
