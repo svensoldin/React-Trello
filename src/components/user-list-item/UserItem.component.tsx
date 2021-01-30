@@ -8,11 +8,12 @@ type Props = {
   user: User;
 };
 
-const UserItem = ({ user }: Props) => {
+const UserItem = ({ user: { name, _id } }: Props) => {
+  const handleAddUser = () => {};
   return (
-    <div className='user-list-item'>
-      <UserAvatar userId={user._id} />
-      <p>{user.name}</p>
+    <div className='user-list-item' onClick={handleAddUser}>
+      <UserAvatar userId={_id} name={name} />
+      <p>{name}</p>
     </div>
   );
 };

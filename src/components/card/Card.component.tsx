@@ -28,7 +28,7 @@ type Props = {
 const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
   // Component should fetch card info from server on mount
   const {
-    userDetails: { id: userId },
+    userDetails: { id: userId, name },
   } = useAuthState();
   const { title, description, _id, column } = card;
   const descriptionStyles: React.CSSProperties = {
@@ -99,6 +99,7 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
               </div>
               <div className='card-header'>
                 <UserAvatar
+                  name={name}
                   userId={userId}
                   style={{ width: '35px', height: '35px', marginLeft: '-5px' }}
                 />

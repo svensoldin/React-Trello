@@ -20,7 +20,7 @@ export type Board = {
   title: string;
   columns: Column[];
   admins: string[];
-  users: string[];
+  users: User[];
   _id: string;
 };
 

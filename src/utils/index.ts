@@ -14,9 +14,9 @@ export function useProfilePicture(userId: string) {
           {},
           { withCredentials: true, responseType: 'blob' }
         );
-        setPictureUrl(URL.createObjectURL(res.data));
+        return setPictureUrl(URL.createObjectURL(res.data));
       } catch (err) {
-        console.error(err);
+        return console.error(err);
       }
     };
     getPicture();
