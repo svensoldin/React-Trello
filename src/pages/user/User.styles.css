@@ -1,0 +1,25 @@
+.user-page {
+  padding: 5px;
+  margin: 10px 100px;
+}
+
+.user-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-board-btn {
+  border: none;
+  background: #2f80ed;
+  height: 35px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}

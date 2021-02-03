@@ -1,19 +1,12 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Board } from 'types/dataTypes';
 import { getAllBoards } from '../../api/queries';
 
 import BoardThumbnail from '../../components/board-thumbnail/BoardThumbnail.component';
+import AddIcon from '@material-ui/icons/AddOutlined';
 
 import './User.styles.css';
-
-type Board = {
-  title: string;
-  columns: Array<string>;
-  photo: string;
-  users: Array<string>;
-  admins: Array<string>;
-  _id: string;
-};
 
 type Props = {
   id: string;
@@ -30,15 +23,20 @@ const UserPage = ({ id }: Props) => {
   );
   return isLoading ? (
     <h2>Loading...</h2>
-  ) : data ? (
-    <>
-      <h2>My boards</h2>
-      {data.map(({ title, _id }: Board) => (
-        <BoardThumbnail key={_id} title={title} id={_id} />
-      ))}
-    </>
   ) : (
-    <span>Oops something went wrong</span>
+    <div className='user-page'>
+      <header className='user-page-header'>
+        <h2>My boards</h2>
+        <button className='add-board-btn'>
+          <AddIcon />
+        </button>
+      </header>
+      <div className='boards-list'>
+        {data?.map(({ title, _id, users }: Board) => (
+          <BoardThumbnail key={_id} title={title} id={_id} users={users} />
+        ))}
+      </div>
+    </div>
   );
 };
 

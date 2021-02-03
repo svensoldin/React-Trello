@@ -7,7 +7,11 @@ import './ColumnsList.styles.css';
 
 type Props = {
   columns: Column[];
-  addCard: any;
+  addCard: (
+    type: string,
+    title: string,
+    id?: string | undefined
+  ) => void | Promise<void>;
 };
 
 const ColumnsList = ({ columns, addCard }: Props) => {

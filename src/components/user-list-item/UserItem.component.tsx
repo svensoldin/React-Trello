@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Board, User } from 'types/dataTypes';
-import UserAvatar from 'components/user-avatar/UserAvatar.component';
-
-import './UserItem.styles.css';
 import { useAtom } from 'jotai';
 import { boardAtom, toastAtom } from 'jotai/atoms';
 import { addUserToBoard } from 'api/mutations';
+
+import UserAvatar from 'components/user-avatar/UserAvatar.component';
+
+import './UserItem.styles.css';
 
 type Props = {
   user: User;
@@ -16,6 +17,7 @@ const UserItem = ({ user }: Props) => {
   const [board, setBoard] = useAtom(boardAtom);
 
   const handleAddUser = () => {
+    // Show toast
     if (board?.users.find((item) => item._id === user._id))
       return setToast({
         isOpen: true,
@@ -23,9 +25,13 @@ const UserItem = ({ user }: Props) => {
         severity: 'info',
       });
     setToast({ isOpen: true, message: 'User added', severity: 'success' });
+
+    // Update state
     const newBoard = { ...board } as Board;
     newBoard.users.push(user);
     setBoard(newBoard);
+
+    // API mutation
     addUserToBoard((board as Board)._id, _id);
   };
   const { _id, name } = user;

@@ -24,7 +24,6 @@ const SearchUser = ({ closePopper }: Props) => {
   }, [search]);
 
   async function getUsersByName(name: string) {
-    setIsLoading(true);
     try {
       const res = await axios.get<User[]>(
         `${process.env.REACT_APP_SERVER_URL}/users?user=${name}`,

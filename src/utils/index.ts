@@ -9,11 +9,7 @@ export function useProfilePicture(userId: string) {
   React.useEffect(() => {
     const getPicture = async () => {
       try {
-        const res = await axios.post(
-          url,
-          {},
-          { withCredentials: true, responseType: 'blob' }
-        );
+        const res = await axios.get(url, { responseType: 'blob' });
         return setPictureUrl(URL.createObjectURL(res.data));
       } catch (err) {
         return console.error(err);

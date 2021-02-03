@@ -42,19 +42,11 @@ export async function getCardsFromColumn(columnId: string) {
   }
 }
 
-export async function getPicture(url: string) {
+export async function getPictureById(userId: string) {
+  const url = `${process.env.REACT_APP_SERVER_URL}/users/profile/${userId}`;
   try {
-    const res = await axios.post(
-      url,
-      {},
-      {
-        responseType: 'blob',
-        withCredentials: true,
-      }
-    );
-    const blob = res.data;
-    const pictureURL = URL.createObjectURL(blob);
-    return pictureURL;
+    const res = await axios.get(url, { responseType: 'blob' });
+    return res.data;
   } catch (err) {
     console.error(err);
     return err;

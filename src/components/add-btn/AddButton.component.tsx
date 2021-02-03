@@ -14,7 +14,6 @@ type Props = {
 };
 
 const AddButton = ({ id, type, addFunction }: Props) => {
-  // Refactor: merge the two states in one object ?
   const [isInputOpen, setIsInputOpen] = React.useState(false);
 
   // The input is controlled via this state

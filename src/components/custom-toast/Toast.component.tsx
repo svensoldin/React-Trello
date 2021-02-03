@@ -13,6 +13,7 @@ const useStyles = makeStyles({
 const Toast = () => {
   const [{ isOpen, message, severity }, setToast] = useAtom(toastAtom);
   const classes = useStyles();
+
   const handleClose = () => {
     setToast({
       isOpen: false,

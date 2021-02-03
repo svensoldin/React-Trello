@@ -1,16 +1,30 @@
 .board-thumbnail {
-	height: 200px;
-	width: 250px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  height: 250px;
+  width: 270px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+
+  background: whitesmoke;
+  box-shadow: dimgrey;
+  border-radius: 5px;
 }
 
 .board-thumbnail img {
-	border-radius: 5px;
+  border-radius: 5px;
+  align-self: center;
 }
 
 .board-thumbnail p {
-	color: black;
+  color: black;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.board-thumbnail-users {
+  display: flex;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }

@@ -6,7 +6,7 @@ import UserAvatar from 'components/user-avatar/UserAvatar.component';
 import './BoardUsers.styles.css';
 
 type Props = {
-  title: string;
+  title?: string;
   users: User[];
 };
 
