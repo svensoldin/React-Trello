@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { DraggableLocation } from 'react-beautiful-dnd';
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export const createCardOrColumn = async (
   type: string,
@@ -61,5 +63,33 @@ export const addUserToBoard = async (boardId: string, userId: string) => {
     return;
   } catch (err) {
     return console.error(err.message);
+  }
+};
+
+export const reorderCards = async (
+  sourceId: string,
+  cardId: string,
+  body: DraggableLocation
+) => {
+  try {
+    const res = await axios.patch(`/columns/drag/${sourceId}/${cardId}`, body);
+    if (res.status === 200) console.log('success');
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const reorderColumns = async (
+  boardId: string,
+  columnId: string,
+  destinationIndex: number
+) => {
+  try {
+    const res = await axios.patch(
+      `/boards/${boardId}/drag/${columnId}/${destinationIndex}`
+    );
+    if (res.status === 200) return console.log('success');
+  } catch (err) {
+    console.error(err);
   }
 };

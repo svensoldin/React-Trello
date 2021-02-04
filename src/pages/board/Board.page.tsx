@@ -7,13 +7,14 @@ import { boardAtom } from 'jotai/atoms';
 import { Board, Column } from 'types/dataTypes';
 
 //Components
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import BoardUsers from 'components/board-users/BoardUsers.component';
 import ColumnsList from 'components/columns-list/ColumnsList.component';
 import AddButton from 'components/add-btn/AddButton.component';
 import Toast from 'components/custom-toast/Toast.component';
 
 import './Board.styles.css';
+import { reorderCards, reorderColumns } from 'api/mutations';
 
 const BoardPage = () => {
   const { boardId } = useParams<{ boardId: string }>();
@@ -56,10 +57,24 @@ const BoardPage = () => {
     source,
     destination,
     draggableId,
+    type,
   }: DropResult) => {
     if (!destination) return;
+
     // Create new object not to mutate the state
     const newBoard = { ...board } as Board;
+
+    if (type === 'column') {
+      const [reorderedColumn] = newBoard.columns.splice(source.index, 1); //Cut
+      newBoard.columns.splice(destination.index, 0, reorderedColumn); // Paste
+      setBoard(newBoard); // Save
+
+      return reorderColumns(
+        newBoard._id,
+        reorderedColumn._id,
+        destination.index
+      );
+    }
 
     // Find the source and destination columns
     const sourceColumn = newBoard.columns.find(
@@ -77,29 +92,33 @@ const BoardPage = () => {
     setBoard(newBoard);
 
     // Update DB
-    try {
-      const res = await axios.patch(
-        `${process.env.REACT_APP_SERVER_URL}/columns/drag/${source.droppableId}/${draggableId}`,
-        destination,
-        { withCredentials: true }
-      );
-      if (res.status === 200) console.log('success');
-    } catch (err) {
-      console.error(err);
-    }
+    return reorderCards(source.droppableId, draggableId, destination);
   };
   return board ? (
     <main className='board-page'>
       <BoardUsers title={board.title} users={board.users} />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className='columns'>
-          <ColumnsList addCard={handleAddElement} columns={board.columns} />
-          <AddButton
-            id={boardId}
-            type='column'
-            addFunction={handleAddElement}
-          />
-        </div>
+        <Droppable
+          droppableId='all-columns'
+          direction='horizontal'
+          type='column'
+        >
+          {(provided) => (
+            <div
+              className='columns'
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              <ColumnsList addCard={handleAddElement} columns={board.columns} />
+              <AddButton
+                id={boardId}
+                type='column'
+                addFunction={handleAddElement}
+              />
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
       <Toast />
     </main>
