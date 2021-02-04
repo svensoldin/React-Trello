@@ -18,12 +18,10 @@ type QueryReturn = {
 };
 
 const UserPage = ({ id }: Props) => {
-  const { data, isLoading }: QueryReturn = useQuery(['getAllBoards', id], () =>
+  const { data }: QueryReturn = useQuery(['getAllBoards', id], () =>
     getAllBoards(id)
   );
-  return isLoading ? (
-    <h2>Loading...</h2>
-  ) : (
+  return (
     <div className='user-page'>
       <header className='user-page-header'>
         <h2>My boards</h2>
