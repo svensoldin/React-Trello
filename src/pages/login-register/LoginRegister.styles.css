@@ -1,0 +1,12 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page span {
+  color: #2f80ed;
+  text-decoration: underline;
+  cursor: pointer;
+}
