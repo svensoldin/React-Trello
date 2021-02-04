@@ -9,3 +9,9 @@ State is managed mostly locally across the app. However, the authentication info
 The end result is a bit barebones but the focus was more on functionality than decorum.
 
 See the API repo [here](https://github.com/svensoldin/Thullo-Server)
+
+### Smarter reading
+
+- [Application State Management with React (Kent C. Dodds)](https://kentcdodds.com/blog/application-state-management-with-react)
+
+- [Mastering Session Authentication (Christian Cashiola)](https://itnext.io/mastering-session-authentication-aa29096f6e22)
