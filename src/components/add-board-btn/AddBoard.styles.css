@@ -28,4 +28,9 @@
   font-size: 14px;
   font-weight: 700;
   color: white;
+  cursor: pointer;
+}
+
+.create-board-btn: hover {
+  background: #3a8a24;
 }

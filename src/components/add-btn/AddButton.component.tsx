@@ -10,7 +10,12 @@ import './AddButton.styles.css';
 type Props = {
   id: string;
   type: 'column' | 'card';
-  addFunction: (type: string, title: string, id?: string) => void;
+  addFunction: (
+    type: string,
+    title: string,
+    newId: string,
+    columnId?: string
+  ) => void;
 };
 
 const AddButton = ({ id, type, addFunction }: Props) => {
@@ -28,8 +33,8 @@ const AddButton = ({ id, type, addFunction }: Props) => {
     if (!title.length) return setIsInputOpen(false);
 
     // Otherwise, trigger mutations and reset state
-    await createCardOrColumn(type, id, title); // Add to DB
-    addFunction(type, title, id); // Add to UI
+    const newId = await createCardOrColumn(type, id, title); // Add to DB
+    addFunction(type, title, newId, id); // Add to UI
     setIsInputOpen(false);
     setTitle('');
   };

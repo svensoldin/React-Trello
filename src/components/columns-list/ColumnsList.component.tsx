@@ -11,7 +11,8 @@ type Props = {
   addCard: (
     type: string,
     title: string,
-    id?: string | undefined
+    newId: string,
+    columnId?: string | undefined
   ) => void | Promise<void>;
 };
 

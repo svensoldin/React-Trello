@@ -4,17 +4,17 @@ import { useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { boardAtom } from 'jotai/atoms';
 
+import { reorderCards, reorderColumns } from 'api/mutations';
 import { Board, Column } from 'types/dataTypes';
 
 //Components
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
-import BoardUsers from 'components/board-users/BoardUsers.component';
+import BoardHeader from 'components/board-header/BoardHeader.component';
 import ColumnsList from 'components/columns-list/ColumnsList.component';
 import AddButton from 'components/add-btn/AddButton.component';
 import Toast from 'components/custom-toast/Toast.component';
 
 import './Board.styles.css';
-import { reorderCards, reorderColumns } from 'api/mutations';
 
 const BoardPage = () => {
   const { boardId } = useParams<{ boardId: string }>();
@@ -32,23 +32,28 @@ const BoardPage = () => {
     fetchBoard();
   }, [boardId, setBoard]);
 
-  const handleAddElement = (type: string, title: string, id?: string) => {
+  const handleAddElement = (
+    type: string,
+    title: string,
+    newId: string,
+    columnId?: string
+  ) => {
     const newBoard = { ...board } as Board;
     if (type === 'card') {
-      const targetColumn = newBoard.columns.find((column) => column._id === id);
+      const targetColumn = newBoard.columns.find(
+        (column) => column._id === columnId
+      );
       targetColumn?.cards.push({
         title,
         column: '',
         comments: [],
         labels: [],
         attachments: [],
-        _id:
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15),
+        _id: newId,
       });
     }
     if (type === 'column') {
-      newBoard.columns.push({ title, cards: [], board: '', _id: '' });
+      newBoard.columns.push({ title, cards: [], board: '', _id: newId });
     }
     return setBoard(newBoard);
   };
@@ -96,7 +101,11 @@ const BoardPage = () => {
   };
   return board ? (
     <main className='board-page'>
-      <BoardUsers title={board.title} users={board.users} />
+      <BoardHeader
+        title={board.title}
+        users={board.users}
+        boardId={board._id}
+      />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable
           droppableId='all-columns'

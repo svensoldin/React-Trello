@@ -12,23 +12,23 @@ export const createCardOrColumn = async (
   switch (type) {
     case 'column':
       try {
-        await axios.patch(
+        const res = await axios.patch(
           `/boards/${id}/column/add`,
           { title },
           { withCredentials: true }
         );
-        break;
+        return res.data;
       } catch (err) {
         return err;
       }
     case 'card':
       try {
-        await axios.patch(
+        const res = await axios.patch(
           `/columns/${id}/card/add`,
           { title },
           { withCredentials: true }
         );
-        break;
+        return res.data;
       } catch (err) {
         return err;
       }
@@ -106,6 +106,15 @@ export const createBoard = async (name: string) => {
   try {
     const res = await axios.post<string>('/boards/', { title: name });
     if (res.status === 200) return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deleteBoard = async (boardId: string) => {
+  try {
+    const res = await axios.delete(`/boards/${boardId}`);
+    if (res.status === 200) return console.log('success');
   } catch (err) {
     console.error(err);
   }

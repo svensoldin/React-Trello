@@ -20,7 +20,7 @@ const AddBoard = () => {
     setBoardName(e.target.value);
   };
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async () => {
     if (!boardName) return;
     const boardId = await createBoard(boardName);
     history.push(`/boards/${boardId}`);
@@ -46,7 +46,9 @@ const AddBoard = () => {
               onChange={handleChange}
               className='add-board-input'
               autoFocus={true}
-              onSubmit={handleSubmit}
+              onKeyUp={({ key }) => {
+                if (key === 'Enter') handleSubmit();
+              }}
             />
             <button className='create-board-btn' onClick={handleSubmit}>
               Create

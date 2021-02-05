@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // Types
-import { Card } from '../../types/dataTypes';
+import { Card } from 'types/dataTypes';
 
 import { Draggable } from 'react-beautiful-dnd';
 import CardComponent from '../card/Card.component';

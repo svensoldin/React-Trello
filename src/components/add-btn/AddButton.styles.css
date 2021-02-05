@@ -1,51 +1,51 @@
 .add-btn {
-	display: flex;
-	align-items: center;
-	flex-shrink: 0;
-	height: 30px;
-	font-size: 15px;
-	opacity: 0.5;
-	background: #f6f6f6;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 30px;
+  font-size: 15px;
+  opacity: 0.5;
+  background: #f6f6f6;
 }
 
 .add-btn:hover {
-	opacity: 1;
-	cursor: pointer;
-	background: gainsboro;
+  opacity: 1;
+  cursor: pointer;
+  background: gainsboro;
 }
 
 .add-column {
-	margin: 5px 20px;
-	width: 272px;
+  margin: 5px 20px;
+  width: 272px;
 }
 
 .add-card {
-	width: 95%;
-	margin-top: 10px;
+  width: 95%;
+  margin-top: 10px;
 }
 
 .add-text {
-	margin: 5px;
+  margin: 5px;
 }
 
 .add-column-form {
-	border: none;
-	margin: 5px 20px;
-	width: 272px;
-	height: 30px;
-	font-size: 15px;
-	opacity: 0.5;
-	background: #f6f6f6;
-	color: black;
-	font-weight: bold;
+  border: none;
+  margin: 5px 20px;
+  width: 272px;
+  height: 30px;
+  font-size: 15px;
+  opacity: 0.5;
+  background: #f6f6f6;
+  color: black;
+  font-weight: bold;
 }
 
 .add-card-form {
-	background: #fff;
-	color: black;
-	font-size: 15px;
-	border: none;
-	width: 272px;
-	height: 30px;
-	margin-top: 10px;
+  background: #fff;
+  color: black;
+  font-size: 15px;
+  border: none;
+  width: 250px;
+  height: 30px;
+  margin-top: 10px;
 }
