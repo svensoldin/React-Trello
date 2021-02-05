@@ -62,3 +62,12 @@
   color: #2f80ed;
   cursor: pointer;
 }
+
+@media screen and (max-width: 500px) {
+  .button {
+    margin: 10px 10px;
+  }
+  .signin-form {
+    width: 300px;
+  }
+}

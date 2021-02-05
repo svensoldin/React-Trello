@@ -38,3 +38,16 @@
   cursor: pointer;
   background: whitesmoke;
 }
+
+@media screen and (max-width: 500px) {
+  .board-header {
+    flex-wrap: wrap;
+  }
+  .board-title {
+    font-size: 0.9rem;
+    width: 100px;
+  }
+  .delete-board {
+    font-size: 0.9rem;
+  }
+}

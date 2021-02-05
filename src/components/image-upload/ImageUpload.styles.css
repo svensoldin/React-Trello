@@ -33,3 +33,16 @@
   margin: 30px 10px;
   transition: 0.3s ease-in;
 }
+
+@media screen and (max-width: 500px) {
+  .image-upload {
+    overflow: hidden;
+  }
+  .picture-form {
+    width: 250px;
+    padding: 5px;
+  }
+  .upload-button {
+    margin: 5px 5px;
+  }
+}

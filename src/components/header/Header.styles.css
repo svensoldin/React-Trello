@@ -1,28 +1,37 @@
 .header {
-	display: flex;
-	min-height: 60px;
-	max-height: 60px;
-	justify-content: space-between;
+  display: flex;
+  min-height: 60px;
+  max-height: 60px;
+  justify-content: space-between;
 }
 
 .title-container {
-	display: flex;
-	align-items: center;
-	margin: 10px;
-	color: #000;
-	font-weight: 400;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: #000;
+  font-weight: 400;
 }
 
 .main-title {
-	text-decoration: none;
-	font-weight: normal;
-	margin: 10px;
-	font-size: 20px;
+  text-decoration: none;
+  font-weight: normal;
+  margin: 10px;
+  font-size: 20px;
 }
 
 .nav {
-	display: flex;
-	width: 45%;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  width: 45%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  .main-title {
+    font-size: 0.9rem;
+  }
+  .nav {
+    flex: 2;
+  }
 }
