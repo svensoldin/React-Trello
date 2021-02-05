@@ -13,7 +13,7 @@ export const createCardOrColumn = async (
     case 'column':
       try {
         await axios.patch(
-          `${process.env.REACT_APP_SERVER_URL}/boards/${id}/column/add`,
+          `/boards/${id}/column/add`,
           { title },
           { withCredentials: true }
         );
@@ -24,7 +24,7 @@ export const createCardOrColumn = async (
     case 'card':
       try {
         await axios.patch(
-          `${process.env.REACT_APP_SERVER_URL}/columns/${id}/card/add`,
+          `/columns/${id}/card/add`,
           { title },
           { withCredentials: true }
         );
@@ -44,7 +44,7 @@ export const updateCardField = async (
 ) => {
   try {
     await axios.patch(
-      `${process.env.REACT_APP_SERVER_URL}/cards/${cardId}/${field}/update`,
+      `/cards/${cardId}/${field}/update`,
       { text },
       { withCredentials: true }
     );
@@ -56,10 +56,9 @@ export const updateCardField = async (
 
 export const addUserToBoard = async (boardId: string, userId: string) => {
   try {
-    await axios.patch(
-      `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}/user/${userId}/add`,
-      { withCredentials: true }
-    );
+    await axios.patch(`/boards/${boardId}/user/${userId}/add`, {
+      withCredentials: true,
+    });
     return;
   } catch (err) {
     return console.error(err.message);
@@ -89,6 +88,24 @@ export const reorderColumns = async (
       `/boards/${boardId}/drag/${columnId}/${destinationIndex}`
     );
     if (res.status === 200) return console.log('success');
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deleteColumn = async (columnId: string) => {
+  try {
+    const res = await axios.delete(`/columns/${columnId}/delete`);
+    if (res.status === 200) return console.log('success');
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const createBoard = async (name: string) => {
+  try {
+    const res = await axios.post<string>('/boards/', { title: name });
+    if (res.status === 200) return res.data;
   } catch (err) {
     console.error(err);
   }

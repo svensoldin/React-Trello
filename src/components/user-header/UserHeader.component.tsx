@@ -60,7 +60,11 @@ const UserHeader = ({ name }: Props) => {
           anchorEl={anchorElement}
           data-testid='dropdown'
         >
-          <UserDropdown handleLogout={handleLogout} avatarURL={pictureUrl} />
+          <UserDropdown
+            handleLogout={handleLogout}
+            avatarURL={pictureUrl}
+            setIsOpen={setIsMenuOpen}
+          />
         </Popper>
       </div>
     </ClickAwayListener>

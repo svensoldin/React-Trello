@@ -10,11 +10,10 @@
   border-radius: 3px;
   padding: 5px;
   margin: 0 0 10px 0;
-  color: grey;
+  color: black;
 }
 
 .menu-icon:hover {
   background: gainsboro;
   cursor: pointer;
-  color: black;
 }

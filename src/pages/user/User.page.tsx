@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Board } from 'types/dataTypes';
-import { getAllBoards } from '../../api/queries';
+import { getAllBoards } from 'api/queries';
 
-import BoardThumbnail from '../../components/board-thumbnail/BoardThumbnail.component';
-import AddIcon from '@material-ui/icons/AddOutlined';
+import BoardThumbnail from 'components/board-thumbnail/BoardThumbnail.component';
+import AddBoard from 'components/add-board-btn/AddBoard.component';
 
 import './User.styles.css';
 
@@ -25,9 +25,7 @@ const UserPage = ({ id }: Props) => {
     <div className='user-page'>
       <header className='user-page-header'>
         <h2>My boards</h2>
-        <button className='add-board-btn'>
-          <AddIcon />
-        </button>
+        <AddBoard />
       </header>
       <div className='boards-list'>
         {data?.map(({ title, _id, users }: Board) => (
