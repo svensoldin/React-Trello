@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10px;
 }
 
 .board-users {
@@ -53,6 +54,10 @@
 
 .dialog-text {
   align-self: flex-start;
+}
+
+.dialog-text h3 {
+  margin-left: 20px;
 }
 
 .dialog-text p {

@@ -1,27 +1,20 @@
 import * as React from 'react';
 import { User } from 'types/dataTypes';
 import UserItem from 'components/user-list-item/UserItem.component';
+import CustomSpinner from 'components/custom-spinner/CustomSpinner.component';
 
 import './UsersList.styles.css';
-import { CircularProgress, makeStyles } from '@material-ui/core';
 
 type Props = {
   users: User[];
   isLoading: boolean;
 };
 
-const useStyles = makeStyles({
-  root: {
-    color: '#2f80ed',
-  },
-});
-
 const UsersList = ({ users, isLoading }: Props) => {
-  const classes = useStyles();
   if (isLoading) {
     return (
       <div className='user-spinner'>
-        <CircularProgress size={30} className={classes.root} />
+        <CustomSpinner size={30} />
       </div>
     );
   }

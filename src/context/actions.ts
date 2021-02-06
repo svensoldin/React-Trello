@@ -7,6 +7,7 @@ type Credentials = {
   password: string;
 };
 
+axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export const loginUser = async (
@@ -15,11 +16,7 @@ export const loginUser = async (
 ) => {
   dispatch({ type: 'Login start' });
   try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/users/signin`,
-      credentials,
-      { withCredentials: true }
-    );
+    const res = await axios.post(`users/signin`, credentials);
     if (res.status === 200) {
       dispatch({
         type: 'Login success',
@@ -37,11 +34,7 @@ export const loginUser = async (
 
 export const logout = async (dispatch: Dispatch) => {
   try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/users/logout`,
-      {},
-      { withCredentials: true }
-    );
+    const res = await axios.post(`/users/logout`, {});
     if (res.status === 200) {
       dispatch({ type: 'Logout' });
     }
@@ -74,10 +67,7 @@ export const useSession = (dispatch: Dispatch) => {
   // Prevent infinite rerendering cycle with useCallback (checkUserSession is a dependency of useEffect)
   const checkUserSession = React.useCallback(async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/users/session`,
-        { withCredentials: true }
-      );
+      const res = await axios.get(`/users/session`);
       if (res.data) {
         dispatch({ type: 'Login success', payload: res.data });
         return setIsLoading(false);

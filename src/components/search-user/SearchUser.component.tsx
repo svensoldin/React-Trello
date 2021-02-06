@@ -3,9 +3,9 @@ import * as React from 'react';
 import { User } from 'types/dataTypes';
 import Paper from '@material-ui/core/Paper';
 import UsersList from 'components/users-list/UsersList.component';
+import { ClickAwayListener } from '@material-ui/core';
 
 import './SearchUser.styles.css';
-import { ClickAwayListener } from '@material-ui/core';
 
 type Props = {
   closePopper: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,10 +25,7 @@ const SearchUser = ({ closePopper }: Props) => {
 
   async function getUsersByName(name: string) {
     try {
-      const res = await axios.get<User[]>(
-        `${process.env.REACT_APP_SERVER_URL}/users?user=${name}`,
-        { withCredentials: true }
-      );
+      const res = await axios.get<User[]>(`users?user=${name}`);
       const users = res.data;
       setUsers(users);
       return setIsLoading(false);
