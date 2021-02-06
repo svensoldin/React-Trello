@@ -21,7 +21,7 @@ const BoardThumbnail = ({ title, id, users }: Props) => {
         alt='board'
         width='250'
         height='150'
-        src='https://static.passeportsante.net/680x357/i93408-.jpeg'
+        src='https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80'
       />
       <p>{title}</p>
       <div className='board-thumbnail-users'>

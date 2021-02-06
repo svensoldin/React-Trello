@@ -29,10 +29,12 @@ const BoardHeader = ({ title, users, boardId }: Props) => {
     <div className='board-header'>
       <div className='board-users'>
         <h3 className='board-title'>{title}</h3>
-        {users.map(({ _id, name }) => (
-          <UserAvatar userId={_id} key={_id} name={name} />
-        ))}
-        <AddUser />
+        <div className='board-users-wrapper'>
+          {users.map(({ _id, name }) => (
+            <UserAvatar userId={_id} key={_id} name={name} />
+          ))}
+          <AddUser />
+        </div>
       </div>
       <div className='board-options'>
         <button className='delete-board' onClick={() => setIsOpen(true)}>

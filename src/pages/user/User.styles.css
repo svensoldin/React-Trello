@@ -1,6 +1,6 @@
 .user-page {
   padding: 5px;
-  margin: 10px 100px;
+  margin: 10px 10vw;
 }
 
 .user-page-header {
@@ -11,10 +11,15 @@
 
 .boards-list {
   display: flex;
+  flex-wrap: wrap;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .user-page {
-    margin: 20px;
+    margin: 10px;
+  }
+  .boards-list {
+    flex-direction: column;
+    align-items: center;
   }
 }

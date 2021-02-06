@@ -1,12 +1,12 @@
 .searchbar {
-  width: 80%;
+  max-width: 60%;
   display: flex;
-  margin: 10px;
+  margin: 5px;
 }
 
 .search-input {
   color: white;
-  width: 40%;
+  max-width: 40%;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   border-top-right-radius: 0px;
@@ -16,12 +16,12 @@
   font-size: 15px;
   outline: none;
   /* Shrinking back after focus smoothly */
-  transition-property: width;
+  transition-property: max-width;
   transition-duration: 0.5s;
 }
 
 .search-input:focus {
-  width: 80%;
+  max-width: 60%;
   transition: 0.7s;
 }
 
@@ -41,11 +41,16 @@
 
 @media screen and (max-width: 500px) {
   .search-btn {
-    width: 20px;
+    min-width: 20px;
+  }
+  .searchbar {
+    width: 50%;
   }
   .search-input {
     width: 30px;
     flex: 2;
     font-size: 10px;
+  }
+  .search-input:focus {
   }
 }

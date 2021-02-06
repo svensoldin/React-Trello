@@ -1,8 +1,9 @@
 .board-thumbnail {
   height: 250px;
-  width: 270px;
+  max-width: 270px;
   overflow: hidden;
   margin-right: 10px;
+  margin-bottom: 10px;
 
   display: flex;
   flex-direction: column;
