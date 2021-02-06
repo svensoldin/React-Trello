@@ -37,26 +37,6 @@
   outline: none;
 }
 
-.button {
-  padding: 10px;
-  border: 1px solid #2f80ed;
-  background-color: #2f80ed;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  width: 70%;
-  border-radius: 7px;
-  cursor: pointer;
-  margin: 30px 10px;
-  transition: 0.3s ease-in;
-}
-
-.button:hover {
-  background-color: white;
-  color: #2f80ed;
-  border: 1px solid #2f80ed;
-}
-
 .button span {
   text-decoration: underline;
   color: #2f80ed;
@@ -64,9 +44,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .button {
-    margin: 10px 10px;
-  }
   .signin-form {
     width: 300px;
   }

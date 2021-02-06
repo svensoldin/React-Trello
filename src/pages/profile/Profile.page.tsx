@@ -53,7 +53,7 @@ const ProfilePage = () => {
             className='input'
           />
         </div>
-        <button type='submit' className='button'>
+        <button type='submit' className='button btn-blue'>
           Save changes
         </button>
       </form>

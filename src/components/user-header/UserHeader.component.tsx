@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // Custom hooks
 import { useAuthState, useAuthDispatch, logout } from '../../context/index';
-import { useProfilePicture } from '../../utils';
+import { useProfilePicture } from '../../utils/hooks';
 
 // Components
 import UserDropdown from '../user-dropdown/UserDropdown.component';

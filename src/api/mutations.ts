@@ -12,22 +12,14 @@ export const createCardOrColumn = async (
   switch (type) {
     case 'column':
       try {
-        const res = await axios.patch(
-          `/boards/${id}/column/add`,
-          { title },
-          { withCredentials: true }
-        );
+        const res = await axios.patch(`/boards/${id}/column/add`, { title });
         return res.data;
       } catch (err) {
         return err;
       }
     case 'card':
       try {
-        const res = await axios.patch(
-          `/columns/${id}/card/add`,
-          { title },
-          { withCredentials: true }
-        );
+        const res = await axios.patch(`/columns/${id}/card/add`, { title });
         return res.data;
       } catch (err) {
         return err;

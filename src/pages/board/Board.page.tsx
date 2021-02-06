@@ -1,8 +1,6 @@
 import * as React from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useAtom } from 'jotai';
-import { boardAtom } from 'jotai/atoms';
+import { useBoard } from 'utils/hooks';
 
 import { reorderCards, reorderColumns } from 'api/mutations';
 import { Board, Column } from 'types/dataTypes';
@@ -18,19 +16,7 @@ import './Board.styles.css';
 
 const BoardPage = () => {
   const { boardId } = useParams<{ boardId: string }>();
-  const [board, setBoard] = useAtom(boardAtom);
-  React.useEffect(() => {
-    const fetchBoard = async () => {
-      const url = `${process.env.REACT_APP_SERVER_URL}/boards/${boardId}`;
-      try {
-        const res = await axios.get<Board>(url, { withCredentials: true });
-        setBoard(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchBoard();
-  }, [boardId, setBoard]);
+  const { board, setBoard } = useBoard(boardId);
 
   const handleAddElement = (
     type: string,
@@ -49,7 +35,7 @@ const BoardPage = () => {
         comments: [],
         labels: [],
         attachments: [],
-        _id: newId,
+        _id: newId, // The id is returned from the API
       });
     }
     if (type === 'column') {
@@ -119,12 +105,12 @@ const BoardPage = () => {
               ref={provided.innerRef}
             >
               <ColumnsList addCard={handleAddElement} columns={board.columns} />
+              {provided.placeholder}
               <AddButton
                 id={boardId}
                 type='column'
                 addFunction={handleAddElement}
               />
-              {provided.placeholder}
             </div>
           )}
         </Droppable>

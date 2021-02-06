@@ -39,6 +39,29 @@
   background: whitesmoke;
 }
 
+.delete-board-dialog {
+  padding: 5px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog-text {
+  align-self: flex-start;
+}
+
+.dialog-text p {
+  color: grey;
+  margin: 10px 20px;
+}
+
+.dialog-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 @media screen and (max-width: 500px) {
   .board-header {
     flex-wrap: wrap;

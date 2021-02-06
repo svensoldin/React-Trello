@@ -16,3 +16,51 @@ ul {
 li {
   text-decoration: none;
 }
+
+.button {
+  padding: 10px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  width: 70%;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 20px 10px;
+  transition: 0.3s ease-in;
+}
+
+.button:hover {
+  background-color: white;
+}
+
+.btn-blue {
+  border: 1px solid #2f80ed;
+  background-color: #2f80ed;
+}
+
+.btn-blue:hover {
+  color: #2f80ed;
+  border: 1px solid #2f80ed;
+}
+
+.btn-danger {
+  background: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.btn-danger:hover {
+  color: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.btn-grey {
+  color: grey;
+  border: none;
+  background: white;
+}
+
+@media screen and (max-width: 500px) {
+  .button {
+    margin: 10px 10px;
+  }
+}

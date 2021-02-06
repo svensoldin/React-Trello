@@ -21,7 +21,6 @@ const UserPage = ({ id }: Props) => {
   const { data }: QueryReturn = useQuery(['getAllBoards', id], () =>
     getAllBoards(id)
   );
-  console.log(data);
   return (
     <div className='user-page'>
       <header className='user-page-header'>

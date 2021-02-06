@@ -100,7 +100,7 @@ const RegisterForm = () => {
             minLength={8}
           />
         </div>
-        <button className='button' onClick={handleSubmit}>
+        <button className='button btn-blue' onClick={handleSubmit}>
           Register
         </button>
       </form>
