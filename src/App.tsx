@@ -2,16 +2,17 @@ import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'jotai';
 
-import { useSession, useAuthDispatch } from './context/index';
+import { useSession, useAuthDispatch } from '@context/index';
 // Components
-import ErrorBoundary from './components/error-boundary/ErrorBoundary.component';
-import Header from './components/header/Header.component';
-import ProtectedRoute from './components/protected-route/ProtectedRoute.component';
+import Toast from '@components/custom-toast/Toast.component';
+import ErrorBoundary from '@components/error-boundary/ErrorBoundary.component';
+import Header from '@components/header/Header.component';
+import ProtectedRoute from '@components/protected-route/ProtectedRoute.component';
 
 // Pages
-import UserRoute from './components/UserRoute/UserRoute.component';
-import BoardPage from './pages/board/Board.page';
-import ProfilePage from './pages/profile/Profile.page';
+import UserRoute from '@components/UserRoute/UserRoute.component';
+import BoardPage from '@pages/board/Board.page';
+import ProfilePage from '@pages/profile/Profile.page';
 
 import './App.css';
 
@@ -33,6 +34,7 @@ const App = () => {
             <ProtectedRoute path={'/profile'} exact component={ProfilePage} />
           </Switch>
         </ErrorBoundary>
+        <Toast />
       </div>
     </Provider>
   ) : null;
