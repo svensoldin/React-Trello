@@ -1,14 +1,11 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '@api/config';
 import { Dispatch } from './reducer';
 
 type Credentials = {
   email: string;
   password: string;
 };
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export const loginUser = async (
   dispatch: Dispatch,
@@ -24,13 +21,14 @@ export const loginUser = async (
       });
       return res.data.user;
     }
-    if (res.status === 400) {
-      return dispatch({ type: 'Login fail', payload: res.data });
-    }
   } catch (err) {
     console.error(err);
-    dispatch({ type: 'Login fail', payload: err });
-    return err.response.data;
+    if (err.response)
+      return dispatch({
+        type: 'Wrong credentials',
+        payload: 'Wrong credentials',
+      });
+    dispatch({ type: 'Login fail', payload: 'Oops, something went wrong' });
   }
 };
 

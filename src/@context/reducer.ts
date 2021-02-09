@@ -25,6 +25,7 @@ type Action =
       payload: { name: string; id: string; email: string };
     }
   | { type: 'Login fail'; payload: string }
+  | { type: 'Wrong credentials'; payload: string }
   | { type: 'Logout' };
 
 export const AuthReducer: Reducer<State, Action> = (
@@ -49,11 +50,17 @@ export const AuthReducer: Reducer<State, Action> = (
         error: action.payload,
         loading: false,
       };
-    case 'Logout':
+    case 'Wrong credentials':
       return {
         ...state,
+        error: 'Wrong credentials',
+        loading: false,
+      };
+    case 'Logout':
+      return {
         userDetails: { name: '', id: '', email: '' },
         loading: false,
+        error: null,
       };
     default:
       return state;

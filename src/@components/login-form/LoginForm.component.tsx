@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAtom } from 'jotai';
 import { toastAtom } from '@jotai/atoms';
-import { loginUser, useAuthDispatch } from '@context/index';
+import { loginUser, useAuthDispatch, useAuthState } from '@context/index';
 
 import './LoginForm.styles.css';
 
@@ -14,6 +14,17 @@ const LoginForm = () => {
     password: '',
   });
   const { email, password } = credentials;
+  const { error } = useAuthState();
+  React.useEffect(() => {
+    if (error) {
+      setToast({
+        isOpen: true,
+        message: error,
+        severity: 'error',
+      });
+    }
+  }, [error, setToast]);
+
   // Put the form input in the state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -24,16 +35,9 @@ const LoginForm = () => {
   const dispatch = useAuthDispatch();
 
   // Trigger login API call with the credentials stored in the state
-  const handleSubmit = async (e: React.SyntheticEvent<any>) => {
+  const handleSubmit = (e: React.SyntheticEvent<any>) => {
     e.preventDefault();
-    const res = await loginUser(dispatch, credentials);
-    if (res === 'Wrong credentials') {
-      setToast({
-        isOpen: true,
-        message: 'Wrong credentials',
-        severity: 'error',
-      });
-    }
+    loginUser(dispatch, credentials);
   };
 
   return (

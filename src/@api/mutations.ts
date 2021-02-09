@@ -1,8 +1,5 @@
-import axios from 'axios';
+import axios from '@api/config';
 import { DraggableLocation } from 'react-beautiful-dnd';
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export const createCardOrColumn = async (
   type: string,

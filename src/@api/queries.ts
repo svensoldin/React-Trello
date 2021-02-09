@@ -1,8 +1,5 @@
-import axios from 'axios';
+import axios from '@api/config';
 import { Board } from '@custom-types/dataTypes';
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export async function getAllBoards(id: string) {
   try {

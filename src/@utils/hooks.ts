@@ -1,12 +1,9 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '@api/config';
 import { useAtom } from 'jotai';
 
 import { boardAtom } from '@jotai/atoms';
 import { Board } from '@custom-types/dataTypes';
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 export function useProfilePicture(userId: string) {
   const [pictureUrl, setPictureUrl] = React.useState<string>();
