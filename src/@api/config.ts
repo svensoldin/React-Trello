@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export default axios.create({
   baseURL:
-    process.env['NODE.ENV'] === 'production'
-      ? process.env.REACT_APP_BASE_URL_PROD
-      : process.env.REACT_APP_BASE_URL_DEV,
+    process.env.NODE_ENV === 'development'
+      ? process.env.REACT_APP_BASE_URL_DEV
+      : '/api',
   withCredentials: true,
 });

@@ -8,6 +8,7 @@ import Toast from '@components/custom-toast/Toast.component';
 import ErrorBoundary from '@components/error-boundary/ErrorBoundary.component';
 import Header from '@components/header/Header.component';
 import ProtectedRoute from '@components/protected-route/ProtectedRoute.component';
+import RedirectWrapper from '@components/redirect-wrapper/RedirectWrapper.component';
 
 // Pages
 import UserRoute from '@components/UserRoute/UserRoute.component';
@@ -32,6 +33,7 @@ const App = () => {
               exact
             />
             <ProtectedRoute path={'/profile'} exact component={ProfilePage} />
+            <Route component={RedirectWrapper} />
           </Switch>
         </ErrorBoundary>
         <Toast />
