@@ -15,7 +15,7 @@ export function useProfilePicture(userId: string) {
       });
       return setPictureUrl(URL.createObjectURL(res.data));
     } catch (err) {
-      return console.error(err);
+      return setPictureUrl('');
     }
   }, [setPictureUrl, userId]);
 
@@ -34,7 +34,7 @@ export function useBoard(boardId: string) {
       const res = await axios.get<Board>(`/boards/${boardId}`);
       setBoard(res.data);
     } catch (err) {
-      console.error(err);
+      return err;
     }
   }, [setBoard, boardId]);
 

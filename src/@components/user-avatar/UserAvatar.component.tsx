@@ -16,7 +16,7 @@ type Props = {
 const UserAvatar = ({ userId, name, style }: Props) => {
   const { pictureUrl } = useProfilePicture(userId);
   return (
-    <Avatar src={pictureUrl} alt='user' style={style}>
+    <Avatar src={pictureUrl || ''} alt='user' style={style}>
       {name.split('')[0].toUpperCase()}
     </Avatar>
   );

@@ -2,14 +2,19 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import { AuthProvider } from '@context/index';
+import { Provider } from 'jotai';
 import LoginForm from './LoginForm.component';
 
-const renderWithContext = (child: React.ReactNode) => {
-  return render(<AuthProvider>{child}</AuthProvider>);
+const renderWithTree = (child: React.ReactNode) => {
+  return render(
+    <AuthProvider>
+      <Provider>{child}</Provider>
+    </AuthProvider>
+  );
 };
 
 test('inputting credentials updates the state', () => {
-  const { getByLabelText } = renderWithContext(<LoginForm />);
+  const { getByLabelText } = renderWithTree(<LoginForm />);
   const emailInput = getByLabelText('email-input') as HTMLInputElement; // Cast the input element to the right type
   const passwordInput = getByLabelText('password-input') as HTMLInputElement;
   // Arrange

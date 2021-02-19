@@ -1,5 +1,5 @@
 import * as React from 'react';
-import axios from 'axios';
+import axios from '@api/config';
 import { User } from '@custom-types/dataTypes';
 
 import Paper from '@material-ui/core/Paper';
