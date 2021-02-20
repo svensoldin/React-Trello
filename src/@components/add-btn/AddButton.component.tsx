@@ -38,27 +38,33 @@ const AddButton = ({ id, type, addFunction }: Props) => {
     setIsInputOpen(false);
     setTitle('');
   };
-  return !isInputOpen ? (
-    <div
-      className={`add-btn ${type === 'column' ? 'add-column' : 'add-card'}`}
-      onClick={() => setIsInputOpen(true)}
-    >
-      <AddIcon />
-      <p className='add-text'>New {type}</p>
-    </div>
-  ) : (
-    <ClickAwayListener onClickAway={handleEvent}>
-      <form onSubmit={handleEvent}>
-        <input
-          type='text'
-          className={type === 'column' ? 'add-column-form' : 'add-card-form'}
-          autoFocus={true}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </form>
-    </ClickAwayListener>
-  );
+  if (isInputOpen) {
+    return (
+      <ClickAwayListener onClickAway={handleEvent}>
+        <form onSubmit={handleEvent}>
+          <input
+            type='text'
+            className={type === 'column' ? 'add-column-form' : 'add-card-form'}
+            autoFocus={true}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </form>
+      </ClickAwayListener>
+    );
+  } else {
+    return (
+      <div
+        className={`add-btn ${type === 'column' ? 'add-column' : 'add-card'}`}
+        onClick={() => setIsInputOpen(true)}
+        role='button'
+        aria-label={`Add a ${type}`}
+      >
+        <AddIcon />
+        <p className='add-text'>New {type}</p>
+      </div>
+    );
+  }
 };
 
 export default AddButton;

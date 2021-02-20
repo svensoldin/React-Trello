@@ -15,7 +15,7 @@ const renderWithTree = (child: React.ReactNode) => {
 
 afterEach(cleanup);
 
-test('inputting credentials updates the state', () => {
+test('typing credentials updates the state', () => {
   const { getByLabelText } = renderWithTree(<LoginForm />);
   const emailInput = getByLabelText('email-input') as HTMLInputElement; // Cast the input element to the right type
   const passwordInput = getByLabelText('password-input') as HTMLInputElement;

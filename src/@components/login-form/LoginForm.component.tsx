@@ -37,6 +37,7 @@ const LoginForm = () => {
   // Trigger login API call with the credentials stored in the state
   const handleSubmit = (e: React.SyntheticEvent<any>) => {
     e.preventDefault();
+    if (!email || !password) return;
     loginUser(dispatch, credentials);
   };
 
