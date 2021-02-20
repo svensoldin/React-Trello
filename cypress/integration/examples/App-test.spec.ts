@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 it('authenticates the user with the right credentials', () => {
   cy.visit('/');
   cy.get('input[name=email]').type('john@gmail.com');

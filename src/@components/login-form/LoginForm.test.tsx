@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 
 import { AuthProvider } from '@context/index';
 import { Provider } from 'jotai';
@@ -12,6 +12,8 @@ const renderWithTree = (child: React.ReactNode) => {
     </AuthProvider>
   );
 };
+
+afterEach(cleanup);
 
 test('inputting credentials updates the state', () => {
   const { getByLabelText } = renderWithTree(<LoginForm />);

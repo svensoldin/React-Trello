@@ -14,7 +14,7 @@ type Props = {
 const UsersList = ({ users, isLoading }: Props) => {
   if (isLoading) {
     return (
-      <div className='user-spinner'>
+      <div className='user-spinner' aria-busy={true} data-testid='spinner'>
         <CustomSpinner size={30} />
       </div>
     );
