@@ -33,7 +33,7 @@ const AddBoard = () => {
           setIsOpen(!isOpen);
         }}
       >
-        <button className='add-board-btn'>
+        <button className='add-board-btn' aria-label='Add a board'>
           <AddIcon />
         </button>
       </div>
