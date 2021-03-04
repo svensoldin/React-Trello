@@ -6,7 +6,7 @@ import { boardAtom } from '@jotai/atoms';
 import { Board, Card } from '@custom-types/dataTypes';
 
 type Props = {
-  HTMLElement: string;
+  HTMLElement: 'h1' | 'h2' | 'p';
   innerText: string;
   updaterFunction: (text: string, id: string, field: string) => Promise<void>;
   id: string;
@@ -25,11 +25,11 @@ const EditableElement = ({
   innerClass,
 }: Props) => {
   const [board, setBoard] = useAtom(boardAtom);
-  const [isInputOpen, setIsInputOpen] = React.useState(false);
+  const [showInput, setShowInput] = React.useState(false);
   const [text, setText] = React.useState(innerText); // The inner text of the element
 
   const handleClickAway = () => {
-    setIsInputOpen(false);
+    setShowInput(false);
     // If the text was changed
     if (text !== innerText) {
       if (field === 'title' && parentId) {
@@ -45,51 +45,39 @@ const EditableElement = ({
     }
   };
 
-  if (isInputOpen) {
-    if (field === 'description') {
-      return (
-        <ClickAwayListener onClickAway={handleClickAway}>
+  if (showInput) {
+    return (
+      <ClickAwayListener onClickAway={handleClickAway}>
+        {field === 'description' ? (
           <textarea
             value={text}
-            onChange={(e) => {
-              e.preventDefault();
-              setText(e.target.value);
-            }}
+            onChange={(e) => setText(e.target.value)}
             className={innerClass}
             autoFocus={true}
             onKeyUp={({ key }) => {
               if (key === 'Enter') handleClickAway();
             }}
           />
-        </ClickAwayListener>
-      );
-    }
-
-    if (field === 'title') {
-      return (
-        <ClickAwayListener onClickAway={handleClickAway}>
+        ) : (
           <input
             value={text}
-            onChange={(e) => {
-              e.preventDefault();
-              setText(e.target.value);
-            }}
+            onChange={(e) => setText(e.target.value)}
             className={innerClass}
             autoFocus={true}
             onKeyUp={({ key }) => {
               if (key === 'Enter') handleClickAway();
             }}
           />
-        </ClickAwayListener>
-      );
-    }
+        )}
+      </ClickAwayListener>
+    );
   }
 
   return (
     <>
       {React.createElement(HTMLElement, {
         onClick: () => {
-          setIsInputOpen(true);
+          setShowInput(true);
         },
         children: text,
         className: innerClass,

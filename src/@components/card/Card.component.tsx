@@ -18,7 +18,6 @@ import TitleIcon from '@material-ui/icons/Title';
 import { updateCardField } from '@api/mutations';
 
 import './styles.css';
-import { TitleTwoTone } from '@material-ui/icons';
 
 type Props = {
   card: Card;
@@ -33,33 +32,6 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
   } = useAuthState();
   const { title, description, _id, column } = card;
 
-  const descriptionStyles: React.CSSProperties = {
-    background: '#fff',
-    height: 50,
-    outline: '1px solid #2f80ed',
-    borderRadius: '3px',
-    cursor: 'text',
-    padding: '10px',
-    width: '80%',
-    fontSize: '15px',
-    resize: 'none',
-    marginTop: '10px',
-    marginBottom: '20px',
-  };
-  const cardTitleStyles: React.CSSProperties = {
-    resize: 'none',
-    margin: '21px 20px',
-    border: 'none',
-    width: '60%',
-    height: '28px',
-    fontFamily: 'inherit',
-    fontSize: '24px',
-    padding: '5px 5px',
-    overflow: 'hidden',
-    fontWeight: 700,
-    outline: '1px solid #2f80ed',
-    cursor: 'text',
-  };
   return (
     <Dialog
       open={isModalOpen}
