@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Provider } from 'jotai';
 
 import { useSession, useAuthDispatch } from '@context/index';
 // Components
@@ -16,30 +15,37 @@ import BoardPage from '@pages/board/Board.page';
 import ProfilePage from '@pages/profile/Profile.page';
 
 import './App.css';
+import HerokuSpinner from '@components/heroku-spinner/HerokuSpinner.component';
 
 const App = () => {
   const dispatch = useAuthDispatch();
   const { isLoading } = useSession(dispatch);
-  return !isLoading ? (
-    <Provider>
+  if (isLoading) {
+    return (
+      <div className='App'>
+        <HerokuSpinner />
+      </div>
+    );
+  }
+  return (
+    <ErrorBoundary>
       <div className='App'>
         <Header />
-        <ErrorBoundary>
-          <Switch>
-            <Route path={'/'} exact component={UserRoute} />
-            <ProtectedRoute
-              component={BoardPage}
-              path={'/boards/:boardId'}
-              exact
-            />
-            <ProtectedRoute path={'/profile'} exact component={ProfilePage} />
-            <Route component={RedirectWrapper} />
-          </Switch>
-        </ErrorBoundary>
+        <Switch>
+          <Route path={'/'} exact component={UserRoute} />
+          <ProtectedRoute
+            component={BoardPage}
+            path={'/boards/:boardId'}
+            exact
+          />
+          <ProtectedRoute path={'/profile'} exact component={ProfilePage} />
+          <Route component={RedirectWrapper} />
+        </Switch>
+
         <Toast />
       </div>
-    </Provider>
-  ) : null;
+    </ErrorBoundary>
+  );
 };
 
 export default App;

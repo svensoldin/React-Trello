@@ -22,7 +22,6 @@ export const loginUser = async (
       return res.data.user;
     }
   } catch (err) {
-    console.error(err);
     if (err.response)
       return dispatch({
         type: 'Wrong credentials',
