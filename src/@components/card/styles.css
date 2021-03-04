@@ -36,8 +36,17 @@
   align-items: center;
 }
 
-.card-header h2 h3 {
+.card-header-title {
   margin-left: 20px;
+}
+
+/* When the card title is clicked */
+.card-title-input {
+  margin: 20px;
+  margin-left: 15px;
+  font-size: 1.5em;
+  font-weight: bolder;
+  padding: 2px;
 }
 
 .card-description {
@@ -55,9 +64,15 @@
   background: rgba(9, 30, 66, 0.04);
 }
 
+.card-description:focus {
+  background: #fff;
+  height: 50px;
+  border: none;
+}
+
 .card-description:hover {
   cursor: pointer;
-  background: rgba(9, 30, 66, 0.08);
+  /* background: rgba(9, 30, 66, 0.08); */
 }
 
 .comment-input {

@@ -6,32 +6,32 @@ import { boardAtom } from '@jotai/atoms';
 import { Board, Card } from '@custom-types/dataTypes';
 
 type Props = {
-  children: React.ReactElement<any>;
+  HTMLElement: string;
+  innerText: string;
   updaterFunction: (text: string, id: string, field: string) => Promise<void>;
-  inputStyles?: React.CSSProperties;
   id: string;
-  field: string;
+  field: 'description' | 'title';
   parentId?: string;
+  innerClass?: string;
 };
 
 const EditableElement = ({
-  children,
+  HTMLElement,
+  innerText,
   updaterFunction,
-  inputStyles,
   id,
   field,
   parentId,
+  innerClass,
 }: Props) => {
-  if (!children)
-    throw new Error('EditableElement component must have children');
   const [board, setBoard] = useAtom(boardAtom);
   const [isInputOpen, setIsInputOpen] = React.useState(false);
-  const [text, setText] = React.useState(children.props.children); // The inner text of the element
+  const [text, setText] = React.useState(innerText); // The inner text of the element
 
   const handleClickAway = () => {
     setIsInputOpen(false);
     // If the text was changed
-    if (text !== children.props.children) {
+    if (text !== innerText) {
       if (field === 'title' && parentId) {
         const newBoard = { ...board } as Board;
         const card = newBoard.columns
@@ -45,30 +45,54 @@ const EditableElement = ({
     }
   };
 
-  return isInputOpen ? (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <textarea
-        value={text}
-        onChange={(e) => {
-          e.preventDefault();
-          setText(e.target.value);
-        }}
-        className={children.props.className}
-        style={inputStyles}
-        autoFocus={true}
-        onKeyUp={({ key }) => {
-          if (key === 'Enter') handleClickAway();
-        }}
-      />
-    </ClickAwayListener>
-  ) : (
+  if (isInputOpen) {
+    if (field === 'description') {
+      return (
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <textarea
+            value={text}
+            onChange={(e) => {
+              e.preventDefault();
+              setText(e.target.value);
+            }}
+            className={innerClass}
+            autoFocus={true}
+            onKeyUp={({ key }) => {
+              if (key === 'Enter') handleClickAway();
+            }}
+          />
+        </ClickAwayListener>
+      );
+    }
+
+    if (field === 'title') {
+      return (
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <input
+            value={text}
+            onChange={(e) => {
+              e.preventDefault();
+              setText(e.target.value);
+            }}
+            className={innerClass}
+            autoFocus={true}
+            onKeyUp={({ key }) => {
+              if (key === 'Enter') handleClickAway();
+            }}
+          />
+        </ClickAwayListener>
+      );
+    }
+  }
+
+  return (
     <>
-      {React.cloneElement(children, {
-        ...children.props,
+      {React.createElement(HTMLElement, {
         onClick: () => {
           setIsInputOpen(true);
         },
         children: text,
+        className: innerClass,
       })}
     </>
   );

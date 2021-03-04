@@ -18,6 +18,7 @@ import TitleIcon from '@material-ui/icons/Title';
 import { updateCardField } from '@api/mutations';
 
 import './styles.css';
+import { TitleTwoTone } from '@material-ui/icons';
 
 type Props = {
   card: Card;
@@ -26,17 +27,24 @@ type Props = {
 };
 
 const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
-  // Component should fetch card info from server on mount
+  // Refactor: should fetch card info from server on mount
   const {
     userDetails: { id: userId, name },
   } = useAuthState();
   const { title, description, _id, column } = card;
+
   const descriptionStyles: React.CSSProperties = {
     background: '#fff',
-    height: 108,
+    height: 50,
     outline: '1px solid #2f80ed',
-    borderRadius: '5px',
+    borderRadius: '3px',
     cursor: 'text',
+    padding: '10px',
+    width: '80%',
+    fontSize: '15px',
+    resize: 'none',
+    marginTop: '10px',
+    marginBottom: '20px',
   };
   const cardTitleStyles: React.CSSProperties = {
     resize: 'none',
@@ -64,14 +72,14 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
           <div className='card-header'>
             <TitleIcon />
             <EditableElement
+              HTMLElement='h2'
+              innerText={title}
               updaterFunction={updateCardField}
               id={_id}
               field='title'
-              inputStyles={cardTitleStyles}
               parentId={column}
-            >
-              <h2>{title}</h2>
-            </EditableElement>
+              innerClass='card-title-input'
+            />
           </div>
         </section>
         <section className='lower-container'>
@@ -79,23 +87,21 @@ const CardComponent = ({ card, isModalOpen, closeModal }: Props) => {
             <div className='card-description-container'>
               <div className='card-header'>
                 <SubjectIcon />
-                <h3>Description</h3>
+                <h3 className='card-header-title'>Description</h3>
               </div>
               <EditableElement
+                HTMLElement='p'
+                innerText={description || 'Add a more detailed description'}
                 updaterFunction={updateCardField}
-                inputStyles={descriptionStyles}
                 id={_id}
                 field='description'
-              >
-                <p className='card-description'>
-                  {description || 'Add a more detailed description...'}
-                </p>
-              </EditableElement>
+                innerClass='card-description'
+              />
             </div>
             <div className='card-activity'>
               <div className='card-header'>
                 <ListIcon />
-                <h3>Activity</h3>
+                <h3 className='card-header-title'>Activity</h3>
               </div>
               <div className='card-header'>
                 <UserAvatar
